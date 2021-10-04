@@ -43,18 +43,13 @@
                 <nav id="left-sidebar-nav" class="sidebar-nav">
                     <ul id="main-menu" class="metismenu">
                         <li class="active">
-                            <a href="#Dashboard" class="has-arrow"><i class="icon-home"></i> <span>Dashboard</span></a>
-                            <ul>
-                                <li><a href="index.html">Analytical</a></li>
-                                <li><a href="index2.html">Demographic</a></li>
-                                <li class="active"><a href="index3.html">Hospital</a></li>
-                            </ul>
+                            <a href="/admin" class="has-arrow"><i class="icon-home"></i> <span>Dashboard</span></a>
                         </li>
                         <li>
                             <a href="#Banner" class="has-arrow"><i class="icon-picture"></i> <span>Banner Management</span></a>
                             <ul>
-                                <li><a href="app-inbox.html">Inbox</a></li>
-                                <li><a href="app-chat.html">Chat</a></li>
+                                <li><a href="{{route('banner.index')}}">All banner</a></li>
+                                <li><a href="{{route('banner.create')}}">Add banner</a></li>
                             </ul>
                         </li>
                         <li>

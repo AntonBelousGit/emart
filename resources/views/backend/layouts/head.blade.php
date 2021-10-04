@@ -14,3 +14,5 @@
 <!-- MAIN CSS -->
 <link rel="stylesheet" href="{{asset('backend/assets/css/main.css')}}">
 <link rel="stylesheet" href="{{asset('backend/assets/css/color_skins.css')}}">
+
+@yield('style')

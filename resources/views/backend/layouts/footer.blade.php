@@ -8,3 +8,5 @@
 
 <script src="{{asset('backend/assets/bundles/mainscripts.bundle.js')}}"></script>
 <script src="{{asset('backend/assets/js/index3.js')}}"></script>
+
+@yield('script')
