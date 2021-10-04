@@ -105,7 +105,15 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="page-login.html" class="icon-menu"><i class="icon-login"></i></a>
+                        <a class="dropdown-item icon-menu" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                            <i class="icon-login"></i>
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </li>
                 </ul>
             </div>
