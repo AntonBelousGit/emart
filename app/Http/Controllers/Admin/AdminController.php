@@ -9,6 +9,6 @@ class AdminController extends Controller
 {
     public function admin()
     {
-        return view('backend.layouts.main');
+        return view('backend.index');
     }
 }

@@ -39,12 +39,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="form-group">
-                                            <label for="">URL </label>
-                                            <input type="text" class="form-control" placeholder="URL" name="slug" value="{{old('slug')}}">
-                                        </div>
-                                    </div>
+                                    {{--                                    <div class="col-lg-12 col-md-12">--}}
+                                    {{--                                        <div class="form-group">--}}
+                                    {{--                                            <label for="">URL </label>--}}
+                                    {{--                                            <input type="text" class="form-control" placeholder="URL" name="slug" value="{{old('slug')}}">--}}
+                                    {{--                                        </div>--}}
+                                    {{--                                    </div>--}}
                                     <div class="col-lg-12 col-md-12">
                                         <div class="form-group">
                                             <label for="">Photo</label>
@@ -67,11 +67,12 @@
                                     <div class="col-lg-12 col-md-12">
                                         <div class="form-group">
                                             <label for="">Description</label>
-                                            <textarea id="summernote" name="description">{{old('description')}}</textarea>
+                                            <textarea id="summernote"
+                                                      name="description">{{old('description')}}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-sm-12">
-                                        <label for="status">Condition <span class="text-danger">*</span> </label>
+                                        <label for="status">Condition <span class="text-danger">*</span></label>
                                         <select name="condition" class="form-control show-tick" required>
                                             <option value="banner" {{old('condition')=== 'banner' ? 'selected': ''}}>
                                                 Banner

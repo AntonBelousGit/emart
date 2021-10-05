@@ -10,3 +10,9 @@
 <script src="{{asset('backend/assets/js/index3.js')}}"></script>
 
 @yield('script')
+
+<script>
+    setTimeout(function () {
+        $('#alert').slideUp();
+    },5000);
+</script>

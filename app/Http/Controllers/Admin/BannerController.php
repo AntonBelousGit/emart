@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class BannerController extends Controller
 {
@@ -14,7 +16,8 @@ class BannerController extends Controller
      */
     public function index()
     {
-        return view('backend.banners.index');
+        $banners = Banner::orderBy('id','DESC')->get();
+        return view('backend.banners.index', compact('banners'));
     }
 
     /**
@@ -30,18 +33,39 @@ class BannerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        dd($request);
+        $validate_data = $this->validate($request, [
+            'title' => 'string|required',
+            'description' => 'string|nullable',
+            'photo' => 'required',
+            'condition' => 'nullable|in:banner,promo',
+            'status' => 'nullable|in:active,inactive',
+        ]);
+        $slug = Str::slug($request->input('title'));
+        $slug_count = Banner::where('slug', $slug)->count();
+        if ($slug_count > 0) {
+            $slug = time() . '_' . $slug;
+        }
+        $validate_data['slug'] = $slug;
+
+        $banner = Banner::create($validate_data);
+
+        if ($banner) {
+            return redirect()->route('banner.index')->with('success', 'Successfully created banner');
+        } else {
+            return back()->with('error', 'Something went wrong!');
+        }
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -52,7 +76,7 @@ class BannerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -63,8 +87,8 @@ class BannerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -75,7 +99,7 @@ class BannerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
