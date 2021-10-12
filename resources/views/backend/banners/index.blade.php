@@ -69,10 +69,22 @@
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$banner->title}}</td>
                                                 <td>{{$banner->description}}</td>
-                                                <td>{{$banner->photo}}</td>
-                                                <td>{{$banner->condition}}</td>
-                                                <td>{{$banner->status}}</td>
-                                                <td></td>
+                                                <td><img src="{{$banner->photo}}" alt="banner image" class="banner-table-image"></td>
+                                                <td>
+                                                    @if ($banner->condition === 'banner')
+                                                        <span class="badge badge-success">{{$banner->condition}}</span>
+                                                    @else
+                                                        <span class="badge badge-warning">{{$banner->condition}}</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" checked data-toggle="toggle" data-on="active" data-off="inactive" data-size="small" data-onstyle="success" data-offstyle="danger">
+                                                </td>
+                                                <td>
+                                                    <a href="{{route('banner.edit',$banner)}}" data-toggle="tooltip" class="btn btn-sm btn-outline-primary" title="edit" data-placement="bottom">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
