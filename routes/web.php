@@ -18,18 +18,28 @@ use App\Http\Controllers\Admin\BannerController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/clear', function() {
 
-Auth::routes(['register'=> false]);
+    Artisan::call('view:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('route:clear');
+    return "Cache Clear All";
+});
+
+Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Admin
 
-Route::group(['prefix' => 'admin','middleware' => 'auth'], function (){
-    Route::get('/',[AdminController::class,'admin'])->name('admin');
-});
-
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    Route::get('/', [AdminController::class, 'admin'])->name('admin');
 
 // Banner Section
 
-Route::resource('banner',  BannerController::class );
+    Route::resource('banner', BannerController::class);
+    Route::post('banner_status',[BannerController::class,'bannerStatus'])->name('banner.status');
+
+});
