@@ -56,7 +56,8 @@
                                                        <i class="fa fa-picture-o"></i> Choose
                                                      </a>
                                                    </span>
-                                                <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$banner->photo}}">
+                                                <input id="thumbnail" class="form-control" type="text" name="photo"
+                                                       value="{{$banner->photo}}">
                                             </div>
                                             <div id="holder" style="margin-top:15px;max-height:100px;">
 
@@ -89,15 +90,18 @@
                                             <option value="active" {{$banner->status === 'active' ? 'selected': ''}}>
                                                 Active
                                             </option>
-                                            <option value="inactive" {{$banner->status === 'inactive' ? 'selected': ''}}>
+                                            <option
+                                                value="inactive" {{$banner->status === 'inactive' ? 'selected': ''}}>
                                                 Inactive
                                             </option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                                    <button type="submit" class="btn btn-outline-secondary">Cancel</button>
+                                <div class="row m-t-15">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        <button type="submit" class="btn btn-outline-secondary">Cancel</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
