@@ -100,7 +100,23 @@ class BannerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
+        $banner = Banner::find($id);
+        if ($banner) {
+            $validate_data = $this->validate($request, [
+                'title' => 'string|required',
+                'description' => 'string|nullable',
+                'photo' => 'required',
+                'condition' => 'nullable|in:banner,promo',
+                'status' => 'nullable|in:active,inactive'
+            ]);
+            $status = $banner->fill($validate_data)->save();
+
+            if ($status) {
+                return redirect()->route('banner.index')->with('success', 'Successfully updated banner');
+            }
+            return back()->with('error', 'Something went wrong!');
+        }
+        return back()->with('error', 'Data not found');
     }
 
     /**
@@ -111,7 +127,15 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $banner = Banner::find($id);
+        if ($banner) {
+            $status = $banner->delete();
+            if ($status) {
+                return redirect()->route('banner.index')->with('success', 'Successfully deleted banner');
+            }
+            return back()->with('error', 'Something went wrong!');
+        }
+        return back()->with('error', 'Data not found');
     }
 
     public function bannerStatus(Request $request)

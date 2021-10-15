@@ -48,15 +48,15 @@
                         <li>
                             <a href="#Banner" class="has-arrow"><i class="icon-picture"></i> <span>Banner Management</span></a>
                             <ul>
-                                <li><a href="{{route('banner.index')}}">All banner</a></li>
-                                <li><a href="{{route('banner.create')}}">Add banner</a></li>
+                                <li><a href="{{route('banner.index')}}">All Banners</a></li>
+                                <li><a href="{{route('banner.create')}}">Add Banners</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#Category" class="has-arrow"><i class="icon-layers"></i> <span>Category Management</span></a>
                             <ul>
-                                <li><a href="app-inbox.html">Inbox</a></li>
-                                <li><a href="app-chat.html">Chat</a></li>
+                                <li><a href="{{route('category.index')}}">All categories</a></li>
+                                <li><a href="{{route('category.create')}}">Add category</a></li>
                             </ul>
                         </li>
                         <li>
