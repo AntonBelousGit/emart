@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -16,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderBy('id', 'DESC')->get();
+        $categories = Category::with('parent')->orderBy('id', 'DESC')->get();
         return view('backend.categories.index', compact('categories'));
     }
 
@@ -27,24 +28,48 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $parent_cats = Category::where('is_parent',1)->orderBy('title', 'ASC')->get();
+
+        return view('backend.categories.create', compact('parent_cats'));
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $validate_data = $this->validate($request, [
+            'title' => 'string|required',
+            'summary' => 'string|nullable',
+            'photo' => 'required',
+            'is_parent' => 'sometimes|in:1',
+            'parent_id' => 'nullable',
+            'status' => 'nullable|in:active,inactive'
+        ]);
+
+        $slug = Str::slug($request->input('title'));
+        $slug_count = Category::where('slug', $slug)->count();
+        if ($slug_count > 0) {
+            $slug = time() . '_' . $slug;
+        }
+        $validate_data['slug'] = $slug;
+        $category = Category::create($validate_data);
+
+        if ($category) {
+            return redirect()->route('category.index')->with('success', 'Successfully created category');
+        } else {
+            return back()->with('error', 'Something went wrong!');
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -55,7 +80,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -66,7 +91,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @param int $id
      * @return \Illuminate\Http\Response
      */

@@ -65,7 +65,7 @@
                                             <td><img src="{{$item->photo}}" alt="banner image"
                                                      class="banner-table-image"></td>
                                             <td>{{$item->is_parent === 1 ? 'Parent': 'Child'}}</td>
-                                            <td>{{$item->parent_id}}</td>
+                                            <td>{{$item->parent->title ?? ''}}</td>
                                             <td>
                                                 <input type="checkbox" data-toggle="toggle" name="toogle"
                                                        value="{{$item->id}}" data-on="active" data-off="inactive"
