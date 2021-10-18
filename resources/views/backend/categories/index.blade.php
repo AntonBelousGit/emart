@@ -30,7 +30,7 @@
 
                     <div class="card">
                         <div class="header">
-                            <span>Total count: {{\App\Models\Category::count()}}</span>
+                            <span>Total count: {{$categories_count}}</span>
                         </div>
                         <div class="body">
                             <div class="table-responsive">

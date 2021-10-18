@@ -16,9 +16,9 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   $categories_count = Category::count();
         $categories = Category::with('parent')->orderBy('id', 'DESC')->get();
-        return view('backend.categories.index', compact('categories'));
+        return view('backend.categories.index', compact('categories','categories_count'));
     }
 
     /**
@@ -46,7 +46,6 @@ class CategoryController extends Controller
             'title' => 'string|required',
             'summary' => 'string|nullable',
             'photo' => 'required',
-            'is_parent' => 'sometimes|in:1',
             'parent_id' => 'nullable',
             'status' => 'nullable|in:active,inactive'
         ]);
@@ -57,8 +56,10 @@ class CategoryController extends Controller
             $slug = time() . '_' . $slug;
         }
         $validate_data['slug'] = $slug;
+        if (!isset($request->is_parent)) {
+            $validate_data['is_parent'] = 0;
+        }
         $category = Category::create($validate_data);
-
         if ($category) {
             return redirect()->route('category.index')->with('success', 'Successfully created category');
         } else {

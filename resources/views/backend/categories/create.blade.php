@@ -130,9 +130,11 @@
             let is_checked = $('#is_parent').prop('checked');
             if (is_checked) {
                 $('#parent_category').addClass('d-none');
-                $('#parent_category').val('')
+                $('#is_parent').attr("checked",true).val(1);
+
             } else {
                 $('#parent_category').removeClass('d-none');
+                $('#is_parent').removeAttr('checked').val(0);
             }
 
         })
