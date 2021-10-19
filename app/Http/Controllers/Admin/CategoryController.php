@@ -16,9 +16,10 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   $categories_count = Category::count();
+    {
+        $categories_count = Category::count();
         $categories = Category::with('parent')->orderBy('id', 'DESC')->get();
-        return view('backend.categories.index', compact('categories','categories_count'));
+        return view('backend.categories.index', compact('categories', 'categories_count'));
     }
 
     /**
@@ -28,7 +29,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $parent_cats = Category::where('is_parent',1)->orderBy('title', 'ASC')->get();
+        $parent_cats = Category::where('is_parent', 1)->orderBy('title', 'ASC')->get();
 
         return view('backend.categories.create', compact('parent_cats'));
 
@@ -46,7 +47,7 @@ class CategoryController extends Controller
             'title' => 'string|required',
             'summary' => 'string|nullable',
             'photo' => 'required',
-            'parent_id' => 'nullable',
+            'parent_id' => 'nullable|exists:categories,id',
             'status' => 'nullable|in:active,inactive'
         ]);
 
@@ -86,7 +87,13 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::find($id);
+        $parent_cats = Category::where('is_parent', 1)->orderBy('title', 'ASC')->get();
+        if ($category) {
+            return view('backend.categories.edit', compact('category', 'parent_cats'));
+        } else {
+            return back()->with('error', 'Category not found');
+        }
     }
 
     /**
@@ -98,7 +105,41 @@ class CategoryController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        //
+//        dd($request);
+        $category = Category::find($id);
+        if ($category) {
+            $validate_data = $this->validate($request, [
+                'title' => 'string|required',
+                'summary' => 'string|nullable',
+                'photo' => 'required',
+                'parent_id' => 'nullable|exists:categories,id',
+                'status' => 'nullable|in:active,inactive',
+                'is_parent' => 'sometimes|in:1'
+            ]);
+
+//            $slug = Str::slug($request->input('title'));
+//            $slug_count = Category::where('slug', $slug)->count();
+//            if ($slug_count > 0) {
+//                $slug = time() . '_' . $slug;
+//            }
+//            $validate_data['slug'] = $slug;
+
+            if (!isset($request->is_parent)) {
+                $validate_data['is_parent'] = 0;
+            } else {
+                $validate_data['parent_id'] = null;
+            }
+
+//            dd($validate_data);
+            $category = $category->fill($validate_data)->save();
+            if ($category) {
+                return redirect()->route('category.index')->with('success', 'Successfully updated category');
+            } else {
+                return back()->with('error', 'Something went wrong!');
+            }
+        } else {
+            return back()->with('error', 'Category not found');
+        }
     }
 
     /**
@@ -110,9 +151,13 @@ class CategoryController extends Controller
     public function destroy(int $id)
     {
         $category = Category::find($id);
+        $child_cat_id = Category::where('parent_id',$id)->pluck('id');
         if ($category) {
             $status = $category->delete();
             if ($status) {
+                if (count($child_cat_id)>0) {
+                    Category::shiftChild($child_cat_id);
+                }
                 return redirect()->route('category.index')->with('success', 'Successfully deleted category');
             }
             return back()->with('error', 'Something went wrong!');

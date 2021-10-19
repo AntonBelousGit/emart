@@ -15,4 +15,8 @@ class Category extends Model
         return $this->belongsTo(Category::class, 'parent_id');
     }
 
+    public static function shiftChild($cat_id)
+    {
+        return Category::whereIn('id',$cat_id)->update(['is_parent' => 1]);
+    }
 }
