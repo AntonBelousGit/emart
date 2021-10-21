@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BannerController;
@@ -19,7 +20,7 @@ use App\Http\Controllers\Admin\BannerController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/clear', function() {
+Route::get('/clear', function () {
 
     Artisan::call('view:clear');
     Artisan::call('cache:clear');
@@ -41,11 +42,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 // Banner Section
 
     Route::resource('banner', BannerController::class);
-    Route::post('banner_status',[BannerController::class,'bannerStatus'])->name('banner.status');
+    Route::post('banner_status', [BannerController::class, 'bannerStatus'])->name('banner.status');
 
 // Category Section
 
-    Route::resource('category',CategoryController::class);
-    Route::post('category_status',[CategoryController::class,'categoryStatus'])->name('category.status');
+    Route::resource('category', CategoryController::class);
+    Route::post('category_status', [CategoryController::class, 'categoryStatus'])->name('category.status');
+
+// Brand  Section
+
+    Route::resource('brand', BrandController::class);
+    Route::post('brand_status', [BrandController::class, 'brandStatus'])->name('brand.status');
 
 });
