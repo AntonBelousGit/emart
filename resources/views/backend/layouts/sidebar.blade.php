@@ -69,8 +69,8 @@
                         <li>
                             <a href="#Products" class="has-arrow"><i class="icon-briefcase"></i> <span>Products Management</span></a>
                             <ul>
-                                <li><a href="app-inbox.html">Inbox</a></li>
-                                <li><a href="app-chat.html">Chat</a></li>
+                                <li><a href="{{route('product.index')}}">All Product</a></li>
+                                <li><a href="{{route('product.create')}}">Add Product</a></li>
                             </ul>
                         </li>
                         <li>

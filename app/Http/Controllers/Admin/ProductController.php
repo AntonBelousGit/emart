@@ -16,8 +16,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('id', 'DESC')->get();
-        return view('backend.products.index', compact('products'));
+        $products_query = Product::query();
+        $products_count = $products_query->count();
+        $products = $products_query->orderBy('id', 'DESC')->get();
+        return view('backend.products.index', compact('products','products_count'));
     }
 
     public function productStatus(Request $request)

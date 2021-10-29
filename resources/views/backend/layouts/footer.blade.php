@@ -14,6 +14,11 @@
 @yield('script')
 
 <script>
+    $(".btn-toggle-offcanvas").on("click", function () {
+        $("body").toggleClass("offcanvas-active")
+    }), $("#main-content").on("click", function () {
+        $("body").removeClass("offcanvas-active")
+    })
     setTimeout(function () {
         $('#alert').slideUp();
     },5000);

@@ -12,15 +12,15 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i
-                                    class="fa fa-arrow-left"></i></a>Banners</h2>
+                                    class="fa fa-arrow-left"></i></a>Products</h2>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{route('admin')}}"><i class="icon-home"></i></a></li>
-                            <li class="breadcrumb-item active">Banners</li>
+                            <li class="breadcrumb-item active">Products</li>
                         </ul>
                     </div>
                     <div class="col-lg-6 col-md-4 col-sm-12 text-right  btn-align-midl">
                         <div class="inlineblock text-center m-r-15 m-l-15  btn-align-midl">
-                               <a href="{{route('banner.create')}}" class="btn btn-round btn-primary"><i class="icon-plus"></i> Create Banner</a>
+                               <a href="{{route('product.create')}}" class="btn btn-round btn-primary"><i class="icon-plus"></i> Create Product</a>
                         </div>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
 
                     <div class="card">
                         <div class="header">
-                            <span>Total count: {{\App\Models\Banner::count()}}</span>
+                            <span>Total count: {{$products_count}}</span>
                         </div>
                         <div class="body">
                             <div class="table-responsive">
@@ -43,8 +43,10 @@
                                     <tr>
                                         <th>№</th>
                                         <th>Title</th>
-                                        <th>Description</th>
                                         <th>Photo</th>
+                                        <th>Price</th>
+                                        <th>Discount</th>
+                                        <th>Size</th>
                                         <th>Condition</th>
                                         <th>Status</th>
                                         <th>Actions</th>
@@ -54,46 +56,53 @@
                                     <tr>
                                         <th>№</th>
                                         <th>Title</th>
-                                        <th>Description</th>
                                         <th>Photo</th>
+                                        <th>Price</th>
+                                        <th>Discount</th>
+                                        <th>Size</th>
                                         <th>Condition</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                     </tfoot>
                                     <tbody>
-                                    @foreach($banners as $banner)
+                                    @foreach($products as $product)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$banner->title}}</td>
-                                            <td>{!! html_entity_decode($banner->description) !!}</td>
-                                            <td><img src="{{$banner->photo}}" alt="banner image"
-                                                     class="banner-table-image"></td>
+                                            <td>{{$product->title}}</td>
+
+                                            <td><img src="{{$product->photo}}" alt="product image"
+                                                     class="product-table-image"></td>
+                                            <td>${{number_format($product->price,2)}}</td>
+                                            <td>{{$product->discount}}%</td>
+                                            <td>{{$product->size}}</td>
                                             <td>
-                                                @if ($banner->condition === 'banner')
-                                                    <span class="badge badge-success">{{$banner->condition}}</span>
+                                                @if ($product->condition === 'new')
+                                                    <span class="badge badge-success">{{$product->condition}}</span>
+                                                @elseif($product->condition === 'popular')
+                                                    <span class="badge badge-primary">{{$product->condition}}</span>
                                                 @else
-                                                    <span class="badge badge-warning">{{$banner->condition}}</span>
+                                                    <span class="badge badge-warning">{{$product->condition}}</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 <input type="checkbox" data-toggle="toggle" name="toogle"
-                                                       value="{{$banner->id}}" data-on="active" data-off="inactive"
-                                                       {{ $banner->status === 'active' ? 'checked':'' }}
+                                                       value="{{$product->id}}" data-on="active" data-off="inactive"
+                                                       {{ $product->status === 'active' ? 'checked':'' }}
                                                        data-size="small" data-onstyle="success" data-offstyle="danger"
-                                                       class="banner-switcher" onchange="bannerStatus(this)"
+                                                       class="banner-switcher" onchange="productStatus(this)"
                                                 >
                                             </td>
                                             <td>
-                                                <a href="{{route('banner.edit',$banner->id)}}" data-toggle="tooltip"
+                                                <a href="{{route('product.edit',$product->id)}}" data-toggle="tooltip"
                                                    class="btn btn-sm btn-outline-primary float-left" title="edit"
                                                    data-placement="bottom">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                <form class="float-left ml-1" action="{{route('banner.destroy',$banner->id)}}" method="post">
+                                                <form class="float-left ml-1" action="{{route('product.destroy',$product->id)}}" method="post">
                                                     @csrf
                                                     @method("DELETE")
-                                                    <a  data-toggle="tooltip" title="delete" data-id="{{$banner->id}}" class="dltBtn btn btn-sm btn-outline-danger" data-placement="bottom" data-original-title="delete">
+                                                    <a  data-toggle="tooltip" title="delete" data-id="{{$product->id}}" class="dltBtn btn btn-sm btn-outline-danger" data-placement="bottom" data-original-title="delete">
                                                         <i class="fa fa-remove"></i>
                                                     </a>
                                                 </form>
@@ -139,7 +148,7 @@
             e.preventDefault();
             swal({
                 title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this Banner",
+                text: "Once deleted, you will not be able to recover this Product",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -147,22 +156,22 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         form.submit();
-                        swal("Poof! Your Banner has been deleted!", {
+                        swal("Poof! Your Product has been deleted!", {
                             icon: "success",
                         });
                     } else {
-                        swal("Your Banner is safe!");
+                        swal("Your Product is safe!");
                     }
                 });
 
         });
 
-        function bannerStatus(el) {
+        function productStatus(el) {
             var mode = $(el).prop('checked');
             var id = $(el).val();
 
             $.ajax({
-                url: "{{route('banner.status')}}",
+                url: "{{route('product.status')}}",
                 type: "POST",
                 data: {
                     _token: '{{csrf_token()}}',

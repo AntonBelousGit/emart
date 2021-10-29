@@ -58,6 +58,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 // Product  Section
 
     Route::resource('product', ProductController::class);
-    Route::post('brand_status', [ProductController::class, 'productStatus'])->name('product.status');
+    Route::post('product_status', [ProductController::class, 'productStatus'])->name('product.status');
 
 });
