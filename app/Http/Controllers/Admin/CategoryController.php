@@ -113,7 +113,7 @@ class CategoryController extends Controller
                 'summary' => 'string|nullable',
                 'photo' => 'required',
                 'parent_id' => 'nullable|exists:categories,id',
-                'status' => 'nullable|in:active,inactive',
+                'status' => 'required|in:active,inactive',
                 'is_parent' => 'sometimes|in:1'
             ]);
 
@@ -151,11 +151,11 @@ class CategoryController extends Controller
     public function destroy(int $id)
     {
         $category = Category::find($id);
-        $child_cat_id = Category::where('parent_id',$id)->pluck('id');
+        $child_cat_id = Category::where('parent_id', $id)->pluck('id');
         if ($category) {
             $status = $category->delete();
             if ($status) {
-                if (count($child_cat_id)>0) {
+                if (count($child_cat_id) > 0) {
                     Category::shiftChild($child_cat_id);
                 }
                 return redirect()->route('category.index')->with('success', 'Successfully deleted category');
@@ -174,5 +174,18 @@ class CategoryController extends Controller
         }
 
         return response()->json(['msg' => 'Successfully updated status', 'status' => true]);
+    }
+
+    public function getChildByParentID(Request $request, $id)
+    {
+        $category = Category::find($request->id);
+        if ($category) {
+            $child_id = Category::getChildByParentID($request->id);
+            if (count($child_id) <= 0) {
+                return response()->json(['status' => false, 'data' => null, 'msg' => '']);
+            }
+            return response()->json(['status' => true, 'data' => $child_id, 'msg' => '']);
+        }
+        return response()->json(['status' => false, 'data' => null, 'msg' => 'Category not found']);
     }
 }

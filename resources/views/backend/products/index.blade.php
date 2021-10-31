@@ -20,7 +20,8 @@
                     </div>
                     <div class="col-lg-6 col-md-4 col-sm-12 text-right  btn-align-midl">
                         <div class="inlineblock text-center m-r-15 m-l-15  btn-align-midl">
-                               <a href="{{route('product.create')}}" class="btn btn-round btn-primary"><i class="icon-plus"></i> Create Product</a>
+                            <a href="{{route('product.create')}}" class="btn btn-round btn-primary"><i
+                                    class="icon-plus"></i> Create Product</a>
                         </div>
                     </div>
                 </div>
@@ -94,19 +95,48 @@
                                                 >
                                             </td>
                                             <td>
+                                                <a href="javascript:void(0);"
+                                                   class="btn btn-sm btn-outline-secondary float-left" title="view"
+                                                   data-placement="bottom" data-toggle="modal" data-target="#productID{{$product->id}}">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
                                                 <a href="{{route('product.edit',$product->id)}}" data-toggle="tooltip"
                                                    class="btn btn-sm btn-outline-primary float-left" title="edit"
                                                    data-placement="bottom">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                <form class="float-left ml-1" action="{{route('product.destroy',$product->id)}}" method="post">
+                                                <form class="float-left ml-1"
+                                                      action="{{route('product.destroy',$product->id)}}" method="post">
                                                     @csrf
                                                     @method("DELETE")
-                                                    <a  data-toggle="tooltip" title="delete" data-id="{{$product->id}}" class="dltBtn btn btn-sm btn-outline-danger" data-placement="bottom" data-original-title="delete">
+                                                    <a data-toggle="tooltip" title="delete" data-id="{{$product->id}}"
+                                                       class="dltBtn btn btn-sm btn-outline-danger"
+                                                       data-placement="bottom" data-original-title="delete">
                                                         <i class="fa fa-remove"></i>
                                                     </a>
                                                 </form>
                                             </td>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="productID{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            ...
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -143,8 +173,8 @@
             }
         });
         $('.dltBtn').click(function (e) {
-            var form=$(this).closest('form');
-            var dataID=$(this).data('id');
+            var form = $(this).closest('form');
+            var dataID = $(this).data('id');
             e.preventDefault();
             swal({
                 title: "Are you sure?",

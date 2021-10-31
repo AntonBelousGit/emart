@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','slug','summary','is_parent','parent_id','status','photo'];
+
+    protected $fillable = ['title', 'slug', 'summary', 'is_parent', 'parent_id', 'status', 'photo'];
 
     public function parent()
     {
@@ -17,6 +18,11 @@ class Category extends Model
 
     public static function shiftChild($cat_id)
     {
-        return Category::whereIn('id',$cat_id)->update(['is_parent' => 1]);
+        return Category::whereIn('id', $cat_id)->update(['is_parent' => 1]);
+    }
+
+    public static function getChildByParentID($id)
+    {
+        return Category::where('parent_id', $id)->pluck('title', 'id');
     }
 }

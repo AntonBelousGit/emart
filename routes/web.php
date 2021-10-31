@@ -50,6 +50,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('category', CategoryController::class);
     Route::post('category_status', [CategoryController::class, 'categoryStatus'])->name('category.status');
 
+    Route::post('category/{id}/child', [CategoryController::class, 'getChildByParentID']);
 // Brand  Section
 
     Route::resource('brand', BrandController::class);
@@ -59,5 +60,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::resource('product', ProductController::class);
     Route::post('product_status', [ProductController::class, 'productStatus'])->name('product.status');
+
 
 });
