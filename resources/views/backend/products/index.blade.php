@@ -97,7 +97,9 @@
                                             <td>
                                                 <a href="javascript:void(0);"
                                                    class="btn btn-sm btn-outline-secondary float-left" title="view"
-                                                   data-placement="bottom" data-toggle="modal" data-target="#productID{{$product->id}}">
+                                                   data-placement="bottom" data-toggle="modal"
+                                                   data-target="#productID{{$product->id}}" data-id="{{$product->id}}"
+                                                   onclick="productView(this)">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                                 <a href="{{route('product.edit',$product->id)}}" data-toggle="tooltip"
@@ -117,21 +119,68 @@
                                                 </form>
                                             </td>
                                             <!-- Modal -->
-                                            <div class="modal fade" id="productID{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal fade" id="productID{{$product->id}}" tabindex="-1"
+                                                 role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                 aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <h5 class="modal-title"
+                                                                id="exampleModalLongTitle">{{\Illuminate\Support\Str::upper($product->title)}}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            ...
+                                                            <strong>Summary:</strong>
+                                                            <p>{!! html_entity_decode($product->summary) !!}</p>
+                                                            <strong>Description:</strong>
+                                                            <p>{!! html_entity_decode($product->description) !!}</p>
+
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <strong>Price:</strong>
+                                                                    <p>${{number_format($product->price,2)}}</p>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <strong>Offer Price:</strong>
+                                                                    <p>${{number_format($product->offer_price,2)}}</p>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <strong>Stock:</strong>
+                                                                    <p>{{$product->stock}}</p>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <strong>Discount:</strong>
+                                                                    <p>{{$product->discount}}</p>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="response-ajax">
+
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <strong>Conditions:</strong>
+                                                                    <p class="badge badge-primary">{{$product->condition}}</p>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <strong>Size:</strong>
+                                                                    <p class="badge badge-success">{{$product->size}}</p>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <strong>Status:</strong>
+                                                                    <p class="badge badge-warning">{{$product->status}}</p>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Close
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -214,6 +263,27 @@
                     } else {
                         alert('Please try again!');
                     }
+                }
+            })
+        }
+
+        function productView(el) {
+            var id = $(el).data('id');
+            var target = $(el).data('target');
+
+            console.log(id, target);
+
+            $.ajax({
+                url: "{{route('product.view')}}",
+                type: "POST",
+                data: {
+                    _token: '{{csrf_token()}}',
+                    id: id,
+                },
+                success: function (response) {
+                    let html = '<div class="row"><div class="col-md-6"><strong>Category:</strong><p>' + response.category + '</p></div><div class="col-md-6"><strong>Child Category:</strong><p>' + response.childCategory + '</p></div></div><div class="row"><div class="col-md-6"><strong>Brand:</strong><p>' + response.brand + '</p></div><div class="col-md-6"><strong>Vendor:</strong><p>' + response.vendor + '</p></div></div>';
+
+                    $(target + ' .response-ajax').html(html);
                 }
             })
         }

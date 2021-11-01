@@ -22,7 +22,8 @@ class ProductController extends Controller
     {
         $products_query = Product::query();
         $products_count = $products_query->count();
-        $products = $products_query->orderBy('id', 'DESC')->get();
+//        $products = $products_query->orderBy('id', 'DESC')->get();
+        $products = DB::table('products')->orderBy('id', 'DESC')->get();;
         return view('backend.products.index', compact('products', 'products_count'));
     }
 
@@ -35,6 +36,18 @@ class ProductController extends Controller
         }
 
         return response()->json(['msg' => 'Successfully updated status', 'status' => true]);
+    }
+
+    public function productView(Request $request){
+
+        $product = Product::with('category','childCategory','brand','vendor')->find($request->id);
+
+        return response()->json([
+            'category' => $product->category->title,
+            'childCategory' => $product->childCategory->title,
+            'brand' => $product->brand->title,
+            'vendor' => $product->vendor->full_name,
+        ]);
     }
 
     /**
@@ -109,6 +122,8 @@ class ProductController extends Controller
             return back()->with('error', 'Product not found');
         }
     }
+
+
 
     /**
      * Show the form for editing the specified resource.

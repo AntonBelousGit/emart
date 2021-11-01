@@ -43,8 +43,8 @@
                                             <label for="">Summary <span class="text-danger">*</span></label>
                                             <textarea id="summary" type="text" class="form-control"
                                                       placeholder="Some text..." name="summary">
-                {{old('summary')}}
-                </textarea>
+                                                    {{old('summary')}}
+                                            </textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12">
@@ -73,7 +73,7 @@
                                     <div class="col-lg-12 col-md-12">
                                         <div class="form-group">
                                             <label for="">Discount</label>
-                                            <input type="number" step="any" class="form-control" placeholder="Discount"
+                                            <input type="number" step="any" min="0" max="100" class="form-control" placeholder="Discount"
                                                    name="discount"
                                                    value="{{old('discount')}}">
                                         </div>
@@ -123,7 +123,7 @@
                                     <div class="col-lg-12 col-sm-12 d-none" id="child_cat_div">
                                         <label for="status">Child Category</label>
                                         <select id="child_cat_id" name="child_cat_id" class="form-control show-tick"
-                                                >
+                                        >
                                         </select>
                                     </div>
                                     <div class="col-lg-12 col-sm-12">

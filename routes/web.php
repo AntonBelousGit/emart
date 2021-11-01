@@ -60,6 +60,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::resource('product', ProductController::class);
     Route::post('product_status', [ProductController::class, 'productStatus'])->name('product.status');
+    Route::post('product_view', [ProductController::class, 'productView'])->name('product.view');
 
 
 });
