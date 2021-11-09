@@ -42,12 +42,9 @@ class ProductController extends Controller
 
         $product = Product::with('category','childCategory','brand','vendor')->find($request->id);
 
-        return response()->json([
-            'category' => $product->category->title,
-            'childCategory' => $product->childCategory->title,
-            'brand' => $product->brand->title,
-            'vendor' => $product->vendor->full_name,
-        ]);
+        $returnHTML = view('backend.products.layouts.modal-body',['product'=> $product])->render();
+
+        return response()->json( ['html'=>$returnHTML]);
     }
 
     /**
