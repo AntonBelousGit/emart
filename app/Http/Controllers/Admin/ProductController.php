@@ -130,7 +130,15 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+        $categories = Category::where('is_parent', 1)->get();
+        $vendors = User::where('role', 'vendor')->get();
+        $brands = Brand::all();
+        if ($product) {
+            return view('backend.products.edit', compact('product','categories','brands','vendors'));
+        } else {
+            return back()->with('error', 'Category not found');
+        }
     }
 
     /**
@@ -142,7 +150,44 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        if ($product) {
+            $validate_data = $this->validate($request, [
+                'title' => 'string|required',
+                'summary' => 'string|required',
+                'description' => 'string|nullable',
+                'stock' => 'nullable|numeric',
+                'price' => 'nullable|numeric',
+                'discount' => 'nullable|numeric',
+                'photo' => 'required',
+                'cat_id' => 'required|exists:categories,id',
+                'brand_id' => 'required|exists:brands,id',
+                'vendor_id' => 'required|exists:users,id',
+                'child_cat_id' => 'nullable|exists:categories,id',
+                'condition' => 'required',
+                'size' => 'nullable',
+                'status' => 'nullable|in:active,inactive'
+            ]);
+
+//            $slug = Str::slug($request->input('title'));
+//            $slug_count = Category::where('slug', $slug)->count();
+//            if ($slug_count > 0) {
+//                $slug = time() . '_' . $slug;
+//            }
+//            $validate_data['slug'] = $slug;
+
+
+            $validate_data['offer_price'] = ($request->price - (($request->price * $request->discount) / 100));
+
+            $product = $product->fill($validate_data)->save();
+            if ($product) {
+                return redirect()->route('product.index')->with('success', 'Successfully updated product');
+            } else {
+                return back()->with('error', 'Something went wrong!');
+            }
+        } else {
+            return back()->with('error', 'Product not found');
+        }
     }
 
     /**
@@ -153,6 +198,14 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        if ($product) {
+            $status = $product->delete();
+            if ($status) {
+                return redirect()->route('product.index')->with('success', 'Successfully deleted product');
+            }
+            return back()->with('error', 'Something went wrong!');
+        }
+        return back()->with('error', 'Data not found');
     }
 }

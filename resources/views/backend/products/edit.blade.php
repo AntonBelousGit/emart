@@ -11,12 +11,12 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-8 col-sm-12">
                         <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i
-                                    class="fa fa-arrow-left"></i></a>Add Banners</h2>
+                                    class="fa fa-arrow-left"></i></a>Add Products</h2>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{route('admin')}}"><i
                                         class="icon-home"></i></a></li>
-                            <li class="breadcrumb-item">Banners</li>
-                            <li class="breadcrumb-item active">Edit Banners</li>
+                            <li class="breadcrumb-item">Products</li>
+                            <li class="breadcrumb-item active">Add Product</li>
                         </ul>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="body">
-                            <form action="{{route('banner.update',$banner->id)}}" method="POST">
+                            <form action="{{route('product.update',$product->id)}}" method="POST">
                                 @csrf
                                 @method('patch')
                                 <div class="row clearfix">
@@ -36,10 +36,50 @@
                                         <div class="form-group">
                                             <label for="">Title <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" placeholder="Title" name="title"
-                                                   value="{{$banner->title}}">
+                                                   value="{{$product->title}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Summary <span class="text-danger">*</span></label>
+                                            <textarea id="summary" type="text" class="form-control"
+                                                      placeholder="Some text..." name="summary">
+                            {{$product->summary}}
+                    </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Description</label>
+                                            <textarea id="summernote"
+                                                      name="description">{{$product->description}}</textarea>
                                         </div>
                                     </div>
 
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Stock <span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" placeholder="Stock" name="stock"
+                                                   value="{{$product->stock}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Price <span class="text-danger">*</span></label>
+                                            <input type="number" step="any" class="form-control" placeholder="Price"
+                                                   name="price"
+                                                   value="{{$product->stock}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Discount</label>
+                                            <input type="number" step="any" min="0" max="100" class="form-control"
+                                                   placeholder="Discount"
+                                                   name="discount"
+                                                   value="{{$product->discount}}">
+                                        </div>
+                                    </div>
                                     {{--                                    <div class="col-lg-12 col-md-12">--}}
                                     {{--                                        <div class="form-group">--}}
                                     {{--                                            <label for="">URL </label>--}}
@@ -50,14 +90,14 @@
                                         <div class="form-group">
                                             <label for="">Photo</label>
                                             <div class="input-group">
-                                                   <span class="input-group-btn">
-                                                     <a id="lfm" data-input="thumbnail" data-preview="holder"
-                                                        class="btn btn-primary">
-                                                       <i class="fa fa-picture-o"></i> Choose
-                                                     </a>
-                                                   </span>
+<span class="input-group-btn">
+ <a id="lfm" data-input="thumbnail" data-preview="holder"
+    class="btn btn-primary">
+   <i class="fa fa-picture-o"></i> Choose
+ </a>
+</span>
                                                 <input id="thumbnail" class="form-control" type="text" name="photo"
-                                                       value="{{$banner->photo}}">
+                                                       value="{{$product->photo}}">
                                             </div>
                                             <div id="holder" style="margin-top:15px;max-height:100px;">
 
@@ -65,33 +105,90 @@
 
                                         </div>
                                     </div>
-
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="form-group">
-                                            <label for="">Description</label>
-                                            <textarea id="summernote"
-                                                      name="description">{{$banner->description}}</textarea>
-                                        </div>
+                                    <div class="col-lg-12 col-sm-12">
+                                        <label for="status">Brands <span class="text-danger">*</span></label>
+                                        <select name="brand_id" class="form-control show-tick" required>
+                                            <option value="">-- Brands --</option>
+                                            @foreach($brands as $brand)
+                                                <option
+                                                    value="{{$brand->id}}" {{$brand->id == $product->brand_id? 'selected' : ''}}>{{$brand->title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-12">
+                                        <label for="status">Category <span class="text-danger">*</span></label>
+                                        <select id="cat_id" name="cat_id" class="form-control show-tick" required>
+                                            <option value="">-- Category --</option>
+                                            @foreach($categories as $category)
+                                                <option
+                                                    value="{{$category->id}}" {{$category->id == $product->cat_id? 'selected' : ''}}>{{$category->title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-12 d-none" id="child_cat_div">
+                                        <label for="status">Child Category</label>
+                                        <select id="child_cat_id" name="child_cat_id" class="form-control show-tick"
+                                        >
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-12">
+                                        <label for="status">Size <span class="text-danger">*</span></label>
+                                        <select name="size" class="form-control show-tick" required>
+                                            <option value="">-- Size --</option>
+                                            <option value="S" {{$product->size === 'S' ? 'selected': ''}}>
+                                                S
+                                            </option>
+                                            <option value="M" {{$product->size === 'M' ? 'selected': ''}}>
+                                                M
+                                            </option>
+                                            <option value="L" {{$product->size === 'L' ? 'selected': ''}}>
+                                                L
+                                            </option>
+                                            <option value="XL" {{$product->size === 'XL' ? 'selected': ''}}>
+                                                XL
+                                            </option>
+                                            <option value="XXL" {{$product->size === 'XXL' ? 'selected': ''}}>
+                                                XXL
+                                            </option>
+                                            <option value="XXXL" {{$product->size === 'XXXL' ? 'selected': ''}}>
+                                                XXXL
+                                            </option>
+                                        </select>
                                     </div>
                                     <div class="col-lg-12 col-sm-12">
                                         <label for="status">Condition <span class="text-danger">*</span></label>
                                         <select name="condition" class="form-control show-tick" required>
-                                            <option value="banner" {{$banner->condition === 'banner' ? 'selected': ''}}>
-                                                Banner
+                                            <option value="new" {{$product->condition === 'new' ? 'selected': ''}}>
+                                                New
                                             </option>
-                                            <option value="promo" {{$banner->condition === 'promo' ? 'selected': ''}}>
-                                                Promo
+                                            <option
+                                                value="popular" {{$product->condition === 'popular' ? 'selected': ''}}>
+                                                Popular
                                             </option>
+                                            <option
+                                                value="winter" {{$product->condition === 'winter' ? 'selected': ''}}>
+                                                Winter
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-12">
+                                        <label for="status">Vendors <span class="text-danger">*</span></label>
+                                        <select name="vendor_id" class="form-control show-tick" required>
+                                            <option value="">-- Vendors --</option>
+                                            @foreach($vendors as $vendor)
+                                                <option
+                                                    value="{{$vendor->id}}" {{$vendor->id == $product->vendor_id? 'selected' : ''}}>{{$vendor->full_name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-lg-12 col-sm-12">
                                         <label for="status">Status <span class="text-danger">*</span></label>
                                         <select name="status" class="form-control show-tick" required>
-                                            <option value="active" {{$banner->status === 'active' ? 'selected': ''}}>
+                                            <option value="active" {{$product->status === 'active' ? 'selected': ''}}>
                                                 Active
                                             </option>
                                             <option
-                                                value="inactive" {{$banner->status === 'inactive' ? 'selected': ''}}>
+                                                value="inactive" {{$product->status === 'inactive' ? 'selected': ''}}>
                                                 Inactive
                                             </option>
                                         </select>
@@ -103,6 +200,7 @@
                                         <button type="submit" class="btn btn-outline-secondary">Cancel</button>
                                     </div>
                                 </div>
+
                             </form>
                         </div>
                     </div>
@@ -112,6 +210,7 @@
 
         </div>
     </div>
+
 @endsection
 
 
@@ -123,5 +222,43 @@
         $(document).ready(function () {
             $('#summernote').summernote();
         });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#summary').summernote();
+        });
+    </script>
+    <script>
+
+        let child_cat_id = {{!is_null($product->child_cat_id)? $product->child_cat_id: 'null'}};
+        $('#cat_id').change(function () {
+            let cat_id = $(this).val();
+            if (cat_id != null) {
+                $.ajax({
+                    url: "/admin/category/" + cat_id + "/child",
+                    type: "POST",
+                    data: {
+                        _token: "{{csrf_token()}}",
+                        cat_id: cat_id,
+                    },
+                    success: function (response) {
+                        let html_option = "<option value=''>--Child Category</option>"
+                        if (response.status) {
+                            $('#child_cat_div').removeClass('d-none');
+                            $.each(response.data, function (id, title) {
+                                html_option += "<option value='" + id + "'"+ (child_cat_id==id?'selected':'') +">" + title + "</ooption>"
+                            })
+                        } else {
+                            $('#child_cat_div').addClass('d-none');
+                        }
+                        $('#child_cat_id').html(html_option);
+                    }
+                })
+            }
+        })
+
+        if (child_cat_id !=null){
+            $('#cat_id').change();
+        }
     </script>
 @endsection
