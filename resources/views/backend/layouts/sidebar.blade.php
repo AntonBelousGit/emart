@@ -130,10 +130,10 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#Comment" class="has-arrow"><i class="icon-user"></i> <span>User Management</span></a>
+                            <a href="#Users" class="has-arrow"><i class="icon-user"></i> <span>User Management</span></a>
                             <ul>
-                                <li><a href="app-inbox.html">Inbox</a></li>
-                                <li><a href="app-chat.html">Chat</a></li>
+                                <li><a href="{{route('user.index')}}">All Users</a></li>
+                                <li><a href="{{route('user.create')}}">Add User</a></li>
                             </ul>
                         </li>
                         <li>
