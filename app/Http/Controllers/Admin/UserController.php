@@ -41,7 +41,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validate_data = $this->validate($request, [
+            'full_name' => 'string|required',
+            'username' => 'string|required',
+            'email' => 'email|required|unique:users,email',
+            'phone' => 'string|nullable',
+            'photo' => 'string|required',
+            'password' => 'required|min:4',
+            'role' => 'nullable|in:admin,vendor,customer',
+            'status' => 'nullable|in:active,inactive'
+        ]);
+
+        return $request->all();
     }
 
     /**
