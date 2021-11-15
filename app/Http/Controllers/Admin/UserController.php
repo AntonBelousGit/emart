@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -47,13 +48,21 @@ class UserController extends Controller
             'username' => 'string|required',
             'email' => 'email|required|unique:users,email',
             'phone' => 'string|nullable',
-            'photo' => 'string|required',
+            'address' => 'string|nullable',
+            'photo' => 'required',
             'password' => 'required|min:4',
             'role' => 'nullable|in:admin,vendor,customer',
             'status' => 'nullable|in:active,inactive'
         ]);
 
-        return $request->all();
+        $validate_data['password']= Hash::make($request->password);
+
+        $category = User::create($validate_data);
+        if ($category) {
+            return redirect()->route('user.index')->with('success', 'Successfully created user');
+        } else {
+            return back()->with('error', 'Something went wrong!');
+        }
     }
 
     /**
@@ -75,7 +84,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        if ($user) {
+            return view('backend.user.edit', compact('user'));
+        } else {
+            return back()->with('error', 'User not found');
+        }
     }
 
     /**
@@ -87,7 +101,29 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        if ($user) {
+            $validate_data = $this->validate($request, [
+                'full_name' => 'string|required',
+                'username' => 'string|required',
+                'email' => 'email|required|exists:users,email',
+                'phone' => 'string|nullable',
+                'address' => 'string|nullable',
+                'photo' => 'required',
+//                'password' => 'required|min:4',
+                'role' => 'nullable|in:admin,vendor,customer',
+                'status' => 'nullable|in:active,inactive'
+            ]);
+
+            $user = $user->fill($validate_data)->save();
+            if ($user) {
+                return redirect()->route('user.index')->with('success', 'Successfully updated user');
+            } else {
+                return back()->with('error', 'Something went wrong!');
+            }
+        } else {
+            return back()->with('error', 'User not found');
+        }
     }
 
     /**
@@ -98,7 +134,15 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        if ($user) {
+            $status = $user->delete();
+            if ($status) {
+                return redirect()->route('user.index')->with('success', 'Successfully deleted user');
+            }
+            return back()->with('error', 'Something went wrong!');
+        }
+        return back()->with('error', 'Data not found');
     }
 
     public function userStatus(Request $request)
