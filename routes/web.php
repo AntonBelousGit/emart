@@ -5,6 +5,9 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Frontend\IndexController;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BannerController;
 
@@ -19,9 +22,6 @@ use App\Http\Controllers\Admin\BannerController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::get('/clear', function () {
 
     Artisan::call('view:clear');
@@ -31,6 +31,13 @@ Route::get('/clear', function () {
     Artisan::call('route:clear');
     return "Cache Clear All";
 });
+
+//Frontend
+
+Route::get('/',[IndexController::class,'index'])->name('index');
+
+
+//Admin section
 
 Auth::routes(['register' => false]);
 
