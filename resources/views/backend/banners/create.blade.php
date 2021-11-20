@@ -38,13 +38,12 @@
                                                    value="{{old('name')}}">
                                         </div>
                                     </div>
-
-                                    {{--                                    <div class="col-lg-12 col-md-12">--}}
-                                    {{--                                        <div class="form-group">--}}
-                                    {{--                                            <label for="">URL </label>--}}
-                                    {{--                                            <input type="text" class="form-control" placeholder="URL" name="slug" value="{{old('slug')}}">--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                    </div>--}}
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="">URL <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" placeholder="URL" name="slug" required value="{{old('slug')}}">
+                                        </div>
+                                    </div>
                                     <div class="col-lg-12 col-md-12">
                                         <div class="form-group">
                                             <label for="">Photo</label>

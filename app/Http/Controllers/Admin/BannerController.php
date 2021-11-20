@@ -41,17 +41,12 @@ class BannerController extends Controller
     {
         $validate_data = $this->validate($request, [
             'title' => 'string|required',
+            'slug' => 'string|required|unique:banners,slug',
             'description' => 'string|nullable',
             'photo' => 'required',
             'condition' => 'nullable|in:banner,promo',
             'status' => 'nullable|in:active,inactive',
         ]);
-        $slug = Str::slug($request->input('title'));
-        $slug_count = Banner::where('slug', $slug)->count();
-        if ($slug_count > 0) {
-            $slug = time() . '_' . $slug;
-        }
-        $validate_data['slug'] = $slug;
 
         $banner = Banner::create($validate_data);
 
@@ -104,6 +99,7 @@ class BannerController extends Controller
         if ($banner) {
             $validate_data = $this->validate($request, [
                 'title' => 'string|required',
+                'slug' => 'string|required|exists:banners,slug',
                 'description' => 'string|nullable',
                 'photo' => 'required',
                 'condition' => 'nullable|in:banner,promo',
