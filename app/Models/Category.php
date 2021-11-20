@@ -25,4 +25,8 @@ class Category extends Model
     {
         return Category::where('parent_id', $id)->pluck('title', 'id');
     }
+
+    public function products(){
+        return $this->hasMany(Product::class,'cat_id','id');
+    }
 }

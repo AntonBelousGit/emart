@@ -36,6 +36,9 @@ Route::get('/clear', function () {
 
 Route::get('/',[IndexController::class,'index'])->name('index');
 
+//Product  category
+
+Route::get('category/{slug}',[IndexController::class,'productCategory'])->name('product.category');
 
 //Admin section
 

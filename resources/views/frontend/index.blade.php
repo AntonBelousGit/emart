@@ -16,7 +16,7 @@
                                 <div class="col-7 col-md-8">
                                     <div class="welcome_slide_text">
                                         <h2 data-animation="fadeInUp" data-delay="300ms">{{$banner->title}}</h2>
-                                        <h4 data-animation="fadeInUp" data-delay="600ms">{!! html_entity_decode($banner->description) !!}}</h4>
+                                        <h4 data-animation="fadeInUp" data-delay="600ms">{!! html_entity_decode($banner->description) !!}</h4>
                                         <a href="{{$banner->slug}}" class="btn btn-primary" data-animation="fadeInUp"
                                            data-delay="1s">Show Now</a>
                                     </div>
@@ -39,42 +39,25 @@
         <!-- Welcome Slides Area -->
 
     @endif
-
-    <!-- Top Catagory Area -->
+    @if (count($categories)>0)
+    <!-- Top Category Area -->
     <div class="top_catagory_area mt-50 clearfix">
         <div class="container">
             <div class="row">
-                <!-- Single Catagory -->
+                @foreach($categories as $category)
                 <div class="col-12 col-md-4">
                     <div class="single_catagory_area mt-50">
-                        <a href="index-1.html#">
-                            <img src="{{asset('frontend/img/bg-img/c1.jpg')}}" alt="">
+                        <a href="{{route('product.category',$category->slug)}}">
+                            <img src="{{$category->photo}}" alt="{{$category->title}}">
                         </a>
                     </div>
                 </div>
-
-                <!-- Single Catagory -->
-                <div class="col-12 col-md-4">
-                    <div class="single_catagory_area mt-50">
-                        <a href="index-1.html#">
-                            <img src="{{asset('frontend/img/bg-img/c2.jpg')}}" alt="">
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Single Catagory -->
-                <div class="col-12 col-md-4">
-                    <div class="single_catagory_area mt-50">
-                        <a href="index-1.html#">
-                            <img src="{{asset('frontend/img/bg-img/c3.jpg')}}" alt="">
-                        </a>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
-    <!-- Top Catagory Area -->
-
+    <!-- Top Category Area -->
+    @endif
     <!-- Quick View Modal Area -->
     <div class="modal fade" id="quickview" tabindex="-1" role="dialog" aria-labelledby="quickview" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
