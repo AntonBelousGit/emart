@@ -40,6 +40,10 @@ Route::get('/',[IndexController::class,'index'])->name('index');
 
 Route::get('category/{slug}',[IndexController::class,'productCategory'])->name('product.category');
 
+//Product detail
+Route::get('product/{slug}',[IndexController::class,'productDetail'])->name('product.detail');
+
+
 //Admin section
 
 Auth::routes(['register' => false]);

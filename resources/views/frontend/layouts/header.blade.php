@@ -6,7 +6,7 @@
                 <div class="col-6">
                     <div class="welcome-note">
                         <span class="popover--text" data-toggle="popover" data-content="Welcome to Bigshop ecommerce template."><i class="icofont-info-square"></i></span>
-                        <span class="text">Welcome to Bigshop ecommerce template.</span>
+                        <span class="text">Welcome to Bigshop ecommerce website.</span>
                     </div>
                 </div>
                 <div class="col-6">
@@ -14,12 +14,12 @@
                         <!-- Language Dropdown -->
                         <div class="language-dropdown">
                             <div class="dropdown">
-                                <a class="btn btn-sm dropdown-toggle" href="index-1.html#" role="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="btn btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     English
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                                    <a class="dropdown-item" href="index-1.html#">Bangla</a>
-                                    <a class="dropdown-item" href="index-1.html#">Arabic</a>
+                                    <a class="dropdown-item" href="#">Bangla</a>
+                                    <a class="dropdown-item" href="#">Arabic</a>
                                 </div>
                             </div>
                         </div>
@@ -27,12 +27,12 @@
                         <!-- Currency Dropdown -->
                         <div class="currency-dropdown">
                             <div class="dropdown">
-                                <a class="btn btn-sm dropdown-toggle" href="index-1.html#" role="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="btn btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     $ USD
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
-                                    <a class="dropdown-item" href="index-1.html#">৳ BDT</a>
-                                    <a class="dropdown-item" href="index-1.html#">€ Euro</a>
+                                    <a class="dropdown-item" href="#">৳ BDT</a>
+                                    <a class="dropdown-item" href="#">€ Euro</a>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                 <nav class="classy-navbar" id="bigshopNav">
 
                     <!-- Nav Brand -->
-                    <a href="index.html" class="nav-brand"><img src="{{asset('frontend/img/core-img/logo.png')}}" alt="logo"></a>
+                    <a href="{{route('index')}}" class="nav-brand"><img src="{{asset('frontend/img/core-img/logo.png')}}" alt="logo"></a>
 
                     <!-- Toggler -->
                     <div class="classy-navbar-toggler">
@@ -66,16 +66,16 @@
                         <!-- Nav -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="index-1.html#">Home</a>
+                                <li><a href="#">Home</a>
                                     <ul class="dropdown">
-                                        <li><a href="index-1.html">Home - 1</a></li>
+                                        <li><a href="">Home - 1</a></li>
                                         <li><a href="index-2.html">Home - 2</a></li>
                                         <li><a href="index-3.html">Home - 3</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="index-1.html#">Shop</a>
+                                <li><a href="#">Shop</a>
                                     <ul class="dropdown">
-                                        <li><a href="index-1.html#">Shop Grid</a>
+                                        <li><a href="#">Shop Grid</a>
                                             <ul class="dropdown">
                                                 <li><a href="shop-grid-left-sidebar.html">Shop Grid Left Sidebar</a></li>
                                                 <li><a href="shop-grid-right-sidebar.html">Shop Grid Right Sidebar</a></li>
@@ -83,7 +83,7 @@
                                                 <li><a href="shop-grid-no-sidebar.html">Shop Grid No Sidebar</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="index-1.html#">Shop List</a>
+                                        <li><a href="#">Shop List</a>
                                             <ul class="dropdown">
                                                 <li><a href="shop-list-left-sidebar.html">Shop List Left Sidebar</a></li>
                                                 <li><a href="shop-list-right-sidebar.html">Shop List Right Sidebar</a></li>
@@ -93,7 +93,7 @@
                                         </li>
                                         <li><a href="product-details.html">Single Product</a></li>
                                         <li><a href="cart.html">Cart</a></li>
-                                        <li><a href="index-1.html#">Checkout</a>
+                                        <li><a href="#">Checkout</a>
                                             <ul class="dropdown">
                                                 <li><a href="checkout-1.html">Login</a></li>
                                                 <li><a href="checkout-2.html">Billing</a></li>
@@ -103,7 +103,7 @@
                                                 <li><a href="checkout-complate.html">Complate</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="index-1.html#">Account Page</a>
+                                        <li><a href="#">Account Page</a>
                                             <ul class="dropdown">
                                                 <li><a href="my-account.html">- Dashboard</a></li>
                                                 <li><a href="order-list.html">- Orders</a></li>
@@ -116,7 +116,7 @@
                                         <li><a href="compare.html">Compare</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="index-1.html#">Pages</a>
+                                <li><a href="#">Pages</a>
                                     <div class="megamenu">
                                         <ul class="single-mega cn-col-4">
                                             <li><a href="about-us.html">- About Us</a></li>
@@ -146,7 +146,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li><a href="index-1.html#">Blog</a>
+                                <li><a href="#">Blog</a>
                                     <ul class="dropdown">
                                         <li><a href="blog-with-left-sidebar.html">Blog Left Sidebar</a></li>
                                         <li><a href="blog-with-right-sidebar.html">Blog Right Sidebar</a></li>
@@ -154,7 +154,7 @@
                                         <li><a href="single-blog.html">Single Blog</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="index-1.html#">Elements</a>
+                                <li><a href="#">Elements</a>
                                     <div class="megamenu">
                                         <ul class="single-mega cn-col-4">
                                             <li><a href="accordian.html">- Accordions</a></li>
@@ -213,11 +213,11 @@
                                 <ul class="cart-list">
                                     <li>
                                         <div class="cart-item-desc">
-                                            <a href="index-1.html#" class="image">
+                                            <a href="#" class="image">
                                                 <img src="{{asset('frontend/img/product-img/top-1.png')}}" class="cart-thumb" alt="">
                                             </a>
                                             <div>
-                                                <a href="index-1.html#">Kid's Fashion</a>
+                                                <a href="#">Kid's Fashion</a>
                                                 <p>1 x - <span class="price">$32.99</span></p>
                                             </div>
                                         </div>
@@ -225,11 +225,11 @@
                                     </li>
                                     <li>
                                         <div class="cart-item-desc">
-                                            <a href="index-1.html#" class="image">
+                                            <a href="#" class="image">
                                                 <img src="{{asset('frontend/img/product-img/best-4.png')}}" class="cart-thumb" alt="">
                                             </a>
                                             <div>
-                                                <a href="index-1.html#">Headphone</a>
+                                                <a href="#">Headphone</a>
                                                 <p>2x - <span class="price">$49.99</span></p>
                                             </div>
                                         </div>
