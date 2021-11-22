@@ -30,7 +30,7 @@
                             @csrf
                             <div class="form-group">
                                 <input type="email" class="form-control" name="email" id="username"
-                                       placeholder="Email or Username" value="{{old('username')}}">
+                                       placeholder="Email or Username">
                                 @error('email')
                                     <p class="text-danger">{{$message}}</p>
                                 @enderror
@@ -66,22 +66,37 @@
                             @csrf
                             <div class="form-group">
                                 <input type="text" class="form-control" name="full_name" id="full_name"
-                                       placeholder="Full Name">
+                                       placeholder="Full Name" value="{{old('full_name')}}">
+                                @error('full_name')
+                                <p class="text-danger">{{$message}}</p>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" name="username" id="username"
-                                       placeholder="User Name">
+                                       placeholder="User Name" value="{{old('username')}}">
+                                @error('username')
+                                <p class="text-danger">{{$message}}</p>
+                                @enderror
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email" id="username" placeholder="Email">
+                                <input type="email" class="form-control" name="email" id="username" placeholder="Email" value="{{old('email')}}">
+                                @error('email')
+                                <p class="text-danger">{{$message}}</p>
+                                @enderror
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" name="password" id="password"
+                                <input type="password" class="form-control" name="passwords" id="passwords"
                                        placeholder="Password">
+                                @error('passwords')
+                                <p class="text-danger">{{$message}}</p>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control" name="confirm_password" id="password"
                                        placeholder="Repeat Password">
+                                @error('confirm_password')
+                                <p class="text-danger">{{$message}}</p>
+                                @enderror
                             </div>
                             <button type="submit" class="btn btn-primary btn-sm">Register</button>
                         </form>

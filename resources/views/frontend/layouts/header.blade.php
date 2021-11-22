@@ -269,7 +269,7 @@
                                 <li><a href="my-account.html">My Account</a></li>
                                 <li><a href="order-list.html">Orders List</a></li>
                                 <li><a href="wishlist.html">Wishlist</a></li>
-                                <li><a href="{{route('logout')}}"><i class="icofont-logout"></i> Logout</a></li>
+                                <li><a href="{{route('user.logout')}}"><i class="icofont-logout"></i> Logout</a></li>
                                 @else
                                     <li><a href="{{route('user.auth')}}">Login & Register</a></li>
                                 @endif

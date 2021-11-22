@@ -34,17 +34,12 @@ Route::get('/clear', function () {
 
 //Frontend
 Route::get('/', [IndexController::class, 'index'])->name('index');
+
 //Auth
 Route::get('user/auth', [IndexController::class, 'userAuth'])->name('user.auth');
-Route::get('logout', function () {
-    auth()->logout();
-    Session()->flush();
-    return Redirect::to('/');
-})->name('logout');
-Route::post('user/login',[IndexController::class, 'loginSubmit'])->name('login.submit');
-Route::post('user/register',[IndexController::class, 'registerSubmit'])->name('register.submit');
-
-
+Route::post('user/login', [IndexController::class, 'loginSubmit'])->name('login.submit');
+Route::post('user/register', [IndexController::class, 'registerSubmit'])->name('register.submit');
+Route::get('user/logout', [IndexController::class, 'userLogout'])->name('user.logout');
 
 
 //Product  category
@@ -62,12 +57,9 @@ Auth::routes(['register' => false]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-
-
-
 // Admin
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth','admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'admin'], function () {
     Route::get('/', [AdminController::class, 'admin'])->name('admin');
 
 // Banner Section
@@ -101,7 +93,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth','admin'], function () 
 
 });
 
-Route::group(['prefix' => 'seller', 'middleware' => 'auth','seller'], function () {
+Route::group(['prefix' => 'seller', 'middleware' => 'auth', 'seller'], function () {
     Route::get('/', [AdminController::class, 'admin'])->name('seller');
 
 });
