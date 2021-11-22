@@ -103,11 +103,14 @@
                                 <a href="shop-list-left-sidebar.html" data-toggle="tooltip" data-placement="top" title="List View"><i class="icofont-listine-dots"></i></a>
                             </div>
                         </div>
-                        <select class="small right">
-                            <option selected>Short by Popularity</option>
-                            <option value="1">Short by Newest</option>
-                            <option value="2">Short by Sales</option>
-                            <option value="3">Short by Ratings</option>
+                        <select id="sortBy" class="small right">
+                            <option selected>Default sort</option>
+                            <option value="priceAsc">Price - Lower To Higher</option>
+                            <option value="priceDesc">Price - Higher To Lower</option>
+                            <option value="titleAsc">Alphabetical Ascending</option>
+                            <option value="titleDesc">Alphabetical Descending</option>
+                            <option value="discAsc">Discount - Lower To Higher</option>
+                            <option value="discDesc">Discount - Higher To Lower</option>
                         </select>
                     </div>
 
@@ -155,4 +158,14 @@
         </div>
     </section>
 
+@endsection
+
+@section('scripts')
+    <script>
+        $('#sortBy').change(function (e) {
+            let sort = $('#sortBy').val();
+
+            window.location="{{url(''.$route.'')}}/{{$categories->slug}}?sort=" + sort;
+        })
+    </script>
 @endsection

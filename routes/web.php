@@ -97,3 +97,8 @@ Route::group(['prefix' => 'seller', 'middleware' => 'auth', 'seller'], function 
     Route::get('/', [AdminController::class, 'admin'])->name('seller');
 
 });
+
+//User Dashboard
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/dashboard',[IndexController::class.'userDashboard'])->name('dashboard');
+});

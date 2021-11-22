@@ -30,7 +30,8 @@ class IndexController extends Controller
     public function productCategory($slug)
     {
         $categories = Category::with('products.brand')->where('slug', $slug)->first();
-        return view('frontend.pages.product-category', compact('categories'));
+        $route = 'category';
+        return view('frontend.pages.product-category', compact('categories','route'));
     }
 
     public function productDetail($slug)
