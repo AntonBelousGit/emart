@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -11,22 +13,26 @@ class Product extends Model
 
     protected $fillable = ['title', 'summary', 'slug', 'description', 'stock', 'price', 'offer_price', 'discount', 'size', 'condition', 'status', 'photo', 'vendor_id','brand_id', 'cat_id', 'child_cat_id', 'size'];
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'cat_id');
     }
-    public function childCategory()
+    public function childCategory(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'child_cat_id');
     }
-    public function brand()
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class, 'brand_id');
     }
-    public function vendor()
+    public function vendor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'vendor_id');
     }
 
+    public function rel_products(): HasMany
+    {
+        return $this->hasMany(__CLASS__,'cat_id','cat_id')->where('status','active')->limit(10);
+    }
 
 }

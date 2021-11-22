@@ -7,15 +7,19 @@
 
 <body>
 <!-- Preloader -->
-<div id="preloader">
-    <div class="spinner-grow" role="status">
-        <span class="sr-only">Loading...</span>
-    </div>
-</div>
+@include('frontend.layouts.preloader')
 
 <!-- Header Area -->
 @include('frontend.layouts.header')
 <!-- Header Area End -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @include('backend.layouts.notification')
+        </div>
+    </div>
+</div>
+
 
 @yield('content')
 

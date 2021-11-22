@@ -63,17 +63,17 @@
                                         <p>Share with friends</p>
                                         <div class="_icon">
                                             <a href="#"><i class="fa fa-facebook"
-                                                                               aria-hidden="true"></i></a>
+                                                           aria-hidden="true"></i></a>
                                             <a href="#"><i class="fa fa-twitter"
-                                                                               aria-hidden="true"></i></a>
+                                                           aria-hidden="true"></i></a>
                                             <a href="#"><i class="fa fa-pinterest"
-                                                                               aria-hidden="true"></i></a>
+                                                           aria-hidden="true"></i></a>
                                             <a href="#"><i class="fa fa-linkedin"
-                                                                               aria-hidden="true"></i></a>
+                                                           aria-hidden="true"></i></a>
                                             <a href="#"><i class="fa fa-instagram"
-                                                                               aria-hidden="true"></i></a>
+                                                           aria-hidden="true"></i></a>
                                             <a href="#"><i class="fa fa-envelope-o"
-                                                                               aria-hidden="true"></i></a>
+                                                           aria-hidden="true"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +137,8 @@
                                     $photos = explode(',',$product->photo);
                                 @endphp
                                 @foreach($photos as $key=>$photo)
-                                    <li class="{{$key==0 ? 'active': ''}}" data-target="#product_details_slider" data-slide-to="{{$key}}"
+                                    <li class="{{$key==0 ? 'active': ''}}" data-target="#product_details_slider"
+                                        data-slide-to="{{$key}}"
                                         style="background-image: url({{$photo}});">
                                     </li>
                                 @endforeach
@@ -149,7 +150,7 @@
                 <!-- Single Product Description -->
                 <div class="col-12 col-lg-6">
                     <div class="single_product_desc">
-                        <h4 class="title mb-2">{{$product->title}}</h4>
+                        <h4 class="title mb-2">{{ucfirst($product->title)}}</h4>
                         <div class="single_product_ratings mb-2">
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star" aria-hidden="true"></i>
@@ -158,7 +159,8 @@
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <span class="text-muted">(8 Reviews)</span>
                         </div>
-                        <h4 class="price mb-4">${{number_format($product->offer_price,2)}} <span>${{number_format($product->price,2)}}</span></h4>
+                        <h4 class="price mb-4">${{number_format($product->offer_price,2)}}
+                            <span>${{number_format($product->price,2)}}</span></h4>
 
                         <!-- Overview -->
                         <div class="short_overview mb-4">
@@ -167,38 +169,38 @@
                         </div>
 
                         <!-- Color Option -->
-{{--                        <div class="widget p-0 color mb-3">--}}
-{{--                            <h6 class="widget-title">Color</h6>--}}
-{{--                            <div class="widget-desc d-flex">--}}
-{{--                                <div class="custom-control custom-radio">--}}
-{{--                                    <input type="radio" id="customRadio1" name="customRadio"--}}
-{{--                                           class="custom-control-input">--}}
-{{--                                    <label class="custom-control-label black" for="customRadio1"></label>--}}
-{{--                                </div>--}}
-{{--                                <div class="custom-control custom-radio">--}}
-{{--                                    <input type="radio" id="customRadio2" name="customRadio"--}}
-{{--                                           class="custom-control-input">--}}
-{{--                                    <label class="custom-control-label pink" for="customRadio2"></label>--}}
-{{--                                </div>--}}
-{{--                                <div class="custom-control custom-radio">--}}
-{{--                                    <input type="radio" id="customRadio3" name="customRadio"--}}
-{{--                                           class="custom-control-input">--}}
-{{--                                    <label class="custom-control-label red" for="customRadio3"></label>--}}
-{{--                                </div>--}}
-{{--                                <div class="custom-control custom-radio">--}}
-{{--                                    <input type="radio" id="customRadio4" name="customRadio"--}}
-{{--                                           class="custom-control-input">--}}
-{{--                                    <label class="custom-control-label purple" for="customRadio4"></label>--}}
-{{--                                </div>--}}
-{{--                                <div class="custom-control custom-radio">--}}
-{{--                                    <input type="radio" id="customRadio5" name="customRadio"--}}
-{{--                                           class="custom-control-input">--}}
-{{--                                    <label class="custom-control-label white" for="customRadio5"></label>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                    {{--                        <div class="widget p-0 color mb-3">--}}
+                    {{--                            <h6 class="widget-title">Color</h6>--}}
+                    {{--                            <div class="widget-desc d-flex">--}}
+                    {{--                                <div class="custom-control custom-radio">--}}
+                    {{--                                    <input type="radio" id="customRadio1" name="customRadio"--}}
+                    {{--                                           class="custom-control-input">--}}
+                    {{--                                    <label class="custom-control-label black" for="customRadio1"></label>--}}
+                    {{--                                </div>--}}
+                    {{--                                <div class="custom-control custom-radio">--}}
+                    {{--                                    <input type="radio" id="customRadio2" name="customRadio"--}}
+                    {{--                                           class="custom-control-input">--}}
+                    {{--                                    <label class="custom-control-label pink" for="customRadio2"></label>--}}
+                    {{--                                </div>--}}
+                    {{--                                <div class="custom-control custom-radio">--}}
+                    {{--                                    <input type="radio" id="customRadio3" name="customRadio"--}}
+                    {{--                                           class="custom-control-input">--}}
+                    {{--                                    <label class="custom-control-label red" for="customRadio3"></label>--}}
+                    {{--                                </div>--}}
+                    {{--                                <div class="custom-control custom-radio">--}}
+                    {{--                                    <input type="radio" id="customRadio4" name="customRadio"--}}
+                    {{--                                           class="custom-control-input">--}}
+                    {{--                                    <label class="custom-control-label purple" for="customRadio4"></label>--}}
+                    {{--                                </div>--}}
+                    {{--                                <div class="custom-control custom-radio">--}}
+                    {{--                                    <input type="radio" id="customRadio5" name="customRadio"--}}
+                    {{--                                           class="custom-control-input">--}}
+                    {{--                                    <label class="custom-control-label white" for="customRadio5"></label>--}}
+                    {{--                                </div>--}}
+                    {{--                            </div>--}}
+                    {{--                        </div>--}}
 
-                        <!-- Size Option -->
+                    <!-- Size Option -->
                         <div class="widget p-0 size mb-3">
                             <h6 class="widget-title">Size</h6>
                             <div class="widget-desc">
@@ -230,7 +232,7 @@
                             <a class="add_to_compare" href="compare.html"><i class="fa fa-th" aria-hidden="true"></i>
                                 COMPARE</a>
                             <a class="share_with_friend" href="#"><i class="fa fa-share"
-                                                                                         aria-hidden="true"></i> SHARE
+                                                                     aria-hidden="true"></i> SHARE
                                 WITH FRIEND</a>
                         </div>
 
@@ -282,7 +284,7 @@
                             <div role="tabpanel" class="tab-pane fade show active" id="description">
                                 <div class="description_area">
                                     <h5>Description</h5>
-                                   {{$product->description}}
+                                    {{$product->description}}
                                 </div>
                             </div>
 
@@ -438,366 +440,10 @@
     <!-- Single Product Details Area End -->
 
     <!-- Related Products Area -->
-    <section class="you_may_like_area section_padding_0_100 clearfix">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section_heading new_arrivals">
-                        <h5>You May Also Like</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="you_make_like_slider owl-carousel">
-                        <!-- Single Product -->
-                        <div class="single-product-area">
-                            <div class="product_image">
-                                <!-- Product Image -->
-                                <img class="normal_img" src="img/product-img/new-1-back.png" alt="">
-                                <img class="hover_img" src="img/product-img/new-1.png" alt="">
+    @if (count($product->rel_products)>0)
+        @include('frontend.layouts.product.components.related-product')
+    @endif
 
-                                <!-- Product Badge -->
-                                <div class="product_badge">
-                                    <span>New</span>
-                                </div>
-
-                                <!-- Wishlist -->
-                                <div class="product_wishlist">
-                                    <a href="wishlist.html"><i class="icofont-heart"></i></a>
-                                </div>
-
-                                <!-- Compare -->
-                                <div class="product_compare">
-                                    <a href="compare.html"><i class="icofont-exchange"></i></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product_description">
-                                <!-- Add to cart -->
-                                <div class="product_add_to_cart">
-                                    <a href="#"><i class="icofont-shopping-cart"></i> Add to
-                                        Cart</a>
-                                </div>
-
-                                <!-- Quick View -->
-                                <div class="product_quick_view">
-                                    <a href="#" data-toggle="modal" data-target="#quickview"><i
-                                            class="icofont-eye-alt"></i> Quick View</a>
-                                </div>
-
-                                <p class="brand_name">Top</p>
-                                <a href="#">Boutique Silk Dress</a>
-                                <h6 class="product-price">$48.99</h6>
-                            </div>
-                        </div>
-
-                        <!-- Single Product -->
-                        <div class="single-product-area">
-                            <div class="product_image">
-                                <!-- Product Image -->
-                                <img class="normal_img" src="img/product-img/new-6.png" alt="">
-                                <img class="hover_img" src="img/product-img/new-6-back.png" alt="">
-
-                                <!-- Product Badge -->
-                                <div class="product_badge">
-                                    <span>New</span>
-                                </div>
-
-                                <!-- Wishlist -->
-                                <div class="product_wishlist">
-                                    <a href="wishlist.html"><i class="icofont-heart"></i></a>
-                                </div>
-
-                                <!-- Compare -->
-                                <div class="product_compare">
-                                    <a href="compare.html"><i class="icofont-exchange"></i></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product_description">
-                                <!-- Add to cart -->
-                                <div class="product_add_to_cart">
-                                    <a href="#"><i class="icofont-shopping-cart"></i> Add to
-                                        Cart</a>
-                                </div>
-
-                                <!-- Quick View -->
-                                <div class="product_quick_view">
-                                    <a href="#" data-toggle="modal" data-target="#quickview"><i
-                                            class="icofont-eye-alt"></i> Quick View</a>
-                                </div>
-
-                                <p class="brand_name">Lim</p>
-                                <a href="#">Gracia Plaid Dress</a>
-                                <h6 class="product-price">$17.63</h6>
-                            </div>
-                        </div>
-
-                        <!-- Single Product -->
-                        <div class="single-product-area">
-                            <div class="product_image">
-                                <!-- Product Image -->
-                                <img class="normal_img" src="img/product-img/new-2.png" alt="">
-                                <img class="hover_img" src="img/product-img/new-2-back.png" alt="">
-
-                                <!-- Product Badge -->
-                                <div class="product_badge">
-                                    <span>New</span>
-                                </div>
-
-                                <!-- Wishlist -->
-                                <div class="product_wishlist">
-                                    <a href="wishlist.html"><i class="icofont-heart"></i></a>
-                                </div>
-
-                                <!-- Compare -->
-                                <div class="product_compare">
-                                    <a href="compare.html"><i class="icofont-exchange"></i></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product_description">
-                                <!-- Add to cart -->
-                                <div class="product_add_to_cart">
-                                    <a href="#"><i class="icofont-shopping-cart"></i> Add to
-                                        Cart</a>
-                                </div>
-
-                                <!-- Quick View -->
-                                <div class="product_quick_view">
-                                    <a href="#" data-toggle="modal" data-target="#quickview"><i
-                                            class="icofont-eye-alt"></i> Quick View</a>
-                                </div>
-
-                                <p class="brand_name">Sarah</p>
-                                <a href="#">Flower Textured Dress</a>
-                                <h6 class="product-price">$24 <span>$49</span></h6>
-                            </div>
-                        </div>
-
-                        <!-- Single Product -->
-                        <div class="single-product-area">
-                            <div class="product_image">
-                                <!-- Product Image -->
-                                <img class="normal_img" src="img/product-img/new-4.png" alt="">
-                                <img class="hover_img" src="img/product-img/new-4-back.png" alt="">
-
-                                <!-- Product Badge -->
-                                <div class="product_badge">
-                                    <span>New</span>
-                                </div>
-
-                                <!-- Wishlist -->
-                                <div class="product_wishlist">
-                                    <a href="wishlist.html"><i class="icofont-heart"></i></a>
-                                </div>
-
-                                <!-- Compare -->
-                                <div class="product_compare">
-                                    <a href="compare.html"><i class="icofont-exchange"></i></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product_description">
-                                <!-- Add to cart -->
-                                <div class="product_add_to_cart">
-                                    <a href="#"><i class="icofont-shopping-cart"></i> Add to
-                                        Cart</a>
-                                </div>
-
-                                <!-- Quick View -->
-                                <div class="product_quick_view">
-                                    <a href="#" data-toggle="modal" data-target="#quickview"><i
-                                            class="icofont-eye-alt"></i> Quick View</a>
-                                </div>
-
-                                <p class="brand_name">Lim</p>
-                                <a href="#">Gracia Plaid Dress</a>
-                                <h6 class="product-price">$78.24</h6>
-                            </div>
-                        </div>
-
-                        <!-- Single Product -->
-                        <div class="single-product-area">
-                            <div class="product_image">
-                                <!-- Product Image -->
-                                <img class="normal_img" src="img/product-img/new-1-back.png" alt="">
-                                <img class="hover_img" src="img/product-img/new-1.png" alt="">
-
-                                <!-- Product Badge -->
-                                <div class="product_badge">
-                                    <span>New</span>
-                                </div>
-
-                                <!-- Wishlist -->
-                                <div class="product_wishlist">
-                                    <a href="wishlist.html"><i class="icofont-heart"></i></a>
-                                </div>
-
-                                <!-- Compare -->
-                                <div class="product_compare">
-                                    <a href="compare.html"><i class="icofont-exchange"></i></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product_description">
-                                <!-- Add to cart -->
-                                <div class="product_add_to_cart">
-                                    <a href="#"><i class="icofont-shopping-cart"></i> Add to
-                                        Cart</a>
-                                </div>
-
-                                <!-- Quick View -->
-                                <div class="product_quick_view">
-                                    <a href="#" data-toggle="modal" data-target="#quickview"><i
-                                            class="icofont-eye-alt"></i> Quick View</a>
-                                </div>
-
-                                <p class="brand_name">Top</p>
-                                <a href="#">Boutique Silk Dress</a>
-                                <h6 class="product-price">$48.99</h6>
-                            </div>
-                        </div>
-
-                        <!-- Single Product -->
-                        <div class="single-product-area">
-                            <div class="product_image">
-                                <!-- Product Image -->
-                                <img class="normal_img" src="img/product-img/new-6.png" alt="">
-                                <img class="hover_img" src="img/product-img/new-6-back.png" alt="">
-
-                                <!-- Product Badge -->
-                                <div class="product_badge">
-                                    <span>New</span>
-                                </div>
-
-                                <!-- Wishlist -->
-                                <div class="product_wishlist">
-                                    <a href="wishlist.html"><i class="icofont-heart"></i></a>
-                                </div>
-
-                                <!-- Compare -->
-                                <div class="product_compare">
-                                    <a href="compare.html"><i class="icofont-exchange"></i></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product_description">
-                                <!-- Add to cart -->
-                                <div class="product_add_to_cart">
-                                    <a href="#"><i class="icofont-shopping-cart"></i> Add to
-                                        Cart</a>
-                                </div>
-
-                                <!-- Quick View -->
-                                <div class="product_quick_view">
-                                    <a href="#" data-toggle="modal" data-target="#quickview"><i
-                                            class="icofont-eye-alt"></i> Quick View</a>
-                                </div>
-
-                                <p class="brand_name">Lim</p>
-                                <a href="#">Gracia Plaid Dress</a>
-                                <h6 class="product-price">$17.63</h6>
-                            </div>
-                        </div>
-
-                        <!-- Single Product -->
-                        <div class="single-product-area">
-                            <div class="product_image">
-                                <!-- Product Image -->
-                                <img class="normal_img" src="img/product-img/new-2.png" alt="">
-                                <img class="hover_img" src="img/product-img/new-2-back.png" alt="">
-
-                                <!-- Product Badge -->
-                                <div class="product_badge">
-                                    <span>New</span>
-                                </div>
-
-                                <!-- Wishlist -->
-                                <div class="product_wishlist">
-                                    <a href="wishlist.html"><i class="icofont-heart"></i></a>
-                                </div>
-
-                                <!-- Compare -->
-                                <div class="product_compare">
-                                    <a href="compare.html"><i class="icofont-exchange"></i></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product_description">
-                                <!-- Add to cart -->
-                                <div class="product_add_to_cart">
-                                    <a href="#"><i class="icofont-shopping-cart"></i> Add to
-                                        Cart</a>
-                                </div>
-
-                                <!-- Quick View -->
-                                <div class="product_quick_view">
-                                    <a href="#" data-toggle="modal" data-target="#quickview"><i
-                                            class="icofont-eye-alt"></i> Quick View</a>
-                                </div>
-
-                                <p class="brand_name">Sarah</p>
-                                <a href="#">Flower Textured Dress</a>
-                                <h6 class="product-price">$24 <span>$49</span></h6>
-                            </div>
-                        </div>
-
-                        <!-- Single Product -->
-                        <div class="single-product-area">
-                            <div class="product_image">
-                                <!-- Product Image -->
-                                <img class="normal_img" src="img/product-img/new-4.png" alt="">
-                                <img class="hover_img" src="img/product-img/new-4-back.png" alt="">
-
-                                <!-- Product Badge -->
-                                <div class="product_badge">
-                                    <span>New</span>
-                                </div>
-
-                                <!-- Wishlist -->
-                                <div class="product_wishlist">
-                                    <a href="wishlist.html"><i class="icofont-heart"></i></a>
-                                </div>
-
-                                <!-- Compare -->
-                                <div class="product_compare">
-                                    <a href="compare.html"><i class="icofont-exchange"></i></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product_description">
-                                <!-- Add to cart -->
-                                <div class="product_add_to_cart">
-                                    <a href="#"><i class="icofont-shopping-cart"></i> Add to
-                                        Cart</a>
-                                </div>
-
-                                <!-- Quick View -->
-                                <div class="product_quick_view">
-                                    <a href="#" data-toggle="modal" data-target="#quickview"><i
-                                            class="icofont-eye-alt"></i> Quick View</a>
-                                </div>
-
-                                <p class="brand_name">Lim</p>
-                                <a href="#">Gracia Plaid Dress</a>
-                                <h6 class="product-price">$78.24</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     <!-- Related Products Area -->
 
 @endsection

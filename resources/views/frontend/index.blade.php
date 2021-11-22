@@ -1,6 +1,5 @@
 @extends('frontend.layouts.app')
 
-
 @section('content')
 
     @if (count($banners)>0)

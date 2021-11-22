@@ -264,11 +264,15 @@
                                 <img src="{{asset('frontend/img/bg-img/user.jpg')}}" alt="">
                             </div>
                             <ul class="user-meta-dropdown">
+                                @if(Auth::check())
                                 <li class="user-title"><span>Hello,</span> Lim Sarah</li>
                                 <li><a href="my-account.html">My Account</a></li>
                                 <li><a href="order-list.html">Orders List</a></li>
                                 <li><a href="wishlist.html">Wishlist</a></li>
-                                <li><a href="login.html"><i class="icofont-logout"></i> Logout</a></li>
+                                <li><a href="{{route('logout')}}"><i class="icofont-logout"></i> Logout</a></li>
+                                @else
+                                    <li><a href="{{route('user.auth')}}">Login & Register</a></li>
+                                @endif
                             </ul>
                         </div>
                     </div>

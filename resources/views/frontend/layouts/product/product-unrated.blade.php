@@ -1,4 +1,4 @@
-<div class="single-product-area">
+<div class="single-product-area mb-15">
     <div class="product_image">
     @php
         $photo = explode(',',$product->photo);
