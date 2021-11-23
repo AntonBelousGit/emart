@@ -27,11 +27,49 @@ class IndexController extends Controller
         return view('frontend.index', compact('banners', 'categories', 'new_product'));
     }
 
-    public function productCategory($slug)
+    public function productCategory(Request $request, $slug)
     {
         $categories = Category::with('products.brand')->where('slug', $slug)->first();
+
+        $sort='';
+        if ($request->sort !=null) {
+            $sort = $request->sort;
+        }
+        if ($categories == null) {
+            return view('errors.404');
+        }
+        else{
+            if($sort == 'priceAsc') {
+                $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('offer_price','ASC')->paginate(12);
+            }
+            elseif ($sort == 'priceDesc') {
+                $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('offer_price','DESC')->paginate(12);
+            }
+            elseif ($sort == 'discAsc') {
+                $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('price','ASC')->paginate(12);
+            }
+            elseif ($sort == 'discDesc') {
+                $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('price','DESC')->paginate(12);
+            }
+            elseif ($sort == 'titleAsc') {
+                $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('title','ASC')->paginate(12);
+            }
+            elseif ($sort == 'titleDesc') {
+                $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->orderBy('title','DESC')->paginate(12);
+            }
+            else
+            {
+                $products = Product::where(['status'=>'active','cat_id'=>$categories->id])->paginate(12);
+            }
+        }
+
         $route = 'category';
-        return view('frontend.pages.product-category', compact('categories','route'));
+
+        if ($request->ajax()) {
+            $view = view('frontend.layouts.product.components._single-product',compact('products'))->render();
+            return response()->json(['html'=>$view]);
+        }
+        return view('frontend.pages.product-category', compact('categories','route','products'));
     }
 
     public function productDetail($slug)
@@ -96,6 +134,6 @@ class IndexController extends Controller
     public function userLogout(){
         Session::forget('user');
         Auth::logout();
-        return \redirect()->home()->with('success','Successfully logout');
+        return redirect()->home()->with('success','Successfully logout');
     }
 }

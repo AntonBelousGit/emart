@@ -103,9 +103,9 @@
                                 <a href="shop-list-left-sidebar.html" data-toggle="tooltip" data-placement="top" title="List View"><i class="icofont-listine-dots"></i></a>
                             </div>
                         </div>
-                        <select id="sortBy" class="small right">
+                        <select id="sortBy" name="sortBy" class="small right">
                             <option selected>Default sort</option>
-                            <option value="priceAsc">Price - Lower To Higher</option>
+                            <option value="priceAsc" {{old('sortBy')=='priceAsc'?'selected':''}}>Price - Lower To Higher</option>
                             <option value="priceDesc">Price - Higher To Lower</option>
                             <option value="titleAsc">Alphabetical Ascending</option>
                             <option value="titleDesc">Alphabetical Descending</option>
@@ -115,42 +115,14 @@
                     </div>
 
                     <div class="shop_grid_product_area">
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center" id="product-data">
                             <!-- Single Product -->
-                            @if (count($categories->products)>0)
-                                @foreach($categories->products as $product)
-                                <div class="col-9 col-sm-6 col-md-4 col-lg-3">
-                                    @include('frontend.layouts.product.product-unrated')
-                                </div>
-                                @endforeach
-                            @else
-                                <p>No product found</p>
-                            @endif
-
-
+                                @include('frontend.layouts.product.components._single-product')
                         </div>
                     </div>
 
-                    <!-- Shop Pagination Area -->
-                    <div class="shop_pagination_area mt-30">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination pagination-sm justify-content-center">
-                                <li class="page-item">
-                                    <a class="page-link" href="shop-grid-no-sidebar.html#"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="shop-grid-no-sidebar.html#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="shop-grid-no-sidebar.html#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="shop-grid-no-sidebar.html#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="shop-grid-no-sidebar.html#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="shop-grid-no-sidebar.html#">5</a></li>
-                                <li class="page-item"><a class="page-link" href="shop-grid-no-sidebar.html#">...</a></li>
-                                <li class="page-item"><a class="page-link" href="shop-grid-no-sidebar.html#">8</a></li>
-                                <li class="page-item"><a class="page-link" href="shop-grid-no-sidebar.html#">9</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="shop-grid-no-sidebar.html#"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                </li>
-                            </ul>
-                        </nav>
+                    <div class="ajax-load text-center" style="display:none;">
+                        <img src="{{asset('frontend/img/loader.gif')}}" alt="Load">
                     </div>
 
                 </div>
@@ -166,6 +138,39 @@
             let sort = $('#sortBy').val();
 
             window.location="{{url(''.$route.'')}}/{{$categories->slug}}?sort=" + sort;
+        })
+    </script>
+
+    <script>
+        function loadmoreData(page) {
+            $.ajax({
+                url:'?page='+page,
+                type:'GET',
+                beforeSend:function (){
+                    $('.ajax-load').show();
+                },
+            })
+            .done(function (data){
+                // if (data.html=='')
+                // {
+                //     $('.ajax-load').html('No more product');
+                //     return;
+                // }
+                $('.ajax-load').hide();
+                $('#product-data').append(data.html)
+            })
+            .fail(function (){
+                alert('Something went wrong! Try again');
+            })
+        }
+
+        let page = 1;
+
+        $(window).scroll(function (){
+            if ($(window).scrollTop() +$(window).height() + 450 >= $(document).height()){
+                page++;
+                loadmoreData(page);
+            }
         })
     </script>
 @endsection
