@@ -100,5 +100,13 @@ Route::group(['prefix' => 'seller', 'middleware' => 'auth', 'seller'], function 
 
 //User Dashboard
 Route::group(['prefix' => 'user'], function () {
-    Route::get('/dashboard',[IndexController::class.'userDashboard'])->name('dashboard');
+    Route::get('/dashboard',[IndexController::class, 'userDashboard'])->name('user.dashboard');
+    Route::get('/order',[IndexController::class, 'userOrder'])->name('user.order');
+    Route::get('/address',[IndexController::class, 'userAddress'])->name('user.address');
+    Route::get('/account-details',[IndexController::class, 'userAccount'])->name('user.account');
+
+    Route::post('/billing/address/{id}',[IndexController::class, 'billingAddress'])->name('billing.address');
+    Route::post('/sipping/address/{id}',[IndexController::class, 'sippingAddress'])->name('sipping.address');
+
+    Route::post('/update/account/{id}',[IndexController::class, 'updateAccount'])->name('account.update');
 });

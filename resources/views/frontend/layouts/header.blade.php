@@ -261,13 +261,18 @@
                         <!-- Account -->
                         <div class="account-area">
                             <div class="user-thumbnail">
-                                <img src="{{asset('frontend/img/bg-img/user.jpg')}}" alt="">
+                                @if (auth()->user()->photo)
+                                    <img src="{{auth()->user()->photo}}" alt="">
+                                @else
+                                    <img src="{{\App\Utilities\Helpers::userDefaultImage()}}" alt="">
+                                @endif
+
                             </div>
                             <ul class="user-meta-dropdown">
                                 @if(Auth::check())
-                                <li class="user-title"><span>Hello,</span> Lim Sarah</li>
-                                <li><a href="my-account.html">My Account</a></li>
-                                <li><a href="order-list.html">Orders List</a></li>
+                                <li class="user-title"><span>Hello,</span> {{Auth::user()->full_name}}</li>
+                                <li><a href="{{route('user.dashboard')}}">My Account</a></li>
+                                <li><a href="{{route('user.order')}}">Orders List</a></li>
                                 <li><a href="wishlist.html">Wishlist</a></li>
                                 <li><a href="{{route('user.logout')}}"><i class="icofont-logout"></i> Logout</a></li>
                                 @else

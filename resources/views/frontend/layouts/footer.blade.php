@@ -124,4 +124,6 @@
             </div>
         </div>
     </div>
+
+    @yield('popup')
 </footer>

@@ -104,8 +104,8 @@
                             </div>
                         </div>
                         <select id="sortBy" name="sortBy" class="small right">
-                            <option selected>Default sort</option>
-                            <option value="priceAsc" {{old('sortBy')=='priceAsc'?'selected':''}}>Price - Lower To Higher</option>
+                            <option value="" selected>Default sort</option>
+                            <option value="priceAsc">Price - Lower To Higher</option>
                             <option value="priceDesc">Price - Higher To Lower</option>
                             <option value="titleAsc">Alphabetical Ascending</option>
                             <option value="titleDesc">Alphabetical Descending</option>
@@ -136,13 +136,17 @@
     <script>
         $('#sortBy').change(function (e) {
             let sort = $('#sortBy').val();
-
+            if ( sort.length === 0)
+            {
+                window.location="{{url(''.$route.'')}}/{{$categories->slug}}";
+            }
             window.location="{{url(''.$route.'')}}/{{$categories->slug}}?sort=" + sort;
         })
     </script>
 
     <script>
         function loadmoreData(page) {
+           let count = '';
             $.ajax({
                 url:'?page='+page,
                 type:'GET',
@@ -156,20 +160,28 @@
                 //     $('.ajax-load').html('No more product');
                 //     return;
                 // }
+                count = data.html.length;
                 $('.ajax-load').hide();
-                $('#product-data').append(data.html)
+                if (data.html.length > 0){
+                    $('#product-data').append(data.html)
+                }
+
             })
             .fail(function (){
                 alert('Something went wrong! Try again');
             })
+            return count;
         }
 
         let page = 1;
-
+        let lenght = 1;
+        console.log(lenght)
         $(window).scroll(function (){
-            if ($(window).scrollTop() +$(window).height() + 450 >= $(document).height()){
+            if ($(window).scrollTop() + $(window).height() + 500 >= $(document).height() && lenght > 0){
                 page++;
-                loadmoreData(page);
+                lenght = loadmoreData(page);
+                console.log(lenght.length);
+                console.log('срака');
             }
         })
     </script>

@@ -22,9 +22,20 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('photo')->nullable();
             $table->string('phone')->nullable();
-            $table->string('address')->nullable();
             $table->enum('role',['admin','seller','customer'])->default('customer');
             $table->enum('status',['active','inactive'])->default('active');
+
+            $table->string('city')->nullable();
+            $table->string('postcode')->nullable();
+            $table->string('state')->nullable();
+            $table->string('address')->nullable();
+            $table->string('country')->nullable();
+
+            $table->string('scity')->nullable();
+            $table->string('spostcode')->nullable();
+            $table->string('sstate')->nullable();
+            $table->string('saddress')->nullable();
+            $table->string('scountry')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
