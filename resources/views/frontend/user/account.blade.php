@@ -38,18 +38,27 @@
                                     <div class="form-group">
                                         <label for="firstName">First Name *</label>
                                         <input type="text" class="form-control" id="firstName" name="full_name" value="{{$user->full_name}}" placeholder="Bilous Anton">
+                                        @error('full_name')
+                                        <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
                                         <label for="displayName">UserName *</label>
                                         <input type="text" class="form-control" id="displayName" name="username" value="{{$user->username}}">
+                                        @error('username')
+                                        <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="emailAddress">Phone Number *</label>
                                         <input type="text" class="form-control" id="phone" name="phone" placeholder="380972448666" value="{{$user->phone}}">
+                                        @error('phone')
+                                        <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -62,12 +71,18 @@
                                     <div class="form-group">
                                         <label for="currentPass">Current Password (Leave blank to leave unchanged)</label>
                                         <input type="password" class="form-control" id="currentPass" name="oldpassword">
+                                        @error('oldpassword')
+                                        <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="newPass">New Password (Leave blank to leave unchanged)</label>
                                         <input type="password" class="form-control" id="newPass" name="newpassword">
+                                        @error('newpassword')
+                                        <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-12">
