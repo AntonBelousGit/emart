@@ -28,12 +28,12 @@
     <div class="product_description">
         <!-- Add to cart -->
         <div class="product_add_to_cart">
-            <a href="shop-grid-no-sidebar.html#"><i class="icofont-shopping-cart"></i> Add to Cart</a>
+            <a href="#" data-quantity="1" data-product-id="{{$product->id}}" class="add_to_cart" id="add_to_cart{{$product->id}}"><i class="icofont-shopping-cart"></i> Add to Cart</a>
         </div>
 
         <!-- Quick View -->
         <div class="product_quick_view">
-            <a href="shop-grid-no-sidebar.html#" data-toggle="modal" data-target="#quickview"><i class="icofont-eye-alt"></i> Quick View</a>
+            <a href="#" data-toggle="modal" data-target="#quickview"><i class="icofont-eye-alt"></i> Quick View</a>
         </div>
 
         <p class="brand_name">{{$product->brand->title}}</p>

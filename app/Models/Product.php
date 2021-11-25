@@ -35,4 +35,9 @@ class Product extends Model
         return $this->hasMany(__CLASS__,'cat_id','cat_id')->where('status','active')->limit(10);
     }
 
+    public static function getProductByCart($id)
+    {
+        return self::where('id',$id)->first();
+    }
+
 }

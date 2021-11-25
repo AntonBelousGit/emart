@@ -1,5 +1,7 @@
 @extends('frontend.layouts.app')
-
+@section('styles')
+    <link rel="stylesheet" href="{{asset('backend/vendor/sweetalert/sweetalert.css')}}">
+@endsection
 @section('content')
     <!-- Quick View Modal Area -->
     <div class="modal fade" id="quickview" tabindex="-1" role="dialog" aria-labelledby="quickview" aria-hidden="true">
@@ -33,15 +35,20 @@
                                             <i class="fa fa-star" aria-hidden="true"></i>
                                         </div>
                                         <h5 class="price">$120.99 <span>$130</span></h5>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia expedita quibusdam aspernatur, sapiente consectetur accusantium perspiciatis praesentium eligendi, in fugiat?</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia expedita
+                                            quibusdam aspernatur, sapiente consectetur accusantium perspiciatis
+                                            praesentium eligendi, in fugiat?</p>
                                         <a href="shop-grid-no-sidebar.html#">View Full Product Details</a>
                                     </div>
                                     <!-- Add to Cart Form -->
                                     <form class="cart" method="post">
                                         <div class="quantity">
-                                            <input type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1">
+                                            <input type="number" class="qty-text" id="qty" step="1" min="1" max="12"
+                                                   name="quantity" value="1">
                                         </div>
-                                        <button type="submit" name="addtocart" value="5" class="cart-submit">Add to cart</button>
+                                        <button type="submit" name="addtocart" value="5" class="cart-submit">Add to
+                                            cart
+                                        </button>
                                         <!-- Wishlist -->
                                         <div class="modal_pro_wishlist">
                                             <a href="wishlist.html"><i class="icofont-heart"></i></a>
@@ -55,12 +62,18 @@
                                     <div class="share_wf mt-30">
                                         <p>Share with friends</p>
                                         <div class="_icon">
-                                            <a href="shop-grid-no-sidebar.html#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                            <a href="shop-grid-no-sidebar.html#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                            <a href="shop-grid-no-sidebar.html#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                                            <a href="shop-grid-no-sidebar.html#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                                            <a href="shop-grid-no-sidebar.html#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                                            <a href="shop-grid-no-sidebar.html#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+                                            <a href="shop-grid-no-sidebar.html#"><i class="fa fa-facebook"
+                                                                                    aria-hidden="true"></i></a>
+                                            <a href="shop-grid-no-sidebar.html#"><i class="fa fa-twitter"
+                                                                                    aria-hidden="true"></i></a>
+                                            <a href="shop-grid-no-sidebar.html#"><i class="fa fa-pinterest"
+                                                                                    aria-hidden="true"></i></a>
+                                            <a href="shop-grid-no-sidebar.html#"><i class="fa fa-linkedin"
+                                                                                    aria-hidden="true"></i></a>
+                                            <a href="shop-grid-no-sidebar.html#"><i class="fa fa-instagram"
+                                                                                    aria-hidden="true"></i></a>
+                                            <a href="shop-grid-no-sidebar.html#"><i class="fa fa-envelope-o"
+                                                                                    aria-hidden="true"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -97,10 +110,12 @@
                     <div class="shop_top_sidebar_area d-flex flex-wrap align-items-center justify-content-between">
                         <div class="view_area d-flex">
                             <div class="grid_view">
-                                <a href="shop-grid-left-sidebar.html" data-toggle="tooltip" data-placement="top" title="Grid View"><i class="icofont-layout"></i></a>
+                                <a href="shop-grid-left-sidebar.html" data-toggle="tooltip" data-placement="top"
+                                   title="Grid View"><i class="icofont-layout"></i></a>
                             </div>
                             <div class="list_view ml-3">
-                                <a href="shop-list-left-sidebar.html" data-toggle="tooltip" data-placement="top" title="List View"><i class="icofont-listine-dots"></i></a>
+                                <a href="shop-list-left-sidebar.html" data-toggle="tooltip" data-placement="top"
+                                   title="List View"><i class="icofont-listine-dots"></i></a>
                             </div>
                         </div>
                         <select id="sortBy" name="sortBy" class="small right">
@@ -117,7 +132,7 @@
                     <div class="shop_grid_product_area">
                         <div class="row justify-content-center" id="product-data">
                             <!-- Single Product -->
-                                @include('frontend.layouts.product.components._single-product')
+                            @include('frontend.layouts.product.components._single-product')
                         </div>
                     </div>
 
@@ -133,56 +148,95 @@
 @endsection
 
 @section('scripts')
+    <script src="{{asset('backend/vendor/sweetalert/sweetalert.min.js')}}"></script>
     <script>
         $('#sortBy').change(function (e) {
             let sort = $('#sortBy').val();
-            if ( sort.length === 0)
-            {
-                window.location="{{url(''.$route.'')}}/{{$categories->slug}}";
+            if (sort.length === 0) {
+                window.location = "{{url(''.$route.'')}}/{{$categories->slug}}";
             }
-            window.location="{{url(''.$route.'')}}/{{$categories->slug}}?sort=" + sort;
+            window.location = "{{url(''.$route.'')}}/{{$categories->slug}}?sort=" + sort;
         })
     </script>
 
     <script>
         function loadmoreData(page) {
-           let count = '';
+            let count = '';
             $.ajax({
-                url:'?page='+page,
-                type:'GET',
-                beforeSend:function (){
+                url: '?page=' + page,
+                type: 'GET',
+                beforeSend: function () {
                     $('.ajax-load').show();
                 },
             })
-            .done(function (data){
-                // if (data.html=='')
-                // {
-                //     $('.ajax-load').html('No more product');
-                //     return;
-                // }
-                count = data.html.length;
-                $('.ajax-load').hide();
-                if (data.html.length > 0){
-                    $('#product-data').append(data.html)
-                }
+                .done(function (data) {
+                    // if (data.html=='')
+                    // {
+                    //     $('.ajax-load').html('No more product');
+                    //     return;
+                    // }
+                    count = data.html.length;
+                    $('.ajax-load').hide();
+                    if (data.html.length > 0) {
+                        $('#product-data').append(data.html)
+                    }
 
-            })
-            .fail(function (){
-                alert('Something went wrong! Try again');
-            })
+                })
+                .fail(function () {
+                    alert('Something went wrong! Try again');
+                })
             return count;
         }
 
         let page = 1;
         let lenght = 1;
-        console.log(lenght)
-        $(window).scroll(function (){
-            if ($(window).scrollTop() + $(window).height() + 500 >= $(document).height() && lenght > 0){
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() + 500 >= $(document).height() && lenght > 0) {
                 page++;
                 lenght = loadmoreData(page);
                 console.log(lenght.length);
                 console.log('срака');
             }
         })
+    </script>
+
+    <script>
+        $(document).on('click', '.add_to_cart', function (e) {
+            e.preventDefault();
+            let product_id = $(this).data('product-id');
+            let product_qty = $(this).data('quantity');
+
+            let token = '{{csrf_token()}}';
+            let path = '{{route('cart.store')}}';
+
+            $.ajax({
+                url: path,
+                type: "POST",
+                dataType: "JSON",
+                data: {
+                    product_id: product_id,
+                    product_qty: product_qty,
+                    _token: token,
+                },
+                beforeSend: function () {
+                    $('#add_to_cart' + product_id).html('<i class="fa fa-spinner fa-spin"></i> Loading...');
+                },
+                complete: function () {
+                    $('#add_to_cart' + product_id).html('<i class="fa fa-cart-plus "></i> Add to Cart');
+
+                },
+                success: function (data) {
+                    console.log(data)
+                    if (data['status'] == true) {
+                        swal({
+                            title: "Good job!",
+                            text: "You add the product to cart!",
+                            icon: "success",
+                            button: "Close",
+                        });
+                    }
+                }
+            });
+        });
     </script>
 @endsection

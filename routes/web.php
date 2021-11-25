@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -49,14 +50,16 @@ Route::get('category/{slug}', [IndexController::class, 'productCategory'])->name
 //Product detail
 Route::get('product/{slug}', [IndexController::class, 'productDetail'])->name('product.detail');
 
+//Cart
 
-//Admin section
+Route::post('cart/store',[CartController::class,'cartStore'])->name('cart.store');
 
+//End Frontend
 Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
+//Admin section
 // Admin
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'admin'], function () {
