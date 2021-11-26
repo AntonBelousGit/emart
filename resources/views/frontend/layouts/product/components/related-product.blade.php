@@ -13,7 +13,6 @@
                     <!-- Single Product -->
                     @php
                         $main_product = $product->id;
-                        print_r($main_product);
                     @endphp
 
                     @foreach($product->rel_products as $product)

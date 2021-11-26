@@ -53,6 +53,7 @@ Route::get('product/{slug}', [IndexController::class, 'productDetail'])->name('p
 //Cart
 
 Route::post('cart/store',[CartController::class,'cartStore'])->name('cart.store');
+Route::post('cart/delete',[CartController::class,'cartDelete'])->name('cart.delete');
 
 //End Frontend
 Auth::routes(['register' => false]);

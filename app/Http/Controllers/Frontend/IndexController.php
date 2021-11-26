@@ -215,23 +215,22 @@ class IndexController extends Controller
                     'phone' => $request->phone,
                 ]);
             return back()->with('success', 'Account successfully updated');
-        } else {
-            if (Hash::check($request->oldpassword, $hashpassword)) {
-                if (!Hash::check($request->newpassword, $hashpassword)) {
-                    User::where('id', $id)
-                        ->update([
-                            'full_name' => $request->full_name,
-                            'username' => $request->username,
-                            'phone' => $request->phone,
-                            'password' => Hash::make($request->newpassword),
-                        ]);
-                    return back()->with('success', 'Account successfully updated');
-                }
-                return back()->with('error', 'New password can not be same with old password');
-            }
-            return back()->with('error', 'Old password does not match');
-
         }
+
+        if (Hash::check($request->oldpassword, $hashpassword)) {
+            if (!Hash::check($request->newpassword, $hashpassword)) {
+                User::where('id', $id)
+                    ->update([
+                        'full_name' => $request->full_name,
+                        'username' => $request->username,
+                        'phone' => $request->phone,
+                        'password' => Hash::make($request->newpassword),
+                    ]);
+                return back()->with('success', 'Account successfully updated');
+            }
+            return back()->with('error', 'New password can not be same with old password');
+        }
+        return back()->with('error', 'Old password does not match');
 
     }
 

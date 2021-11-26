@@ -148,7 +148,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{asset('backend/vendor/sweetalert/sweetalert.min.js')}}"></script>
     <script>
         $('#sortBy').change(function (e) {
             let sort = $('#sortBy').val();
@@ -194,49 +193,9 @@
             if ($(window).scrollTop() + $(window).height() + 500 >= $(document).height() && lenght > 0) {
                 page++;
                 lenght = loadmoreData(page);
-                console.log(lenght.length);
-                console.log('срака');
             }
         })
     </script>
 
-    <script>
-        $(document).on('click', '.add_to_cart', function (e) {
-            e.preventDefault();
-            let product_id = $(this).data('product-id');
-            let product_qty = $(this).data('quantity');
 
-            let token = '{{csrf_token()}}';
-            let path = '{{route('cart.store')}}';
-
-            $.ajax({
-                url: path,
-                type: "POST",
-                dataType: "JSON",
-                data: {
-                    product_id: product_id,
-                    product_qty: product_qty,
-                    _token: token,
-                },
-                beforeSend: function () {
-                    $('#add_to_cart' + product_id).html('<i class="fa fa-spinner fa-spin"></i> Loading...');
-                },
-                complete: function () {
-                    $('#add_to_cart' + product_id).html('<i class="fa fa-cart-plus "></i> Add to Cart');
-
-                },
-                success: function (data) {
-                    console.log(data)
-                    if (data['status'] == true) {
-                        swal({
-                            title: "Good job!",
-                            text: "You add the product to cart!",
-                            icon: "success",
-                            button: "Close",
-                        });
-                    }
-                }
-            });
-        });
-    </script>
 @endsection

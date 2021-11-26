@@ -2,15 +2,19 @@
 <html lang="en">
 
 <head>
-  @include('frontend.layouts.head')
+    @include('frontend.layouts.head')
 </head>
 
 <body>
 <!-- Preloader -->
 @include('frontend.layouts.preloader')
 
+
 <!-- Header Area -->
-@include('frontend.layouts.header')
+<header class="header_area" id="header-ajax">
+    @include('frontend.layouts.header')
+</header>
+
 <!-- Header Area End -->
 <div class="container">
     <div class="row">
