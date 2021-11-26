@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\CartController;
@@ -51,9 +52,9 @@ Route::get('category/{slug}', [IndexController::class, 'productCategory'])->name
 Route::get('product/{slug}', [IndexController::class, 'productDetail'])->name('product.detail');
 
 //Cart
-
-Route::post('cart/store',[CartController::class,'cartStore'])->name('cart.store');
-Route::post('cart/delete',[CartController::class,'cartDelete'])->name('cart.delete');
+Route::get('cart', [CartController::class, 'cart'])->name('cart');
+Route::post('cart/store', [CartController::class, 'cartStore'])->name('cart.store');
+Route::post('cart/delete', [CartController::class, 'cartDelete'])->name('cart.delete');
 
 //End Frontend
 Auth::routes(['register' => false]);
@@ -94,6 +95,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'admin'], function ()
     Route::post('user_status', [UserController::class, 'userStatus'])->name('user.status');
     Route::post('user_view', [UserController::class, 'userView'])->name('user.view');
 
+// Coupon Section
+    Route::resource('coupon', CouponController::class);
+    Route::post('coupon_status', [CouponController::class, 'couponStatus'])->name('coupon.status');
+    Route::post('coupon_view', [CouponController::class, 'couponView'])->name('coupon.view');
 
 });
 
@@ -104,13 +109,13 @@ Route::group(['prefix' => 'seller', 'middleware' => 'auth', 'seller'], function 
 
 //User Dashboard
 Route::group(['prefix' => 'user'], function () {
-    Route::get('/dashboard',[IndexController::class, 'userDashboard'])->name('user.dashboard');
-    Route::get('/order',[IndexController::class, 'userOrder'])->name('user.order');
-    Route::get('/address',[IndexController::class, 'userAddress'])->name('user.address');
-    Route::get('/account-details',[IndexController::class, 'userAccount'])->name('user.account');
+    Route::get('/dashboard', [IndexController::class, 'userDashboard'])->name('user.dashboard');
+    Route::get('/order', [IndexController::class, 'userOrder'])->name('user.order');
+    Route::get('/address', [IndexController::class, 'userAddress'])->name('user.address');
+    Route::get('/account-details', [IndexController::class, 'userAccount'])->name('user.account');
 
-    Route::post('/billing/address/{id}',[IndexController::class, 'billingAddress'])->name('billing.address');
-    Route::post('/sipping/address/{id}',[IndexController::class, 'sippingAddress'])->name('sipping.address');
+    Route::post('/billing/address/{id}', [IndexController::class, 'billingAddress'])->name('billing.address');
+    Route::post('/sipping/address/{id}', [IndexController::class, 'sippingAddress'])->name('sipping.address');
 
-    Route::post('/update/account/{id}',[IndexController::class, 'updateAccount'])->name('account.update');
+    Route::post('/update/account/{id}', [IndexController::class, 'updateAccount'])->name('account.update');
 });

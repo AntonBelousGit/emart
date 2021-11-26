@@ -246,6 +246,9 @@
                                     </li>
                                 </ul>
                             </div>
+                            <div class="cart-box mb-15">
+                                <a href="{{route('cart')}}" class="btn btn-success d-block">Cart</a>
+                            </div>
                             <div class="cart-box">
                                 <a href="checkout-1.html" class="btn btn-primary d-block">Checkout</a>
                             </div>

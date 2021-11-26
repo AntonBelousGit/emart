@@ -69,7 +69,7 @@ class IndexController extends Controller
             $view = view('frontend.layouts.product.components._single-product', compact('products'))->render();
             return response()->json(['html' => $view]);
         }
-        return view('frontend.pages.product-category', compact('categories', 'route', 'products'));
+        return view('frontend.pages.product.product-category', compact('categories', 'route', 'products'));
     }
 
     public function productDetail($slug)

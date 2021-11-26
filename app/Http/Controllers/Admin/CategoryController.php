@@ -130,16 +130,15 @@ class CategoryController extends Controller
                 $validate_data['parent_id'] = null;
             }
 
-//            dd($validate_data);
             $category = $category->fill($validate_data)->save();
             if ($category) {
                 return redirect()->route('category.index')->with('success', 'Successfully updated category');
-            } else {
-                return back()->with('error', 'Something went wrong!');
             }
-        } else {
-            return back()->with('error', 'Category not found');
+
+            return back()->with('error', 'Something went wrong!');
         }
+
+        return back()->with('error', 'Category not found');
     }
 
     /**
@@ -188,4 +187,5 @@ class CategoryController extends Controller
         }
         return response()->json(['status' => false, 'data' => null, 'msg' => 'Category not found']);
     }
+
 }

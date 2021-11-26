@@ -130,7 +130,7 @@
                                 <div class="row m-t-15">
                                     <div class="col-sm-12">
                                         <button type="submit" class="btn btn-primary">Submit</button>
-                                        <button type="submit" class="btn btn-outline-secondary">Cancel</button>
+                                        <a href="{{route('user.index')}}" class="btn btn-outline-secondary">Cancel</a>
                                     </div>
                                 </div>
 
