@@ -227,10 +227,12 @@
                                             </a>
                                             <div>
                                                 <a href="{{route('product.detail',$item->model->slug)}}">{{$item->name}}</a>
-                                                <p>{{$item->qty}} x - <span class="price">${{number_format($item->price,2)}}</span></p>
+                                                <p>{{$item->qty}} x - <span
+                                                        class="price">${{number_format($item->price,2)}}</span></p>
                                             </div>
                                         </div>
-                                        <span class="dropdown-product-remove cart_delete" data-id="{{$item->rowId}}"><i class="icofont-bin"></i></span>
+                                        <span class="dropdown-product-remove cart_delete" data-id="{{$item->rowId}}"><i
+                                                class="icofont-bin"></i></span>
                                     </li>
                                 @endforeach
                             </ul>
@@ -242,7 +244,11 @@
                                     </li>
                                     <li>
                                         <span>Total:</span>
-                                        <span>${{\Gloudemans\Shoppingcart\Facades\Cart::subtotal()}}</span>
+                                        @if (session()->has('coupon'))
+                                            <span>${{number_format(Cart::subtotal(2,'.','')-session('coupon')['value'],2)}}</span>
+                                        @else
+                                            <span>${{\Gloudemans\Shoppingcart\Facades\Cart::subtotal()}}</span>
+                                        @endif
                                     </li>
                                 </ul>
                             </div>

@@ -45,6 +45,7 @@
                 if (data['status'] === true) {
                     $('body #header-ajax').html(data['header']);
                     $('body #cart_counter').html(data['cart_counter']);
+                    $('body #cart-list').html(data['cart_list']);
                     swal({
                         title: "Good job!",
                         text: data['message'],
@@ -53,12 +54,13 @@
                     });
                 }
             },
-            error:function (err) {
+            error: function (err) {
                 console.log(err);
             }
         });
     });
 </script>
+
 //add to cart
 <script>
     $(document).on('click', '.add_to_cart', function (e) {

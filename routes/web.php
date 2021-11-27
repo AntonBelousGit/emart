@@ -55,6 +55,11 @@ Route::get('product/{slug}', [IndexController::class, 'productDetail'])->name('p
 Route::get('cart', [CartController::class, 'cart'])->name('cart');
 Route::post('cart/store', [CartController::class, 'cartStore'])->name('cart.store');
 Route::post('cart/delete', [CartController::class, 'cartDelete'])->name('cart.delete');
+Route::post('cart/update', [CartController::class, 'cartUpdate'])->name('cart.update');
+
+//Coupon section
+Route::post('coupon/add',[CartController::class,'couponAdd'])->name('coupon.add');
+
 
 //End Frontend
 Auth::routes(['register' => false]);

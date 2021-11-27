@@ -24,41 +24,8 @@
             <div class="row justify-content-between">
                 <div class="col-12">
                     <div class="cart-table">
-                        <div class="table-responsive">
-                            <table class="table table-bordered mb-30">
-                                <thead>
-                                <tr>
-                                    <th scope="col"><i class="icofont-ui-delete"></i></th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Product</th>
-                                    <th scope="col">Unit Price</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Total</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($cart_products as $item)
-                                    <tr>
-                                    <th scope="row">
-                                        <i class="icofont-close cart_delete" data-id="{{$item->rowId}}"></i>
-                                    </th>
-                                    <td>
-                                        <img src="{{$item->model->photo}}" alt="{{$item->name}}">
-                                    </td>
-                                    <td>
-                                        <a href="{{route('product.detail',$item->model->slug)}}">{{$item->name}}</a>
-                                    </td>
-                                    <td>${{$item->price}}</td>
-                                    <td>
-                                        <div class="quantity">
-                                            <input type="number" class="qty-text" id="qty2" step="1" min="1" max="99" name="quantity" value="{{$item->qty}}">
-                                        </div>
-                                    </td>
-                                    <td>${{$item->subtotal}}</td>
-                                </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                        <div class="table-responsive" id="cart-list">
+                            @include('frontend.pages.cart.component._cart-list')
                         </div>
                     </div>
                 </div>
@@ -69,9 +36,11 @@
                         <p>Enter your coupon code here &amp; get awesome discounts!</p>
                         <!-- Form -->
                         <div class="coupon-form">
-                            <form action="cart.html#">
-                                <input type="text" class="form-control" placeholder="Enter Your Coupon Code">
-                                <button type="submit" class="btn btn-primary">Apply Coupon</button>
+                            <form action="{{route('coupon.add')}}" id="coupon-form" method="post">
+                                @csrf
+                                <input type="text" name="code" class="form-control"
+                                       placeholder="Enter Your Coupon Code">
+                                <button type="submit" class="coupon-btn btn btn-primary">Apply Coupon</button>
                             </form>
                         </div>
                     </div>
@@ -114,38 +83,63 @@
 
 @section('scripts')
     <script>
-        $(document).on('click', '.cart_delete', function (e) {
+        $(document).on('click', '.coupon-btn', function (e) {
             e.preventDefault();
-            let cart_id = $(this).data('id');
+            let code = $('input[name=code]').val();
+            $('.coupon-btn').html('<i class="fa fa-refresh fa-spin"></i> Applying...')
+            $('#coupon-form').submit()
 
-            let token = '{{csrf_token()}}';
-            let path = '{{route('cart.delete')}}';
+        });
+    </script>
+    <script>
+        $(document).on('click', '.qty-text', function (e) {
+            let id = $(this).data('id');
+            let spinner = $(this),
+                input = spinner.closest("div.quantity").find('input[type="number"]');
+
+            if (input.val() < 1) {
+                return false;
+            }
+            if (input.val() != 1) {
+                let newVal = parseFloat(input.val());
+                $('#qty-input-' + id).val(newVal)
+            }
+
+            let productQuantity = $('#update-cart-' + id).data('product-quantity');
+            update_cart(id, productQuantity);
+
+        });
+
+        function update_cart(id, productQuantity) {
+            let product_qty = $('#qty-input-' + id).val();
+            let token = "{{csrf_token()}}";
+            let path = "{{route('cart.update')}}";
 
             $.ajax({
                 url: path,
                 type: "POST",
-                dataType: "JSON",
                 data: {
-                    cart_id: cart_id,
                     _token: token,
+                    product_qty: product_qty,
+                    rowId: id,
+                    productQuantity: productQuantity,
                 },
                 success: function (data) {
-
                     if (data['status'] === true) {
                         $('body #header-ajax').html(data['header']);
                         $('body #cart_counter').html(data['cart_counter']);
+                        $('body #cart-list').html(data['cart_list']);
                         swal({
                             title: "Good job!",
                             text: data['message'],
                             icon: "success",
                             button: "OK!",
                         });
+                    } else {
+
                     }
-                },
-                error:function (err) {
-                    console.log(err);
                 }
-            });
-        });
+            })
+        }
     </script>
 @endsection
