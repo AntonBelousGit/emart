@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\Frontend\WishlistController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +61,12 @@ Route::post('cart/update', [CartController::class, 'cartUpdate'])->name('cart.up
 //Coupon section
 Route::post('coupon/add',[CartController::class,'couponAdd'])->name('coupon.add');
 
+// Wishlist
+
+Route::get('wishlist',[WishlistController::class,'wishlist'])->name('wishlist');
+Route::post('wishlist/store',[WishlistController::class,'wishlistStore'])->name('wishlist.store');
+Route::post('wishlist/move-to-cart',[WishlistController::class,'moveToCart'])->name('wishlist.move.cart');
+Route::post('wishlist/delete',[WishlistController::class,'wishlistDelete'])->name('wishlist.delete');
 
 //End Frontend
 Auth::routes(['register' => false]);

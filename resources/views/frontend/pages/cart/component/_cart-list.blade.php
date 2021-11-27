@@ -10,7 +10,10 @@
     </tr>
     </thead>
     <tbody>
-    @foreach(Cart::instance('shopping')->content() as $item)
+    @php
+        $cart = Cart::instance('shopping');
+    @endphp
+    @foreach($cart->content() as $item)
         <tr>
             <th scope="row">
                 <i class="icofont-close cart_delete" data-id="{{$item->rowId}}"></i>
@@ -21,7 +24,7 @@
             <td>
                 <a href="{{route('product.detail',$item->model->slug)}}">{{$item->name}}</a>
             </td>
-            <td>${{$item->price}}</td>
+            <td>${{number_format($item->price,2)}}</td>
             <td>
                 <div class="quantity">
                     <input type="number" data-id="{{$item->rowId}}" class="qty-text"
@@ -32,7 +35,7 @@
                            id="update-cart-{{$item->rowId}}">
                 </div>
             </td>
-            <td>${{$item->subtotal}}</td>
+            <td>${{number_format($item->subtotal,2)}}</td>
         </tr>
     @endforeach
     </tbody>

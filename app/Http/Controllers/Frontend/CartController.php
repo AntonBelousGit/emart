@@ -13,8 +13,8 @@ class CartController extends Controller
 {
     public function cart()
     {
-        $cart_products = Cart::instance('shopping')->content();
-        return view('frontend.pages.cart.index', compact('cart_products'));
+        $cart = Cart::instance('shopping')->content();
+        return view('frontend.pages.cart.index', compact('cart'));
     }
 
     public function cartStore(Request $request)
@@ -24,13 +24,6 @@ class CartController extends Controller
 
         $product = Product::getProductByCart($product_id);
         $price = $product->offer_price;
-
-//        $cart_array=[];
-//
-//        foreach (Cart::instance('shopping')->content() as $item)
-//        {
-//            $cart_array[] = $item->id;
-//        }
 
         $result = Cart::instance('shopping')->add($product_id, $product->title, $product_qty, $price)->associate(Product::class);
 

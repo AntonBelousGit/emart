@@ -203,14 +203,17 @@
                         </div>
                     </div>
 
-                    <!-- Wishlist -->
+                <!-- Wishlist -->
                     <div class="wishlist-area">
-                        <a href="wishlist.html" class="wishlist-btn"><i class="icofont-heart"></i></a>
+                        <a href="{{route('wishlist')}}" class="wishlist-btn" id="wishlist_counter">
+                                <i class="icofont-heart"></i>
+                        </a>
                     </div>
-                @php
-                    $cart = \Gloudemans\Shoppingcart\Facades\Cart::instance('shopping');
-                @endphp
-                <!-- Cart -->
+                    @php
+                     $cart =\Gloudemans\Shoppingcart\Facades\Cart::instance('shopping');
+                    @endphp
+
+                    <!-- Cart -->
                     <div class="cart-area">
                         <div class="cart--btn"><i class="icofont-cart"></i> <span
                                 class="cart_quantity" id="cart_counter">{{$cart->count()}}</span></div>
@@ -240,14 +243,14 @@
                                 <ul>
                                     <li>
                                         <span>Sub Total:</span>
-                                        <span>${{\Gloudemans\Shoppingcart\Facades\Cart::subtotal()}}</span>
+                                        <span>${{$cart->subtotal()}}</span>
                                     </li>
                                     <li>
                                         <span>Total:</span>
                                         @if (session()->has('coupon'))
-                                            <span>${{number_format(Cart::subtotal(2,'.','')-session('coupon')['value'],2)}}</span>
+                                            <span>${{number_format($cart->subtotal(2,'.','') - session('coupon')['value'],2)}}</span>
                                         @else
-                                            <span>${{\Gloudemans\Shoppingcart\Facades\Cart::subtotal()}}</span>
+                                            <span>${{$cart->subtotal()}}</span>
                                         @endif
                                     </li>
                                 </ul>
