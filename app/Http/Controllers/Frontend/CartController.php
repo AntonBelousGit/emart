@@ -7,6 +7,7 @@ use App\Models\Coupon;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use function Symfony\Component\String\b;
 
 class CartController extends Controller
@@ -14,7 +15,10 @@ class CartController extends Controller
     public function cart()
     {
         $cart = Cart::instance('shopping')->content();
-        return view('frontend.pages.cart.index', compact('cart'));
+        $amount = Session::get('coupon');
+        $full_cart = Cart::class;
+
+        return view('frontend.pages.cart.index', compact('cart','amount','full_cart'));
     }
 
     public function cartStore(Request $request)

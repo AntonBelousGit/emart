@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 
 class IndexController extends Controller
 {
@@ -83,6 +85,7 @@ class IndexController extends Controller
 
     public function userAuth()
     {
+        Session::put('url.intended',URL::previous());
         return view('frontend.auth.auth');
     }
 
@@ -135,7 +138,7 @@ class IndexController extends Controller
     {
         Session::forget('user');
         Auth::logout();
-        return redirect()->home()->with('success', 'Successfully logout');
+        return redirect()->route('index')->with('success', 'Successfully logout');
     }
 
     public function userDashboard()

@@ -13,6 +13,7 @@
     @php
         $cart = Cart::instance('shopping');
     @endphp
+
     @foreach($cart->content() as $item)
         <tr>
             <th scope="row">
