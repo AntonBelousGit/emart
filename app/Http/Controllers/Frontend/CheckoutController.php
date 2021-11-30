@@ -13,4 +13,9 @@ class CheckoutController extends Controller
         $user = Auth::user();
         return view('frontend.pages.checkout.checkout1',compact('user'));
     }
+    public function checkout1Store(Request $request)
+    {
+
+    }
+
 }

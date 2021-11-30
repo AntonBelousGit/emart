@@ -74,10 +74,10 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#Cart" class="has-arrow"><i class="icon-basket"></i> <span>Carts Management</span></a>
+                            <a href="#Cart" class="has-arrow"><i class="fa fa-truck"></i> <span>Shipping Management</span></a>
                             <ul>
-                                <li><a href="app-inbox.html">Inbox</a></li>
-                                <li><a href="app-chat.html">Chat</a></li>
+                                <li><a href="{{route('shipping.index')}}">All Shippings</a></li>
+                                <li><a href="{{route('shipping.create')}}">Add Shippings</a></li>
                             </ul>
                         </li>
                         <li>

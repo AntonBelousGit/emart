@@ -18,7 +18,7 @@ class CartController extends Controller
         $amount = Session::get('coupon');
         $full_cart = Cart::class;
 
-        return view('frontend.pages.cart.index', compact('cart','amount','full_cart'));
+        return view('frontend.pages.cart.index', compact('cart', 'amount', 'full_cart'));
     }
 
     public function cartStore(Request $request)
@@ -38,9 +38,13 @@ class CartController extends Controller
             $response['cart_count'] = Cart::instance('shopping')->count();
             $response['message'] = "Item was added to your cart";
         }
+        if (Session::has('coupon')) {
+            $response['amount'] = $this->updatePercentCoupon();
+        }
 
         if ($request->ajax()) {
             $header = view('frontend.layouts.header')->render();
+            $response['cart_total'] = $this->cartTotal();
             $response['header'] = $header;
         }
         return json_encode($response, JSON_THROW_ON_ERROR);
@@ -55,11 +59,17 @@ class CartController extends Controller
         $response['total'] = Cart::subtotal();
         $response['cart_count'] = Cart::instance('shopping')->count();
         $response['message'] = "Product successfully removed";
+        if (Session::has('coupon')) {
+            $response['amount'] = $this->updatePercentCoupon();
+        }
+
 
         if ($request->ajax()) {
             $header = view('frontend.layouts.header')->render();
             $cart_list = view('frontend.pages.cart.component._cart-list')->render();
+
             $response['cart_list'] = $cart_list;
+            $response['cart_total'] = $this->cartTotal();
             $response['header'] = $header;
         }
         return $response;
@@ -87,12 +97,17 @@ class CartController extends Controller
             $response['total'] = Cart::subtotal();
             $response['cart_count'] = Cart::instance('shopping')->count();
         }
+        if (Session::has('coupon')) {
+             $response['amount'] = $this->updatePercentCoupon();
+        }
+
         if ($request->ajax()) {
             $header = view('frontend.layouts.header')->render();
             $cart_list = view('frontend.pages.cart.component._cart-list')->render();
 
             $response['header'] = $header;
             $response['cart_list'] = $cart_list;
+            $response['cart_total'] = $this->cartTotal();
             $response['message'] = $message;
         }
         return $response;
@@ -112,6 +127,30 @@ class CartController extends Controller
             'value' => $coupon->discount($total_price),
 
         ]);
-        return back()->with('success','Coupon applied successfully');
+        return back()->with('success', 'Coupon applied successfully');
+    }
+
+    public function updatePercentCoupon()
+    {
+        $oldcoupon = Session::get('coupon');
+        $coupon = Coupon::where('code', $oldcoupon['code'])->first();
+        $total_price = Cart::instance('shopping')->subtotal();
+        $value = $coupon->discount($total_price);
+
+        session()->put('coupon', [
+            'id' => $oldcoupon['id'],
+            'code' => $oldcoupon['code'],
+            'value' => $value,
+
+        ]);
+
+        return $value;
+    }
+
+    public function cartTotal()
+    {
+        $amount = Session::get('coupon');
+        $full_cart = Cart::class;
+        return view('frontend.pages.cart.component._cart-total',compact('amount','full_cart'))->render();
     }
 }

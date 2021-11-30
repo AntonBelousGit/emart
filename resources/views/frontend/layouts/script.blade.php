@@ -47,6 +47,8 @@
                     $('body #header-ajax').html(data['header']);
                     $('body #cart_counter').html(data['cart_counter']);
                     $('body #cart-list').html(data['cart_list']);
+                    $('body #cart-total').html(data['cart_total']);
+
                     swal({
                         title: "Good job!",
                         text: data['message'],
@@ -92,6 +94,8 @@
                 if (data['status'] === true) {
                     $('body #header-ajax').html(data['header']);
                     $('body #cart_counter').html(data['cart_counter']);
+                    $('body #cart-total').html(data['cart_total']);
+
                     swal({
                         title: "Good job!",
                         text: data['message'],
