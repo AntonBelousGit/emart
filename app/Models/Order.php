@@ -17,6 +17,9 @@ class Order extends Model
         'coupon',
         'quantity',
         'delivery_charge',
+        'payment_method',
+        'payment_status',
+        'condition',
     ];
 
     public function info()

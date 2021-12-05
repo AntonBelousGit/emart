@@ -20,8 +20,8 @@
 
     <!-- Checkout Step Area -->
     <div class="checkout_steps_area">
-        <a class="active" href="checkout-2.html"><i class="icofont-check-circled"></i> Billing</a>
-        <a href="checkout-3.html"><i class="icofont-check-circled"></i> Shipping</a>
+        <a class="active" href="{{route('checkout1')}}"><i class="icofont-check-circled"></i> Billing</a>
+        <a href=""><i class="icofont-check-circled"></i> Shipping</a>
         <a href="checkout-4.html"><i class="icofont-check-circled"></i> Payment</a>
         <a href="checkout-5.html"><i class="icofont-check-circled"></i> Review</a>
     </div>
@@ -43,7 +43,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="first_name">First Name</label>
                                     <input type="text" class="form-control" id="first_name" placeholder="First Name"
-                                           value="{{$name[0]}}" required name="ssfirst_name">
+                                           value="{{$name[0]}}" required name="first_name">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="last_name">Last Name</label>

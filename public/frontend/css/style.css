@@ -3828,3 +3828,6 @@ button.mfp-arrow {
     -o-transition-duration: 500ms;
     transition-duration: 500ms;
     box-shadow: 0 0 8px 0 rgba(47, 91, 234, 0.125); }
+
+.fix-label-five{
+    padding-top: 3px;}

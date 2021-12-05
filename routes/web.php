@@ -72,7 +72,11 @@ use App\Http\Controllers\Admin\BannerController;
     //Checkout section
 
     Route::get('checkout1', [CheckoutController::class, 'checkout1'])->name('checkout1')->middleware('user');
-    Route::post('checkout-first',[CheckoutController::class, 'checkout1Store'])->name('checkout1.store')->middleware('user');
+    Route::post('checkout-first',[CheckoutController::class, 'checkout1Store'])->name('checkout1.store');
+    Route::post('checkout-second',[CheckoutController::class, 'checkout2Store'])->name('checkout2.store');
+    Route::post('checkout-third',[CheckoutController::class, 'checkout3Store'])->name('checkout3.store');
+    Route::get('checkout-store',[CheckoutController::class, 'checkoutStore'])->name('checkout.store');
+
     //End Frontend
 
     Auth::routes(['register' => false]);
