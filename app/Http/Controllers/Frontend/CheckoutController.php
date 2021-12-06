@@ -77,8 +77,8 @@ class CheckoutController extends Controller
     {
         $order = new Order();
         $order['user_id'] = auth()->user()->id;
-        $order['order_nuber'] = Str::upper('ORD-'.Str::random());
-
+        $order['order_number'] = Str::upper('ORD-'.Str::random());
+        $order['sub_total'] = Session::get('checkout')['sub_total'] ;
         return $order;
     }
 }
