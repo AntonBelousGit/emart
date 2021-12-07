@@ -82,7 +82,7 @@
 
                                             <div class="form-group">
                                                 <label for="">Coupon Value <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" required placeholder="eg. 10%"
+                                                <input type="number" min="0" class="form-control" required placeholder="eg. 10"
                                                        name="value"
                                                        value="{{old('value')}}">
                                             </div>

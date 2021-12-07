@@ -5,12 +5,12 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\WishlistController;
-use App\Http\Controllers\ShippingController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -76,6 +76,7 @@ use App\Http\Controllers\Admin\BannerController;
     Route::post('checkout-second',[CheckoutController::class, 'checkout2Store'])->name('checkout2.store');
     Route::post('checkout-third',[CheckoutController::class, 'checkout3Store'])->name('checkout3.store');
     Route::get('checkout-store',[CheckoutController::class, 'checkoutStore'])->name('checkout.store');
+    Route::get('checkout-complete/{order}',[CheckoutController::class, 'complete'])->name('checkout.complete');
 
     //End Frontend
 

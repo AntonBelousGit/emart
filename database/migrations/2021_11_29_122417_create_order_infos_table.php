@@ -19,21 +19,24 @@ class CreateOrderInfosTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email');
-            $table->string('phone');
-            $table->string('country');
-            $table->string('address');
-            $table->string('city');
-            $table->string('state');
-            $table->mediumText('note');
+            $table->string('phone')->nullable();
+            $table->string('country')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('postcode')->nullable();
+            $table->mediumText('note')->nullable();
 
-            $table->string('sfirst_name');
-            $table->string('slast_name');
-            $table->string('semail');
-            $table->string('sphone');
-            $table->string('scountry');
-            $table->string('saddress');
-            $table->string('scity');
-            $table->string('sstate');
+            $table->string('sfirst_name')->nullable();
+            $table->string('slast_name')->nullable();
+            $table->string('semail')->nullable();
+            $table->string('sphone')->nullable();
+            $table->string('scountry')->nullable();
+            $table->string('saddress')->nullable();
+            $table->string('scity')->nullable();
+            $table->string('sstate')->nullable();
+            $table->string('spostcode')->nullable();
+
 
             $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();

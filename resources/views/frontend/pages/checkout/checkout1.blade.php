@@ -29,6 +29,17 @@
     <!-- Checkout Area -->
     <div class="checkout_area section_padding_100">
         <div class="container">
+            <div class="col-md-12">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
             <div class="row">
                 <form action="{{route('checkout1.store')}}" method="post">
                     @csrf
@@ -87,7 +98,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label for="order-notes">Order Notes</label>
-                                    <textarea class="form-control" id="order-notes" cols="30" rows="10" name="note"
+                                    <textarea class="form-control" id="order-notes" value="{{old('note')}}" cols="30" rows="10" name="note"
                                               placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
                                 </div>
                             </div>

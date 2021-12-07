@@ -220,7 +220,7 @@
                     <div class="col-12">
                         <div class="checkout_pagination d-flex justify-content-end mt-30">
                             <a href="checkout-3.html" class="btn btn-primary mt-2 ml-2">Go Back</a>
-                            <button type="submit "  class="btn btn-primary mt-2 ml-2">Final Step</button>
+                            <button type="submit"  class="btn btn-primary mt-2 ml-2">Final Step</button>
                         </div>
                     </div>
                 </div>

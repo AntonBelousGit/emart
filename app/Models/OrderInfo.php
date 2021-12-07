@@ -19,6 +19,7 @@ class OrderInfo extends Model
         'city',
         'state',
         'note',
+        'postcode',
         'sfirst_name',
         'slast_name',
         'sphone',
@@ -26,7 +27,8 @@ class OrderInfo extends Model
         'saddress',
         'scity',
         'sstate',
-        'order_id'
+        'order_id',
+        'spostcode'
     ];
 
 //    public function order()

@@ -98,7 +98,6 @@
 
                                 <tr>
                                     <td>Total</td>
-
                                     <td>$
                                         @if (isset($amount))
                                             {{number_format($full_cart::subtotal(2,'.','') + $checkout['delivery_charge'][0] - $amount['value'],2)}}
