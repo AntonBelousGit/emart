@@ -28,7 +28,7 @@
     <div class="product_description">
         <!-- Add to cart -->
         <div class="product_add_to_cart">
-            <a href="#" data-quantity="1" data-product-id="{{$product->id}}" class="add_to_cart" id="add_to_cart{{$product->id}}"><i class="icofont-shopping-cart"></i> Add to Cart</a>
+            <a href="javascript:void(0);" data-quantity="1" data-product-id="{{$product->id}}" class="add_to_cart" id="add_to_cart{{$product->id}}"><i class="icofont-shopping-cart"></i> Add to Cart</a>
         </div>
 
         <!-- Quick View -->

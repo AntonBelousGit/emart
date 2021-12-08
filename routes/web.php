@@ -78,6 +78,9 @@ use App\Http\Controllers\Admin\BannerController;
     Route::get('checkout-store',[CheckoutController::class, 'checkoutStore'])->name('checkout.store');
     Route::get('checkout-complete/{order}',[CheckoutController::class, 'complete'])->name('checkout.complete');
 
+    // Shop section
+    Route::get('shop',[IndexController::class,'shop'])->name('shop');
+
     //End Frontend
 
     Auth::routes(['register' => false]);

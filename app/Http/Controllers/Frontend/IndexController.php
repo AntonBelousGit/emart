@@ -29,6 +29,13 @@ class IndexController extends Controller
         return view('frontend.index', compact('banners', 'categories', 'new_product'));
     }
 
+    public function shop(Request $request)
+    {
+        $products = Product::where('status','active')->paginate(9);
+        $categories = Category::where(['status'=>'active','is_parent'=>1])->orderBy('title', 'ASC')->get();
+        return view('frontend.pages.product.shop',compact('products','categories'));
+    }
+
     public function productCategory(Request $request, $slug)
     {
         $categories = Category::with('products.brand')->where('slug', $slug)->first();
@@ -78,7 +85,7 @@ class IndexController extends Controller
     {
         $product = Product::with('rel_products')->where('slug', $slug)->first();
         if ($product) {
-            return view('frontend.layouts.product.single-product-detail', compact('product'));
+            return view('frontend.pages.product.single-product-detail', compact('product'));
         }
         return 'Product not found';
     }
