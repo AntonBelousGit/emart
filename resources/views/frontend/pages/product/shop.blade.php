@@ -81,7 +81,7 @@
                 <div class="col-12">
                     <h5>Shop Grid</h5>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('index')}}">Home</a></li>
                         <li class="breadcrumb-item active">Shop Grid</li>
                     </ol>
                 </div>
@@ -117,6 +117,7 @@
                     </div>
 
                     <div class="shop_grid_product_area">
+                        <p>Total products: {{$products->total()}}</p>
                         <div class="row justify-content-center">
                             <!-- Single Product -->
                             @if (count($products)>0)
@@ -132,7 +133,7 @@
                         </div>
                     </div>
 
-                    {{$products->links('vendor.pagination.custom')}}
+                    {{$products->withQueryString()->links('vendor.pagination.custom')}}
                 </div>
             </div>
         </div>

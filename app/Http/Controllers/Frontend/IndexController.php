@@ -31,9 +31,35 @@ class IndexController extends Controller
 
     public function shop(Request $request)
     {
-        $products = Product::where('status','active')->paginate(9);
-        $categories = Category::where(['status'=>'active','is_parent'=>1])->orderBy('title', 'ASC')->get();
-        return view('frontend.pages.product.shop',compact('products','categories'));
+        $products = Product::query();
+        if (!empty($_GET['category'])) {
+            $slug = explode(',', $_GET['category']);
+            $cat_ids = Category::select('id')->whereIn('slug', $slug)->pluck('id')->toArray();
+            $products = $products->whereIn('cat_id', $cat_ids)->paginate(12);
+        } else {
+            $products = Product::where('status', 'active')->paginate(12);
+        }
+
+        $categories = Category::where(['status' => 'active', 'is_parent' => 1])->with('products')->orderBy('title', 'ASC')->get();
+
+
+        return view('frontend.pages.product.shop', compact('products', 'categories'));
+    }
+
+    public function shopFilter(Request $request)
+    {
+        $data = $request->all();
+        $catUrl = '';
+        if (!empty($data['category'])) {
+            foreach ($data['category'] as $category) {
+                if (empty($catUrl)) {
+                    $catUrl .= '&category=' . $category;
+                } else {
+                    $catUrl .= ',' . $category;
+                }
+            }
+        }
+        return redirect()->route('shop', $catUrl);
     }
 
     public function productCategory(Request $request, $slug)
@@ -92,7 +118,7 @@ class IndexController extends Controller
 
     public function userAuth()
     {
-        Session::put('url.intended',URL::previous());
+        Session::put('url.intended', URL::previous());
         return view('frontend.auth.auth');
     }
 
@@ -208,12 +234,12 @@ class IndexController extends Controller
 
     public function updateAccount(Request $request, $id)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'newpassword' => 'nullable|min:3',
             'oldpassword' => 'nullable|min:3',
-            'full_name'=> 'required|string',
-            'username'=> 'nullable|string',
-            'phone'=>'nullable|min:8|max:25'
+            'full_name' => 'required|string',
+            'username' => 'nullable|string',
+            'phone' => 'nullable|min:8|max:25'
         ]);
         $hashpassword = Auth::user()->password;
 
