@@ -65,9 +65,19 @@ class IndexController extends Controller
                     $query->orderBy('id', 'ASC');
                 });
         }
-        $products->get();
 
-        $categories = Category::where(['status' => 'active', 'is_parent' => 1])->with('products')->orderBy('title', 'ASC')->get();
+        if (!empty($_GET['price'])) {
+            $price = explode('-', $_GET['price']);
+            $price[0] = floor($price[0]);
+            $price[1] = ceil($price[1]);
+
+            $products = $products->whereBetween('offer_price',$price);
+        }
+        $products = $products->paginate(12);
+
+        $categories = Category::where(['status' => 'active', 'is_parent' => 1])
+            ->with('products')
+            ->orderBy('title', 'ASC')->get();
 
         return view('frontend.pages.product.shop', compact('products', 'categories'));
     }
@@ -90,8 +100,14 @@ class IndexController extends Controller
         if (!empty($data['sortBy'])) {
             $sortByUrl .= '&sortBy=' . $data['sortBy'];
         }
+        //price filter
 
-        return redirect()->route('shop', $catUrl . $sortByUrl);
+        $price_range_url = '';
+        if (!empty($data['price_range'])) {
+            $price_range_url .= '&price=' . $data['price_range'];
+        }
+
+        return redirect()->route('shop', $catUrl . $sortByUrl . $price_range_url);
     }
 
     public function productCategory(Request $request, $slug)

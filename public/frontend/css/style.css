@@ -3831,3 +3831,17 @@ button.mfp-arrow {
 
 .fix-label-five{
     padding-top: 3px;}
+#amount{
+    border: none;
+    width: 105%;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.price_range_btn{
+    text-align: center;
+    display: block;
+    margin: 12px auto 0;
+    height: 30px;
+    line-height: 22px;
+}

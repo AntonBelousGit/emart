@@ -136,10 +136,9 @@
                         </div>
 
                         <div class="shop_grid_product_area">
-{{--                            <p>Total products: {{$products->total()}}</p>--}}
+                            <p>Total products: {{$products->total()}}</p>
                             <div class="row justify-content-center">
                                 <!-- Single Product -->
-                                @dd($products)
                                 @if (count($products)>0)
                                     @foreach($products as $product)
                                         <div class="col-9 col-sm-12 col-md-6 col-lg-4">
@@ -160,4 +159,38 @@
             </form>
         </div>
     </section>
+@endsection
+
+
+@section('scripts')
+    <script>
+        $(document).ready(function () {
+            if ($('#slider-range').length > 0)
+            {
+                const max_value = parseInt($('#slider-range').data('max')) || 100000;
+                const min_value = parseInt($('#slider-range').data('min')) || 0;
+                const currency =  $('#price_range').data('currency') || '';
+                let price_range = min_value+'-'+max_value;
+
+                if ($('#price_range').length > 0 && $('#price_range').val() )
+                {
+                    price_range = $('#price_range').val().trim();
+                }
+                let price = price_range.split('-');
+                $('#slider-range').slider({
+                    range:true,
+                    min:min_value,
+                    max:max_value,
+                    values:price,
+                    slide:function (event,ui)
+                    {
+                        $('#amount').val('$'+ui.values[0]+"-"+'$'+ui.values[1])
+
+                        $('#price_range').val(ui.values[0]+"-"+ui.values[1])
+                    }
+                })
+            }
+        })
+
+    </script>
 @endsection
