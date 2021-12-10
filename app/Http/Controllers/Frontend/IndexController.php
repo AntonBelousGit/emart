@@ -31,17 +31,43 @@ class IndexController extends Controller
 
     public function shop(Request $request)
     {
-        $products = Product::query();
+        $product_query = Product::query();
+        $products = $product_query->where('status', 'active');
         if (!empty($_GET['category'])) {
             $slug = explode(',', $_GET['category']);
             $cat_ids = Category::select('id')->whereIn('slug', $slug)->pluck('id')->toArray();
-            $products = $products->whereIn('cat_id', $cat_ids)->paginate(12);
-        } else {
-            $products = Product::where('status', 'active')->paginate(12);
+            $products = $products->whereIn('cat_id', $cat_ids);
         }
 
-        $categories = Category::where(['status' => 'active', 'is_parent' => 1])->with('products')->orderBy('title', 'ASC')->get();
+        if (!empty($_GET['sortBy'])) {
 
+            $sort = $_GET['sortBy'];
+            $products = $products
+                ->when($sort === 'priceAsc', function ($query) {
+                    $query->orderBy('offer_price', 'ASC');
+                })
+                ->when($sort === 'priceDesc', function ($query) {
+                    $query->orderBy('offer_price', 'DESC');
+                })
+                ->when($sort === 'discAsc', function ($query) {
+                    $query->orderBy('price', 'ASC');
+                })
+                ->when($sort === 'discDesc', function ($query) {
+                    $query->orderBy('price', 'DESC');
+                })
+                ->when($sort === 'titleAsc', function ($query) {
+                    $query->orderBy('price', 'ASC');
+                })
+                ->when($sort === 'titleDesc', function ($query) {
+                    $query->orderBy('price', 'DESC');
+                })
+                ->when($sort === '', function ($query) {
+                    $query->orderBy('id', 'ASC');
+                });
+        }
+        $products->get();
+
+        $categories = Category::where(['status' => 'active', 'is_parent' => 1])->with('products')->orderBy('title', 'ASC')->get();
 
         return view('frontend.pages.product.shop', compact('products', 'categories'));
     }
@@ -59,7 +85,13 @@ class IndexController extends Controller
                 }
             }
         }
-        return redirect()->route('shop', $catUrl);
+        //sort filter
+        $sortByUrl = '';
+        if (!empty($data['sortBy'])) {
+            $sortByUrl .= '&sortBy=' . $data['sortBy'];
+        }
+
+        return redirect()->route('shop', $catUrl . $sortByUrl);
     }
 
     public function productCategory(Request $request, $slug)
