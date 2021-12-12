@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
@@ -37,6 +38,12 @@ class IndexController extends Controller
             $slug = explode(',', $_GET['category']);
             $cat_ids = Category::select('id')->whereIn('slug', $slug)->pluck('id')->toArray();
             $products = $products->whereIn('cat_id', $cat_ids);
+        }
+
+        if (!empty($_GET['brand'])) {
+            $slug = explode(',', $_GET['brand']);
+            $cat_ids = Brand::select('id')->whereIn('slug', $slug)->pluck('id')->toArray();
+            $products = $products->whereIn('brand_id', $cat_ids);
         }
 
         if (!empty($_GET['sortBy'])) {
@@ -78,8 +85,11 @@ class IndexController extends Controller
         $categories = Category::where(['status' => 'active', 'is_parent' => 1])
             ->with('products')
             ->orderBy('title', 'ASC')->get();
+        $brands = Brand::where('status', 'active')
+            ->with('products')
+            ->orderBy('title', 'ASC')->get();
 
-        return view('frontend.pages.product.shop', compact('products', 'categories'));
+        return view('frontend.pages.product.shop', compact('products', 'categories','brands'));
     }
 
     public function shopFilter(Request $request)
@@ -107,7 +117,20 @@ class IndexController extends Controller
             $price_range_url .= '&price=' . $data['price_range'];
         }
 
-        return redirect()->route('shop', $catUrl . $sortByUrl . $price_range_url);
+        //brand filter
+        $brandUrl = '';
+        if (!empty($data['brand'])) {
+            foreach ($data['brand'] as $brand) {
+                if (empty($brandUrl)) {
+                    $brandUrl .= '&brand=' . $brand;
+                } else {
+                    $brandUrl .= ',' . $brand;
+                }
+            }
+        }
+
+
+        return redirect()->route('shop', $catUrl . $sortByUrl . $price_range_url . $brandUrl);
     }
 
     public function productCategory(Request $request, $slug)
