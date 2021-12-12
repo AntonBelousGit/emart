@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Size;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -88,8 +89,9 @@ class IndexController extends Controller
         $brands = Brand::where('status', 'active')
             ->with('products')
             ->orderBy('title', 'ASC')->get();
+        $sizes = Size::with('products')->get();
 
-        return view('frontend.pages.product.shop', compact('products', 'categories','brands'));
+        return view('frontend.pages.product.shop', compact('products', 'categories','brands','sizes'));
     }
 
     public function shopFilter(Request $request)

@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Size;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -38,7 +39,7 @@ class ProductFactory extends Factory
             'price' => $this->faker->numberBetween(100, 2000),
             'offer_price' => $this->faker->numberBetween(100, 2000),
             'discount' => $this->faker->numberBetween(1, 100),
-            'size' => $this->faker->randomElement(['S', 'M', 'L','XL','XXL','XXXL']),
+            'size_id' => $this->faker->randomElement(Size::pluck('id')->toArray()),
             'condition' => $this->faker->randomElement(['new', 'popular', 'winter']),
             'status' => $this->faker->randomElement(['active', 'inactive']),
         ];

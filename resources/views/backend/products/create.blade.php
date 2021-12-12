@@ -67,7 +67,7 @@
                                     <div class="col-lg-12 col-md-12">
                                         <div class="form-group">
                                             <label for="">Stock <span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control" placeholder="Stock" name="stock"
+                                            <input type="number" class="form-control" required placeholder="Stock" name="stock"
                                                    value="{{old('stock')}}">
                                         </div>
                                     </div>
@@ -97,13 +97,13 @@
                                         <div class="form-group">
                                             <label for="">Photo</label>
                                             <div class="input-group">
-                       <span class="input-group-btn">
-                         <a id="lfm" data-input="thumbnail" data-preview="holder"
-                            class="btn btn-primary">
-                           <i class="fa fa-picture-o"></i> Choose
-                         </a>
-                       </span>
-                                                <input id="thumbnail" class="form-control" type="text" name="photo">
+                                               <span class="input-group-btn">
+                                                 <a id="lfm" data-input="thumbnail" data-preview="holder"
+                                                    class="btn btn-primary">
+                                                   <i class="fa fa-picture-o"></i> Choose
+                                                 </a>
+                                               </span>
+                                                <input id="thumbnail" class="form-control" type="text" name="photo" required>
                                             </div>
                                             <div id="holder" style="margin-top:15px;max-height:100px;">
 
@@ -137,26 +137,12 @@
                                     </div>
                                     <div class="col-lg-12 col-sm-12">
                                         <label for="status">Size <span class="text-danger">*</span></label>
-                                        <select name="size" class="form-control show-tick" required>
+                                        <select name="size_id" class="form-control show-tick" required>
                                             <option value="">-- Size --</option>
-                                            <option value="S" {{old('size')=== 'S' ? 'selected': ''}}>
-                                                S
-                                            </option>
-                                            <option value="M" {{old('size')=== 'M' ? 'selected': ''}}>
-                                                M
-                                            </option>
-                                            <option value="L" {{old('size')=== 'L' ? 'selected': ''}}>
-                                                L
-                                            </option>
-                                            <option value="XL" {{old('size')=== 'XL' ? 'selected': ''}}>
-                                                XL
-                                            </option>
-                                            <option value="XXL" {{old('size')=== 'XXL' ? 'selected': ''}}>
-                                                XXL
-                                            </option>
-                                            <option value="XXXL" {{old('size')=== 'XXXL' ? 'selected': ''}}>
-                                                XXXL
-                                            </option>
+                                            @foreach($sizes as $size)
+                                                <option value="{{$size->id}}" {{old('size_id')=== $size->id ? 'selected': ''}}>
+                                                    {{$size->title}} ({{$size->slug}}) </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-lg-12 col-sm-12">

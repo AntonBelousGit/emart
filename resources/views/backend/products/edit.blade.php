@@ -53,8 +53,8 @@
                                             <label for="">Summary <span class="text-danger">*</span></label>
                                             <textarea id="summary" type="text" class="form-control"
                                                       placeholder="Some text..." name="summary">
-                            {{$product->summary}}
-                    </textarea>
+                                        {{$product->summary}}
+                                            </textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12">
@@ -68,7 +68,7 @@
                                     <div class="col-lg-12 col-md-12">
                                         <div class="form-group">
                                             <label for="">Stock <span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control" placeholder="Stock" name="stock"
+                                            <input type="number" class="form-control" required placeholder="Stock" name="stock"
                                                    value="{{$product->stock}}">
                                         </div>
                                     </div>
@@ -95,18 +95,18 @@
                                     {{--                                            <input type="text" class="form-control" placeholder="URL" name="slug" value="{{old('slug')}}">--}}
                                     {{--                                        </div>--}}
                                     {{--                                    </div>--}}
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="form-group">
-                                            <label for="">Photo</label>
-                                            <div class="input-group">
-<span class="input-group-btn">
- <a id="lfm" data-input="thumbnail" data-preview="holder"
-    class="btn btn-primary">
-   <i class="fa fa-picture-o"></i> Choose
- </a>
-</span>
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="form-group">
+                                                    <label for="">Photo</label>
+                                                    <div class="input-group">
+                                            <span class="input-group-btn">
+                                             <a id="lfm" data-input="thumbnail" data-preview="holder"
+                                                class="btn btn-primary">
+                                               <i class="fa fa-picture-o"></i> Choose
+                                             </a>
+                                            </span>
                                                 <input id="thumbnail" class="form-control" type="text" name="photo"
-                                                       value="{{$product->photo}}">
+                                                       value="{{$product->photo}}" required>
                                             </div>
                                             <div id="holder" style="margin-top:15px;max-height:100px;">
 
@@ -142,26 +142,12 @@
                                     </div>
                                     <div class="col-lg-12 col-sm-12">
                                         <label for="status">Size <span class="text-danger">*</span></label>
-                                        <select name="size" class="form-control show-tick" required>
+                                        <select name="size_id" class="form-control show-tick" required>
                                             <option value="">-- Size --</option>
-                                            <option value="S" {{$product->size === 'S' ? 'selected': ''}}>
-                                                S
-                                            </option>
-                                            <option value="M" {{$product->size === 'M' ? 'selected': ''}}>
-                                                M
-                                            </option>
-                                            <option value="L" {{$product->size === 'L' ? 'selected': ''}}>
-                                                L
-                                            </option>
-                                            <option value="XL" {{$product->size === 'XL' ? 'selected': ''}}>
-                                                XL
-                                            </option>
-                                            <option value="XXL" {{$product->size === 'XXL' ? 'selected': ''}}>
-                                                XXL
-                                            </option>
-                                            <option value="XXXL" {{$product->size === 'XXXL' ? 'selected': ''}}>
-                                                XXXL
-                                            </option>
+                                            @foreach($sizes as $size)
+                                                <option value="{{$size->id}}" {{$product->size_id=== $size->id ? 'selected': ''}}>
+                                                    {{$size->title}} ({{$size->slug}}) </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-lg-12 col-sm-12">
@@ -206,7 +192,8 @@
                                 <div class="row m-t-15">
                                     <div class="col-sm-12">
                                         <button type="submit" class="btn btn-primary">Update</button>
-                                        <a href="{{route('product.index')}}" class="btn btn-outline-secondary">Cancel</a>
+                                        <a href="{{route('product.index')}}"
+                                           class="btn btn-outline-secondary">Cancel</a>
                                     </div>
                                 </div>
 
@@ -255,7 +242,7 @@
                         if (response.status) {
                             $('#child_cat_div').removeClass('d-none');
                             $.each(response.data, function (id, title) {
-                                html_option += "<option value='" + id + "'"+ (child_cat_id==id?'selected':'') +">" + title + "</ooption>"
+                                html_option += "<option value='" + id + "'" + (child_cat_id == id ? 'selected' : '') + ">" + title + "</ooption>"
                             })
                         } else {
                             $('#child_cat_div').addClass('d-none');
@@ -266,7 +253,7 @@
             }
         })
 
-        if (child_cat_id !=null){
+        if (child_cat_id != null) {
             $('#cat_id').change();
         }
     </script>

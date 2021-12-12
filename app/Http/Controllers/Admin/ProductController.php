@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Size;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +24,7 @@ class ProductController extends Controller
         $products_query = Product::query();
         $products_count = $products_query->count();
 //        $products = $products_query->orderBy('id', 'DESC')->get();
-        $products = DB::table('products')->orderBy('id', 'DESC')->get();;
+        $products = $products_query->with('size')->orderBy('id', 'DESC')->get();;
         return view('backend.products.index', compact('products', 'products_count'));
     }
 
@@ -40,7 +41,7 @@ class ProductController extends Controller
 
     public function productView(Request $request){
 
-        $product = Product::with('category','childCategory','brand','vendor')->find($request->id);
+        $product = Product::with('category','childCategory','brand','vendor','size')->find($request->id);
 
         $returnHTML = view('backend.products.layouts.modal-body',['product'=> $product])->render();
 
@@ -55,11 +56,12 @@ class ProductController extends Controller
     public function create()
     {
         $cat = Category::query();
-        $vendors = User::where('role', 'vendor')->get();
+        $vendors = User::where('role', 'seller')->get();
         $categories = $cat->where('is_parent', 1)->get();
 //        $childCategories = $cat->where('is_parent',1)->get();
+        $sizes = Size::all();
         $brands = Brand::all();
-        return view('backend.products.create', compact('brands', 'vendors', 'categories'));
+        return view('backend.products.create', compact('brands', 'vendors', 'categories','sizes'));
     }
 
     /**
@@ -81,12 +83,11 @@ class ProductController extends Controller
             'cat_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
             'vendor_id' => 'required|exists:users,id',
+            'size_id' => 'required|exists:sizes,id',
             'child_cat_id' => 'nullable|exists:categories,id',
             'condition' => 'required',
-            'size' => 'nullable',
             'status' => 'nullable|in:active,inactive'
         ]);
-
 
         $slug = Str::slug($request->input('title'));
         $slug_count = Product::where('slug', $slug)->count();
@@ -95,7 +96,6 @@ class ProductController extends Controller
         }
         $validate_data['slug'] = $slug;
         $validate_data['offer_price'] = ($request->price - (($request->price * $request->discount) / 100));
-//        return $validate_data;
         $status = Product::create($validate_data);
         if ($status) {
             return redirect()->route('product.index')->with('success', 'Successfully created product');
@@ -120,8 +120,6 @@ class ProductController extends Controller
         }
     }
 
-
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -132,10 +130,12 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $categories = Category::where('is_parent', 1)->get();
-        $vendors = User::where('role', 'vendor')->get();
+        $vendors = User::where('role', 'seller')->get();
         $brands = Brand::all();
+        $sizes = Size::all();
+
         if ($product) {
-            return view('backend.products.edit', compact('product','categories','brands','vendors'));
+            return view('backend.products.edit', compact('product','categories','brands','vendors','sizes'));
         } else {
             return back()->with('error', 'Category not found');
         }
@@ -163,19 +163,12 @@ class ProductController extends Controller
                 'cat_id' => 'required|exists:categories,id',
                 'brand_id' => 'required|exists:brands,id',
                 'vendor_id' => 'required|exists:users,id',
+                'size_id' => 'required|exists:sizes,id',
                 'child_cat_id' => 'nullable|exists:categories,id',
                 'condition' => 'required',
                 'size' => 'nullable',
                 'status' => 'nullable|in:active,inactive'
             ]);
-
-//            $slug = Str::slug($request->input('title'));
-//            $slug_count = Category::where('slug', $slug)->count();
-//            if ($slug_count > 0) {
-//                $slug = time() . '_' . $slug;
-//            }
-//            $validate_data['slug'] = $slug;
-
 
             $validate_data['offer_price'] = ($request->price - (($request->price * $request->discount) / 100));
 

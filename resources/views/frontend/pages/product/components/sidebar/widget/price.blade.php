@@ -15,7 +15,7 @@
                 <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
             </div>
             <input type="hidden" id="price_range"
-                   value="@if(!empty($_GET['price'])) {{$_GET['price']}}@else{{$min}}-{{$max}}@endif"
+                   value="@if(!empty($_GET['price'])) {{$_GET['price']}}@endif"
                    name="price_range">
             <input type="text" id="amount"
                    value="@if(!empty($_GET['price'])) @php $price = explode('-',$_GET['price']); echo '$'.$price[0].'-$'.$price[1] @endphp @else${{$min}}-${{$max}}@endif"

@@ -78,7 +78,7 @@
                                                      class="product-table-image"></td>
                                             <td>${{number_format($product->price,2)}}</td>
                                             <td>{{$product->discount}}%</td>
-                                            <td>{{$product->size}}</td>
+                                            <td>{{$product->size->title}}</td>
                                             <td>
                                                 @if ($product->condition === 'new')
                                                     <span class="badge badge-success">{{$product->condition}}</span>

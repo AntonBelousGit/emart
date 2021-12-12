@@ -43,7 +43,7 @@
     </div>
     <div class="col-md-3">
         <strong>Size:</strong>
-        <p class="badge badge-success">{{$product->size ?? ''}}</p>
+        <p class="badge badge-success">{{$product->size->slug ?? ''}}</p>
     </div>
     <div class="col-md-4">
         <strong>Status:</strong>
