@@ -63,14 +63,12 @@ use App\Http\Controllers\Admin\BannerController;
     Route::post('coupon/add', [CartController::class, 'couponAdd'])->name('coupon.add');
 
     // Wishlist
-
     Route::get('wishlist', [WishlistController::class, 'wishlist'])->name('wishlist');
     Route::post('wishlist/store', [WishlistController::class, 'wishlistStore'])->name('wishlist.store');
     Route::post('wishlist/move-to-cart', [WishlistController::class, 'moveToCart'])->name('wishlist.move.cart');
     Route::post('wishlist/delete', [WishlistController::class, 'wishlistDelete'])->name('wishlist.delete');
 
     //Checkout section
-
     Route::get('checkout1', [CheckoutController::class, 'checkout1'])->name('checkout1')->middleware('user');
     Route::post('checkout-first',[CheckoutController::class, 'checkout1Store'])->name('checkout1.store');
     Route::post('checkout-second',[CheckoutController::class, 'checkout2Store'])->name('checkout2.store');
@@ -81,7 +79,12 @@ use App\Http\Controllers\Admin\BannerController;
     // Shop section
     Route::get('shop',[IndexController::class,'shop'])->name('shop');
     Route::post('shop-filter',[IndexController::class,'shopFilter'])->name('shop.filter');
-    //End Frontend
+
+    // Search product
+    Route::get('auto-search',[IndexController::class,'autoSearch'])->name('autosearch');
+    Route::get('search',[IndexController::class,'search'])->name('search');
+
+    // End Frontend
 
     Auth::routes(['register' => false]);
 

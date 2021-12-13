@@ -197,10 +197,12 @@
                     <div class="search-area">
                         <div class="search-btn"><i class="icofont-search"></i></div>
                         <!-- Form -->
-                        <div class="search-form">
-                            <input type="search" class="form-control" placeholder="Search">
-                            <input type="submit" class="d-none" value="Send">
-                        </div>
+                        <form action="{{route('search')}}" method="GET">
+                            <div class="search-form d-flex ">
+                                <input type="search" id="search_text" name="query" class="form-control ui-autocomplete-input" placeholder="Search" autocomplete="off">
+                                <button type="submit"  class="btn btn-primary btn-search">Search</button>
+                            </div>
+                        </form>
                     </div>
 
                 <!-- Wishlist -->

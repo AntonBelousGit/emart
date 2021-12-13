@@ -1,5 +1,4 @@
 <!-- jQuery (Necessary for All JavaScript Plugins) -->
-<script src="{{asset('frontend/js/jquery.min.js')}}"></script>
 <script src="{{asset('frontend/js/popper.min.js')}}"></script>
 <script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('frontend/js/jquery.easing.min.js')}}"></script>
@@ -9,7 +8,6 @@
 <script src="{{asset('frontend/js/waypoints.min.js')}}"></script>
 <script src="{{asset('frontend/js/jquery.countdown.min.js')}}"></script>
 <script src="{{asset('frontend/js/jquery.counterup.min.js')}}"></script>
-<script src="{{asset('frontend/js/jquery-ui.min.js')}}"></script>
 <script src="{{asset('frontend/js/jarallax.min.js')}}"></script>
 <script src="{{asset('frontend/js/jarallax-video.min.js')}}"></script>
 <script src="{{asset('frontend/js/jquery.magnific-popup.min.js')}}"></script>
@@ -170,6 +168,28 @@
             error:function (err) {
                 console.log(err);
             }
+        });
+    });
+</script>
+{{--Search--}}
+<script>
+    $(document).ready(function () {
+        let path = "{{route('autosearch')}}";
+        $('#search_text').autocomplete({
+            source:function (request,response) {
+                $.ajax({
+                    url:path,
+                    dataType:"JSON",
+                    data:{
+                        term:request.term
+                    },
+                    success:function (data) {
+                        console.log(data);
+                        response(data);
+                    }
+                })
+            },
+            minLength:3,
         });
     });
 </script>

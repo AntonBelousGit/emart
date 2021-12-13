@@ -14,4 +14,8 @@
 
 <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
 
+<script src="{{asset('frontend/js/jquery.min.js')}}"></script>
+<script src="{{asset('frontend/js/jquery-ui.min.js')}}"></script>
+
+
 @yield('styles')

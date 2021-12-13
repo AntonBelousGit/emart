@@ -35,6 +35,7 @@ class IndexController extends Controller
     {
         $product_query = Product::query();
         $products = $product_query->where('status', 'active');
+
         if (!empty($_GET['category'])) {
             $slug = explode(',', $_GET['category']);
             $cat_ids = Category::select('id')->whereIn('slug', $slug)->pluck('id')->toArray();
@@ -43,8 +44,8 @@ class IndexController extends Controller
 
         if (!empty($_GET['brand'])) {
             $slug = explode(',', $_GET['brand']);
-            $cat_ids = Brand::select('id')->whereIn('slug', $slug)->pluck('id')->toArray();
-            $products = $products->whereIn('brand_id', $cat_ids);
+            $brand_ids = Brand::select('id')->whereIn('slug', $slug)->pluck('id')->toArray();
+            $products = $products->whereIn('brand_id', $brand_ids);
         }
 
         if (!empty($_GET['sortBy'])) {
@@ -79,8 +80,15 @@ class IndexController extends Controller
             $price[0] = floor($price[0]);
             $price[1] = ceil($price[1]);
 
-            $products = $products->whereBetween('offer_price',$price);
+            $products = $products->whereBetween('offer_price', $price);
         }
+
+        if (!empty($_GET['size'])) {
+            $slug = explode(',', $_GET['size']);
+            $size_ids = Size::select('id')->whereIn('slug', $slug)->pluck('id')->toArray();
+            $products = $products->whereIn('size_id', $size_ids);
+        }
+
         $products = $products->paginate(12);
 
         $categories = Category::where(['status' => 'active', 'is_parent' => 1])
@@ -91,7 +99,7 @@ class IndexController extends Controller
             ->orderBy('title', 'ASC')->get();
         $sizes = Size::with('products')->get();
 
-        return view('frontend.pages.product.shop', compact('products', 'categories','brands','sizes'));
+        return view('frontend.pages.product.shop', compact('products', 'categories', 'brands', 'sizes'));
     }
 
     public function shopFilter(Request $request)
@@ -113,12 +121,10 @@ class IndexController extends Controller
             $sortByUrl .= '&sortBy=' . $data['sortBy'];
         }
         //price filter
-
         $price_range_url = '';
         if (!empty($data['price_range'])) {
             $price_range_url .= '&price=' . $data['price_range'];
         }
-
         //brand filter
         $brandUrl = '';
         if (!empty($data['brand'])) {
@@ -130,9 +136,50 @@ class IndexController extends Controller
                 }
             }
         }
+        $sizeUrl = '';
+        if (!empty($data['size'])) {
+            foreach ($data['size'] as $size) {
+                if (empty($sizeUrl)) {
+                    $sizeUrl .= '&size=' . $size;
+                } else {
+                    $sizeUrl .= ',' . $size;
+                }
+            }
+        }
 
 
-        return redirect()->route('shop', $catUrl . $sortByUrl . $price_range_url . $brandUrl);
+        return redirect()->route('shop', $catUrl . $sortByUrl . $price_range_url . $brandUrl . $sizeUrl);
+    }
+
+    public function autoSearch(Request $request)
+    {
+        $query = $request->get('term', '');
+        $products = Product::where('title', 'LIKE', '%' . $query . '%')->limit(5)->get();
+
+        $data = [];
+        foreach ($products as $product) {
+            $data[] = array('value' => ucfirst($product->title), 'id' => $product->id);
+        }
+        if (count($data)) {
+            return $data;
+        }
+        return ['value' => "No Result Found", 'id' => ''];
+
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $products = Product::where('title', 'LIKE', '%' . $query . '%')->orderBy('id', 'DESC')->paginate(12);
+        $categories = Category::where(['status' => 'active', 'is_parent' => 1])
+            ->with('products')
+            ->orderBy('title', 'ASC')->get();
+        $brands = Brand::where('status', 'active')
+            ->with('products')
+            ->orderBy('title', 'ASC')->get();
+        $sizes = Size::with('products')->get();
+        return view('frontend.pages.product.shop', compact('products', 'products', 'categories', 'brands', 'sizes'));
+
     }
 
     public function productCategory(Request $request, $slug)

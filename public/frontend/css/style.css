@@ -3845,3 +3845,39 @@ button.mfp-arrow {
     height: 30px;
     line-height: 22px;
 }
+
+.btn-search{
+    margin: 0;
+    border-radius: 0 4px 4px 0;
+    margin-right: -15px;
+}
+
+#search_text{
+    height: 42px;
+    width: 300px;
+}
+
+element.style {
+    position: relative;
+    top: -3868.69px;
+    left: 803px;
+    /* display: none; */
+    width: 301px;
+}
+ul#ui-id-1 {
+    width: 300px !important;
+    padding: 5px 10px;
+    border: 0;
+    /* -webkit-box-shadow: -2px 9px 13px -2px rgb(0 0 0 / 19%); */
+    -moz-box-shadow: -2px 9px 13px -2px rgba(0, 0, 0, 0.19);
+    /* box-shadow: -2px 9px 13px -2px rgb(0 0 0 / 19%); */
+    -webkit-box-shadow: -2px 9px 13px -2px rgb(0 0 0 / 3%);
+    -moz-box-shadow: -2px 9px 13px -2px rgba(0, 0, 0, 0.03);
+    box-shadow: -2px 9px 13px -2px rgb(47 91 234 / 15%);
+}
+ul#ui-id-1>li {
+    padding: 5px 0;
+}
+.ui-widget-content{
+    border: 0 !important;
+}
