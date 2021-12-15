@@ -15,6 +15,12 @@ class CreateProductAttributesTable extends Migration
     {
         Schema::create('product_attributes', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->string('size')->nullable();
+            $table->float('original_price')->default(0);
+            $table->float('offer_price')->default(0);
+            $table->integer('stock')->default(0);
+            $table->foreign('product_id')->on('products')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
     }

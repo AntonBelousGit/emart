@@ -97,15 +97,21 @@
                                                 >
                                             </td>
                                             <td>
+                                                <a href="{{route('product.show',$product->id)}}"
+                                                   class="btn btn-sm btn-outline-info float-left ml-1" title="add attribute"
+                                                   data-id="{{$product->id}}" data-toggle="tooltip"
+                                                   onclick="productView(this)">
+                                                    <i class="fa fa-plus-circle"></i>
+                                                </a>
                                                 <a href="javascript:void(0);"
-                                                   class="btn btn-sm btn-outline-secondary float-left" title="view"
+                                                   class="btn btn-sm btn-outline-secondary float-left ml-1" title="view"
                                                    data-placement="bottom" data-toggle="modal"
                                                    data-target="#productID" data-id="{{$product->id}}"
                                                    onclick="productView(this)">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                                 <a href="{{route('product.edit',$product->id)}}" data-toggle="tooltip"
-                                                   class="btn btn-sm btn-outline-primary float-left" title="edit"
+                                                   class="btn btn-sm btn-outline-primary float-left ml-1" title="edit"
                                                    data-placement="bottom">
                                                     <i class="fa fa-edit"></i>
                                                 </a>

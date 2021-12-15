@@ -39,13 +39,14 @@ class ProductController extends Controller
         return response()->json(['msg' => 'Successfully updated status', 'status' => true]);
     }
 
-    public function productView(Request $request){
+    public function productView(Request $request)
+    {
 
-        $product = Product::with('category','childCategory','brand','vendor','size')->find($request->id);
+        $product = Product::with('category', 'childCategory', 'brand', 'vendor', 'size')->find($request->id);
 
-        $returnHTML = view('backend.products.layouts.modal-body',['product'=> $product])->render();
+        $returnHTML = view('backend.products.layouts.modal-body', ['product' => $product])->render();
 
-        return response()->json( ['html'=>$returnHTML]);
+        return response()->json(['html' => $returnHTML]);
     }
 
     /**
@@ -61,7 +62,7 @@ class ProductController extends Controller
 //        $childCategories = $cat->where('is_parent',1)->get();
         $sizes = Size::all();
         $brands = Brand::all();
-        return view('backend.products.create', compact('brands', 'vendors', 'categories','sizes'));
+        return view('backend.products.create', compact('brands', 'vendors', 'categories', 'sizes'));
     }
 
     /**
@@ -114,10 +115,9 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         if ($product) {
-            return view('backend.categories.view', compact('product'));
-        } else {
-            return back()->with('error', 'Product not found');
+            return view('backend.products.product-attribute', compact('product'));
         }
+        return back()->with('error', 'Product not found');
     }
 
     /**
@@ -135,10 +135,9 @@ class ProductController extends Controller
         $sizes = Size::all();
 
         if ($product) {
-            return view('backend.products.edit', compact('product','categories','brands','vendors','sizes'));
-        } else {
-            return back()->with('error', 'Category not found');
+            return view('backend.products.edit', compact('product', 'categories', 'brands', 'vendors', 'sizes'));
         }
+        return back()->with('error', 'Category not found');
     }
 
     /**
