@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductAttribute;
 use App\Models\Size;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,17 +15,13 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $products_query = Product::query();
         $products_count = $products_query->count();
 //        $products = $products_query->orderBy('id', 'DESC')->get();
-        $products = $products_query->with('size')->orderBy('id', 'DESC')->get();;
+        $products = $products_query->with('size')->orderBy('id', 'DESC')->get();
         return view('backend.products.index', compact('products', 'products_count'));
     }
 
@@ -114,8 +111,9 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
+        $product_attribute = ProductAttribute::where('product_id',$id)->orderBy('id','DESC')->get();
         if ($product) {
-            return view('backend.products.product-attribute', compact('product'));
+            return view('backend.products.product-attribute', compact('product','product_attribute'));
         }
         return back()->with('error', 'Product not found');
     }
@@ -195,6 +193,43 @@ class ProductController extends Controller
             $status = $product->delete();
             if ($status) {
                 return redirect()->route('product.index')->with('success', 'Successfully deleted product');
+            }
+            return back()->with('error', 'Something went wrong!');
+        }
+        return back()->with('error', 'Data not found');
+    }
+
+    public function addProductAttribute(Request $request, $id)
+    {
+        $this->validate($request, [
+            'size[]'=>'nullable|string',
+            'original_price[]'=>'nullable|numeric',
+            'offer_price[]'=>'nullable|numeric',
+            'stock[]'=>'nullable|numeric',
+        ]);
+        $data = $request->all();
+
+        foreach ($data['original_price'] as $key => $val) {
+            if (!empty($val)) {
+                $attribute = new ProductAttribute;
+                $attribute['original_price'] = $val;
+                $attribute['offer_price'] = $data['offer_price'][$key];
+                $attribute['stock'] = $data['stock'][$key];
+                $attribute['product_id'] = $id;
+                $attribute['size'] = $data['size'][$key];
+                $attribute->save();
+            }
+        }
+        return redirect()->back()->with('success', 'Product attribute successfully added');
+    }
+
+    public function addProductAttributeDelete($id)
+    {
+        $product_attr = ProductAttribute::find($id);
+        if ($product_attr) {
+            $status = $product_attr->delete();
+            if ($status) {
+                return redirect()->back()->with('success', 'Product attribute successfully deleted!');
             }
             return back()->with('error', 'Something went wrong!');
         }
