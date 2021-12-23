@@ -59,15 +59,30 @@
                                     <div class="col-lg-12 col-md-12">
                                         <div class="form-group">
                                             <label for="">Description</label>
-                                            <textarea id="summernote"
+                                            <textarea class="summernote"
                                                       name="description">{{old('description')}}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Additional Information</label>
+                                            <textarea class="summernote"
+                                                      name="additional_info">{{old('additional_info')}}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Return & Cancellation</label>
+                                            <textarea class="summernote"
+                                                      name="return_cancel">{{old('return_cancel')}}</textarea>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12 col-md-12">
                                         <div class="form-group">
                                             <label for="">Stock <span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control" required placeholder="Stock" name="stock"
+                                            <input type="number" class="form-control" required placeholder="Stock"
+                                                   name="stock"
                                                    value="{{old('stock')}}">
                                         </div>
                                     </div>
@@ -82,7 +97,8 @@
                                     <div class="col-lg-12 col-md-12">
                                         <div class="form-group">
                                             <label for="">Discount</label>
-                                            <input type="number" step="any" min="0" max="100" class="form-control" placeholder="Discount"
+                                            <input type="number" step="any" min="0" max="100" class="form-control"
+                                                   placeholder="Discount"
                                                    name="discount"
                                                    value="{{old('discount')}}">
                                         </div>
@@ -103,9 +119,29 @@
                                                    <i class="fa fa-picture-o"></i> Choose
                                                  </a>
                                                </span>
-                                                <input id="thumbnail" class="form-control" type="text" name="photo" required>
+                                                <input id="thumbnail" class="form-control" type="text" name="photo"
+                                                       required  value="{{old('photo')}}">
                                             </div>
                                             <div id="holder" style="margin-top:15px;max-height:100px;">
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Size Guide</label>
+                                            <div class="input-group">
+                                               <span class="input-group-btn">
+                                                 <a id="lfm2" data-input="thumbnail1" data-preview="holder1"
+                                                    class="btn btn-primary">
+                                                   <i class="fa fa-picture-o"></i> Choose
+                                                 </a>
+                                               </span>
+                                                <input id="thumbnail1" class="form-control" type="text" name="size_guide"
+                                                       required  value="{{old('size_guide')}}">
+                                            </div>
+                                            <div id="holder1" style="margin-top:15px;max-height:100px;">
 
                                             </div>
 
@@ -116,7 +152,8 @@
                                         <select name="brand_id" class="form-control show-tick" required>
                                             <option value="">-- Brands --</option>
                                             @foreach($brands as $brand)
-                                                <option value="{{$brand->id}}" {{old('brand_id')==$brand->id? 'selected':''}}>{{$brand->title}}</option>
+                                                <option
+                                                    value="{{$brand->id}}" {{old('brand_id')==$brand->id? 'selected':''}}>{{$brand->title}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -125,7 +162,8 @@
                                         <select id="cat_id" name="cat_id" class="form-control show-tick" required>
                                             <option value="">-- Category --</option>
                                             @foreach($categories as $category)
-                                                <option value="{{$category->id}}" {{old('cat_id')==$category->id? 'selected':''}}>{{$category->title}}</option>
+                                                <option
+                                                    value="{{$category->id}}" {{old('cat_id')==$category->id? 'selected':''}}>{{$category->title}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -140,8 +178,10 @@
                                         <select name="size_id" class="form-control show-tick" required>
                                             <option value="">-- Size --</option>
                                             @foreach($sizes as $size)
-                                                <option value="{{$size->id}}" {{old('size_id')=== $size->id ? 'selected': ''}}>
-                                                    {{$size->title}} ({{$size->slug}}) </option>
+                                                <option
+                                                    value="{{$size->id}}" {{old('size_id')=== $size->id ? 'selected': ''}}>
+                                                    {{$size->title}} ({{$size->slug}})
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -164,7 +204,8 @@
                                         <select name="vendor_id" class="form-control show-tick" required>
                                             <option value="">-- Vendors --</option>
                                             @foreach($vendors as $vendor)
-                                                <option value="{{$vendor->id}}" {{old('vendor_id')==$vendor->id? 'selected':''}}>{{$vendor->full_name}}</option>
+                                                <option
+                                                    value="{{$vendor->id}}" {{old('vendor_id')==$vendor->id? 'selected':''}}>{{$vendor->full_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -183,7 +224,8 @@
                                 <div class="row m-t-15">
                                     <div class="col-sm-12">
                                         <button type="submit" class="btn btn-primary">Submit</button>
-                                        <a href="{{route('product.index')}}" class="btn btn-outline-secondary">Cancel</a>
+                                        <a href="{{route('product.index')}}"
+                                           class="btn btn-outline-secondary">Cancel</a>
                                     </div>
                                 </div>
 
@@ -204,8 +246,9 @@
     <script src="{{asset('vendor/laravel-filemanager/js/stand-alone-button.js')}}"></script>
     <script>
         $('#lfm').filemanager('image');
+        $('#lfm2').filemanager('image');
         $(document).ready(function () {
-            $('#summernote').summernote();
+            $('.summernote').summernote();
         });
     </script>
     <script>

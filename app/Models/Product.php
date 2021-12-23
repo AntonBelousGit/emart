@@ -11,7 +11,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'summary', 'slug', 'description', 'stock', 'price', 'offer_price', 'discount', 'size_id', 'condition', 'status', 'photo', 'vendor_id','brand_id', 'cat_id', 'child_cat_id', 'size'];
+    protected $fillable = ['title', 'summary', 'slug', 'description','additional_info','return_cancel','size_guide', 'stock', 'price', 'offer_price', 'discount', 'size_id', 'condition', 'status', 'photo', 'vendor_id','brand_id', 'cat_id', 'child_cat_id', 'size'];
 
     public function category(): BelongsTo
     {

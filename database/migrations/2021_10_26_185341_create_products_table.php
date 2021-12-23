@@ -19,12 +19,15 @@ class CreateProductsTable extends Migration
             $table->string('slug')->unique();
             $table->mediumText('summary')->nullable();
             $table->longText('description')->nullable();
+            $table->longText('additional_info')->nullable();
+            $table->longText('return_cancel')->nullable();
             $table->integer('stock')->default(0);
             $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('cat_id');
             $table->unsignedBigInteger('child_cat_id')->nullable();
             $table->unsignedBigInteger('size_id');
             $table->string('photo');
+            $table->string('size_guide')->nullable();
             $table->float('price')->default(0);
             $table->float('offer_price')->default(0);
             $table->float('discount')->default(0);
