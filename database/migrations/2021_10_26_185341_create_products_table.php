@@ -26,8 +26,8 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('cat_id');
             $table->unsignedBigInteger('child_cat_id')->nullable();
             $table->unsignedBigInteger('size_id');
-            $table->string('photo');
-            $table->string('size_guide')->nullable();
+            $table->text('photo');
+            $table->text('size_guide')->nullable();
             $table->float('price')->default(0);
             $table->float('offer_price')->default(0);
             $table->float('discount')->default(0);

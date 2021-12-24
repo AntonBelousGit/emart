@@ -33,6 +33,10 @@ class Product extends Model
     {
         return $this->belongsTo(User::class, 'vendor_id');
     }
+    public function attributes(): HasMany
+    {
+        return $this->hasMany(ProductAttribute::class,'product_id');
+    }
 
     public function rel_products(): HasMany
     {

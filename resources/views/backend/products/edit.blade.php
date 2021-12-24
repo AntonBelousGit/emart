@@ -11,10 +11,10 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-8 col-sm-12">
                         <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i
-                                    class="fa fa-arrow-left"></i></a>Add Products</h2>
+                                        class="fa fa-arrow-left"></i></a>Add Products</h2>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{route('admin')}}"><i
-                                        class="icon-home"></i></a></li>
+                                            class="icon-home"></i></a></li>
                             <li class="breadcrumb-item">Products</li>
                             <li class="breadcrumb-item active">Add Product</li>
                         </ul>
@@ -60,15 +60,30 @@
                                     <div class="col-lg-12 col-md-12">
                                         <div class="form-group">
                                             <label for="">Description</label>
-                                            <textarea id="summernote"
+                                            <textarea class="summernote"
                                                       name="description">{{$product->description}}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Additional Information</label>
+                                            <textarea class="summernote"
+                                                      name="additional_info">{{$product->additional_info}}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Return & Cancellation</label>
+                                            <textarea class="summernote"
+                                                      name="return_cancel">{{$product->return_cancel}}</textarea>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12 col-md-12">
                                         <div class="form-group">
                                             <label for="">Stock <span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control" required placeholder="Stock" name="stock"
+                                            <input type="number" class="form-control" required placeholder="Stock"
+                                                   name="stock"
                                                    value="{{$product->stock}}">
                                         </div>
                                     </div>
@@ -89,16 +104,11 @@
                                                    value="{{$product->discount}}">
                                         </div>
                                     </div>
-                                    {{--                                    <div class="col-lg-12 col-md-12">--}}
-                                    {{--                                        <div class="form-group">--}}
-                                    {{--                                            <label for="">URL </label>--}}
-                                    {{--                                            <input type="text" class="form-control" placeholder="URL" name="slug" value="{{old('slug')}}">--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                    </div>--}}
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="form-group">
-                                                    <label for="">Photo</label>
-                                                    <div class="input-group">
+
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Photo</label>
+                                            <div class="input-group">
                                             <span class="input-group-btn">
                                              <a id="lfm" data-input="thumbnail" data-preview="holder"
                                                 class="btn btn-primary">
@@ -114,13 +124,33 @@
 
                                         </div>
                                     </div>
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Size Guide</label>
+                                            <div class="input-group">
+                                               <span class="input-group-btn">
+                                                 <a id="lfm2" data-input="thumbnail1" data-preview="holder1"
+                                                    class="btn btn-primary">
+                                                   <i class="fa fa-picture-o"></i> Choose
+                                                 </a>
+                                               </span>
+                                                <input id="thumbnail1" class="form-control" type="text"
+                                                       name="size_guide"
+                                                       required value="{{$product->size_guide}}">
+                                            </div>
+                                            <div id="holder1" style="margin-top:15px;max-height:100px;">
+
+                                            </div>
+
+                                        </div>
+                                    </div>
                                     <div class="col-lg-12 col-sm-12">
                                         <label for="status">Brands <span class="text-danger">*</span></label>
                                         <select name="brand_id" class="form-control show-tick" required>
                                             <option value="">-- Brands --</option>
                                             @foreach($brands as $brand)
                                                 <option
-                                                    value="{{$brand->id}}" {{$brand->id == $product->brand_id? 'selected' : ''}}>{{$brand->title}}</option>
+                                                        value="{{$brand->id}}" {{$brand->id == $product->brand_id? 'selected' : ''}}>{{$brand->title}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -130,7 +160,7 @@
                                             <option value="">-- Category --</option>
                                             @foreach($categories as $category)
                                                 <option
-                                                    value="{{$category->id}}" {{$category->id == $product->cat_id? 'selected' : ''}}>{{$category->title}}</option>
+                                                        value="{{$category->id}}" {{$category->id == $product->cat_id? 'selected' : ''}}>{{$category->title}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -146,7 +176,8 @@
                                             <option value="">-- Size --</option>
                                             @foreach($sizes as $size)
                                                 <option value="{{$size->id}}" {{$product->size_id=== $size->id ? 'selected': ''}}>
-                                                    {{$size->title}} ({{$size->slug}}) </option>
+                                                    {{$size->title}} ({{$size->slug}})
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -157,11 +188,11 @@
                                                 New
                                             </option>
                                             <option
-                                                value="popular" {{$product->condition === 'popular' ? 'selected': ''}}>
+                                                    value="popular" {{$product->condition === 'popular' ? 'selected': ''}}>
                                                 Popular
                                             </option>
                                             <option
-                                                value="winter" {{$product->condition === 'winter' ? 'selected': ''}}>
+                                                    value="winter" {{$product->condition === 'winter' ? 'selected': ''}}>
                                                 Winter
                                             </option>
                                         </select>
@@ -172,7 +203,7 @@
                                             <option value="">-- Vendors --</option>
                                             @foreach($vendors as $vendor)
                                                 <option
-                                                    value="{{$vendor->id}}" {{$vendor->id == $product->vendor_id? 'selected' : ''}}>{{$vendor->full_name}}</option>
+                                                        value="{{$vendor->id}}" {{$vendor->id == $product->vendor_id? 'selected' : ''}}>{{$vendor->full_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -183,7 +214,7 @@
                                                 Active
                                             </option>
                                             <option
-                                                value="inactive" {{$product->status === 'inactive' ? 'selected': ''}}>
+                                                    value="inactive" {{$product->status === 'inactive' ? 'selected': ''}}>
                                                 Inactive
                                             </option>
                                         </select>
@@ -214,9 +245,9 @@
     <script src="{{asset('backend/vendor/summernote/dist/summernote.js')}}"></script>
     <script src="{{asset('vendor/laravel-filemanager/js/stand-alone-button.js')}}"></script>
     <script>
-        $('#lfm').filemanager('image');
+        $('#lfm,#lfm2').filemanager('image');
         $(document).ready(function () {
-            $('#summernote').summernote();
+            $('.summernote').summernote();
         });
     </script>
     <script>

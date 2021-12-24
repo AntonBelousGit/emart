@@ -11,10 +11,10 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-8 col-sm-12">
                         <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i
-                                    class="fa fa-arrow-left"></i></a>Add Products</h2>
+                                        class="fa fa-arrow-left"></i></a>Add Products</h2>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{route('admin')}}"><i
-                                        class="icon-home"></i></a></li>
+                                            class="icon-home"></i></a></li>
                             <li class="breadcrumb-item">Products</li>
                             <li class="breadcrumb-item active">Add Product</li>
                         </ul>
@@ -120,7 +120,7 @@
                                                  </a>
                                                </span>
                                                 <input id="thumbnail" class="form-control" type="text" name="photo"
-                                                       required  value="{{old('photo')}}">
+                                                       required value="{{old('photo')}}">
                                             </div>
                                             <div id="holder" style="margin-top:15px;max-height:100px;">
 
@@ -138,8 +138,9 @@
                                                    <i class="fa fa-picture-o"></i> Choose
                                                  </a>
                                                </span>
-                                                <input id="thumbnail1" class="form-control" type="text" name="size_guide"
-                                                       required  value="{{old('size_guide')}}">
+                                                <input id="thumbnail1" class="form-control" type="text"
+                                                       name="size_guide"
+                                                       required value="{{old('size_guide')}}">
                                             </div>
                                             <div id="holder1" style="margin-top:15px;max-height:100px;">
 
@@ -153,7 +154,7 @@
                                             <option value="">-- Brands --</option>
                                             @foreach($brands as $brand)
                                                 <option
-                                                    value="{{$brand->id}}" {{old('brand_id')==$brand->id? 'selected':''}}>{{$brand->title}}</option>
+                                                        value="{{$brand->id}}" {{old('brand_id')==$brand->id? 'selected':''}}>{{$brand->title}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -163,7 +164,7 @@
                                             <option value="">-- Category --</option>
                                             @foreach($categories as $category)
                                                 <option
-                                                    value="{{$category->id}}" {{old('cat_id')==$category->id? 'selected':''}}>{{$category->title}}</option>
+                                                        value="{{$category->id}}" {{old('cat_id')==$category->id? 'selected':''}}>{{$category->title}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -179,7 +180,7 @@
                                             <option value="">-- Size --</option>
                                             @foreach($sizes as $size)
                                                 <option
-                                                    value="{{$size->id}}" {{old('size_id')=== $size->id ? 'selected': ''}}>
+                                                        value="{{$size->id}}" {{old('size_id')=== $size->id ? 'selected': ''}}>
                                                     {{$size->title}} ({{$size->slug}})
                                                 </option>
                                             @endforeach
@@ -205,7 +206,7 @@
                                             <option value="">-- Vendors --</option>
                                             @foreach($vendors as $vendor)
                                                 <option
-                                                    value="{{$vendor->id}}" {{old('vendor_id')==$vendor->id? 'selected':''}}>{{$vendor->full_name}}</option>
+                                                        value="{{$vendor->id}}" {{old('vendor_id')==$vendor->id? 'selected':''}}>{{$vendor->full_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -245,8 +246,7 @@
     <script src="{{asset('backend/vendor/summernote/dist/summernote.js')}}"></script>
     <script src="{{asset('vendor/laravel-filemanager/js/stand-alone-button.js')}}"></script>
     <script>
-        $('#lfm').filemanager('image');
-        $('#lfm2').filemanager('image');
+        $('#lfm,#lfm2').filemanager('image');
         $(document).ready(function () {
             $('.summernote').summernote();
         });

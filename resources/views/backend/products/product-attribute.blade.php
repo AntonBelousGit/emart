@@ -62,7 +62,7 @@
                                         </div>
                                         <div class="col-md-2">
                                             <label for="">Original Price</label>
-                                            <input class="form-control" placeholder="eg. 1200" step="any"
+                                            <input class="form-control" placeholder="eg. 1500" step="any"
                                                    name="original_price[]"
                                                    type="number">
                                         </div>

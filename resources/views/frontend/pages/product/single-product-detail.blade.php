@@ -165,7 +165,7 @@
                         <!-- Overview -->
                         <div class="short_overview mb-4">
                             <h6>Overview</h6>
-                            <p>{{$product->summary}}</p>
+                            <p>{!! html_entity_decode($product->summary) !!}</p>
                         </div>
 
                         <!-- Color Option -->
@@ -203,14 +203,21 @@
                     <!-- Size Option -->
                         <div class="widget p-0 size mb-3">
                             <h6 class="widget-title">Size</h6>
-                            <div class="widget-desc">
-                                <ul>
-                                    <li><a href="#">XS</a></li>
-                                    <li><a href="#">S</a></li>
-                                    <li><a href="#">M</a></li>
-                                    <li><a href="#">L</a></li>
-                                    <li><a href="#">XL</a></li>
-                                </ul>
+                            <div class="widget-desc" style="height: 20px">
+                                <select name="size" id="">
+                                    <option value=""></option>
+                                    @foreach($product->attributes as $item)
+                                        <option value="{{$item->size}}">{{$item->size}}</option>
+                                    @endforeach
+                                </select>
+
+{{--                                <ul>--}}
+{{--                                    <li><a href="#">XS</a></li>--}}
+{{--                                    <li><a href="#">S</a></li>--}}
+{{--                                    <li><a href="#">M</a></li>--}}
+{{--                                    <li><a href="#">L</a></li>--}}
+{{--                                    <li><a href="#">XL</a></li>--}}
+{{--                                </ul>--}}
                             </div>
                         </div>
 
@@ -240,15 +247,14 @@
                         <div class="sizeguide">
                             <h6>Size Guide</h6>
                             <div class="size_guide_thumb d-flex">
-                                <a class="size_guide_img" href="img/bg-img/size-1.png"
-                                   style="background-image: url(img/bg-img/size-1.png);">
-                                </a>
-                                <a class="size_guide_img" href="img/bg-img/size-2.png"
-                                   style="background-image: url(img/bg-img/size-2.png);">
-                                </a>
-                                <a class="size_guide_img" href="img/bg-img/size-3.png"
-                                   style="background-image: url(img/bg-img/size-3.png);">
-                                </a>
+                                @php
+                                    $size_guide = explode(',',$product->size_guide);
+                                @endphp
+                                @foreach($size_guide as $item)
+                                    <a class="size_guide_img" href="{{$item}}"
+                                       style="background-image: url({{$item}});">
+                                    </a>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -284,7 +290,7 @@
                             <div role="tabpanel" class="tab-pane fade show active" id="description">
                                 <div class="description_area">
                                     <h5>Description</h5>
-                                    {{$product->description}}
+                                    {!! $product->description !!}
                                 </div>
                             </div>
 
@@ -384,51 +390,14 @@
                             <div role="tabpanel" class="tab-pane fade" id="addi-info">
                                 <div class="additional_info_area">
                                     <h5>Additional Info</h5>
-                                    <p>What should I do if I receive a damaged parcel?
-                                        <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit impedit similique qui, itaque delectus labore.</span>
-                                    </p>
-                                    <p>I have received my order but the wrong item was delivered to me.
-                                        <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis quam voluptatum beatae harum tempore, ab?</span>
-                                    </p>
-                                    <p>Product Receipt and Acceptance Confirmation Process
-                                        <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum ducimus, temporibus soluta impedit minus rerum?</span>
-                                    </p>
-                                    <p class="mb-0">How do I cancel my order?
-                                        <br> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum eius eum, minima!</span>
-                                    </p>
+                                    {!! $product->additional_info !!}
                                 </div>
                             </div>
 
                             <div role="tabpanel" class="tab-pane fade" id="refund">
                                 <div class="refund_area">
                                     <h6>Return Policy</h6>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa quidem, eos eius
-                                        laboriosam voluptates totam mollitia repellat rem voluptate obcaecati quas fuga
-                                        similique impedit cupiditate vitae repudiandae. Rem, tenetur placeat!</p>
-
-                                    <h6>Return Criteria</h6>
-                                    <ul class="mb-30 ml-30">
-                                        <li><i class="icofont-check"></i> Package broken</li>
-                                        <li><i class="icofont-check"></i> Physical damage in the product</li>
-                                        <li><i class="icofont-check"></i> Software/hardware problem</li>
-                                        <li><i class="icofont-check"></i> Accessories missing or damaged etc.</li>
-                                    </ul>
-
-                                    <h6>Q. What should I do if I receive a damaged parcel?</h6>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit impedit
-                                        similique qui, itaque delectus labore.</p>
-
-                                    <h6>Q. I have received my order but the wrong item was delivered to me.</h6>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis quam voluptatum
-                                        beatae harum tempore, ab?</p>
-
-                                    <h6>Q. Product Receipt and Acceptance Confirmation Process</h6>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum ducimus,
-                                        temporibus soluta impedit minus rerum?</p>
-
-                                    <h6>Q. How do I cancel my order?</h6>
-                                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum
-                                        eius eum, minima!</p>
+                                    {!! $product->return_cancel !!}
                                 </div>
                             </div>
                         </div>
@@ -445,5 +414,19 @@
     @endif
 
     <!-- Related Products Area -->
+
+@endsection
+
+@section('styles')
+    <style>
+        /*.nice-select.open .list{*/
+        /*    width: 100%;*/
+        /*}*/
+
+        .widget.size .widget-desc li {
+            display: block;
+            margin-top: 4px;
+        }
+    </style>
 
 @endsection

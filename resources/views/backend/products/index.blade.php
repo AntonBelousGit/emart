@@ -74,7 +74,7 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$product->title}}</td>
-                                            <td><img src="{{$photo[0]}}" alt="product image"
+                                            <td class="text-center" ><img src="{{$photo[0]}}" alt="product image"
                                                      class="product-table-image"></td>
                                             <td>${{number_format($product->price,2)}}</td>
                                             <td>{{$product->discount}}%</td>

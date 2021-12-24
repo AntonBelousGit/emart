@@ -60,7 +60,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#Brand" class="has-arrow"><i class="icon-briefcase"></i> <span>Brand Management</span></a>
+                            <a href="#Brand" class="has-arrow"><i class="icon-badge"></i> <span>Brand Management</span></a>
                             <ul>
                                 <li><a href="{{route('brand.index')}}">All Brand</a></li>
                                 <li><a href="{{route('brand.create')}}">Add Brand</a></li>
