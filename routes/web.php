@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductReviewController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\CartController;
@@ -52,6 +53,11 @@ use App\Http\Controllers\Admin\BannerController;
 
     //Product detail
     Route::get('product/{slug}', [IndexController::class, 'productDetail'])->name('product.detail');
+    Route::get('get-product-price/{slug}', [IndexController::class, 'filterPriceWithSize']);
+
+    //Product review
+
+    Route::post('product-review/{slug}',[ProductReviewController::class,'productReview'])->name('product.review');
 
     //Cart
     Route::get('cart', [CartController::class, 'cart'])->name('cart');

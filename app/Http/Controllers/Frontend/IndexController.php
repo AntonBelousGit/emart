@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductReview;
 use App\Models\Size;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
@@ -229,9 +230,10 @@ class IndexController extends Controller
 
     public function productDetail($slug)
     {
-        $product = Product::with('rel_products','attributes')->where('slug', $slug)->first();
+        $product = Product::with('rel_products','attributes','brand','review.user')->where('slug', $slug)->first();
         if ($product) {
-            return view('frontend.pages.product.single-product-detail', compact('product'));
+            $comments = ProductReview::where('product_id', $product->id)->with('user')->latest()->paginate(10);
+            return view('frontend.pages.product.single-product-detail', compact('product','comments'));
         }
         return 'Product not found';
     }

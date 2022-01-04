@@ -13,6 +13,8 @@ class Product extends Model
 
     protected $fillable = ['title', 'summary', 'slug', 'description','additional_info','return_cancel','size_guide', 'stock', 'price', 'offer_price', 'discount', 'size_id', 'condition', 'status', 'photo', 'vendor_id','brand_id', 'cat_id', 'child_cat_id', 'size'];
 
+    protected $with = ['brand'];
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'cat_id');
@@ -36,6 +38,10 @@ class Product extends Model
     public function attributes(): HasMany
     {
         return $this->hasMany(ProductAttribute::class,'product_id');
+    }
+    public function review(): HasMany
+    {
+        return $this->hasMany(ProductReview::class,'product_id');
     }
 
     public function rel_products(): HasMany

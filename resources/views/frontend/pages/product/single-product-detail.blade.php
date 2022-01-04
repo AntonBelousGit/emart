@@ -159,8 +159,8 @@
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <span class="text-muted">(8 Reviews)</span>
                         </div>
-                        <h4 class="price mb-4">${{number_format($product->offer_price,2)}}
-                            <span>${{number_format($product->price,2)}}</span></h4>
+                        <h4 id="offer_price" class="price mb-4">${{number_format($product->offer_price,2)}}
+                            <span id="original_price">${{number_format($product->price,2)}}</span></h4>
 
                         <!-- Overview -->
                         <div class="short_overview mb-4">
@@ -204,20 +204,20 @@
                         <div class="widget p-0 size mb-3">
                             <h6 class="widget-title">Size</h6>
                             <div class="widget-desc" style="height: 20px">
-                                <select name="size" id="">
+                                <select name="size" id="size">
                                     <option value=""></option>
                                     @foreach($product->attributes as $item)
                                         <option value="{{$item->size}}">{{$item->size}}</option>
                                     @endforeach
                                 </select>
 
-{{--                                <ul>--}}
-{{--                                    <li><a href="#">XS</a></li>--}}
-{{--                                    <li><a href="#">S</a></li>--}}
-{{--                                    <li><a href="#">M</a></li>--}}
-{{--                                    <li><a href="#">L</a></li>--}}
-{{--                                    <li><a href="#">XL</a></li>--}}
-{{--                                </ul>--}}
+                                {{--                                <ul>--}}
+                                {{--                                    <li><a href="#">XS</a></li>--}}
+                                {{--                                    <li><a href="#">S</a></li>--}}
+                                {{--                                    <li><a href="#">M</a></li>--}}
+                                {{--                                    <li><a href="#">L</a></li>--}}
+                                {{--                                    <li><a href="#">XL</a></li>--}}
+                                {{--                                </ul>--}}
                             </div>
                         </div>
 
@@ -227,7 +227,7 @@
                                 <input type="number" class="qty-text form-control" id="qty2" step="1" min="1" max="12"
                                        name="quantity" value="1">
                             </div>
-                            <button type="submit" name="addtocart" value="5"
+                            <button type="submit" id="add_to_cart_button_details_1" name="addtocart" value="5"
                                     class="btn btn-primary mt-1 mt-md-0 ml-1 ml-md-3">Add to cart
                             </button>
                         </form>
@@ -274,7 +274,7 @@
                             </li>
                             <li class="nav-item">
                                 <a href="#reviews" class="nav-link" data-toggle="tab" role="tab">Reviews
-                                    <span class="text-muted">(3)</span></a>
+                                    <span class="text-muted">({{$product->review->count()}})</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="#addi-info" class="nav-link" data-toggle="tab" role="tab">Additional
@@ -295,95 +295,103 @@
                             </div>
 
                             <div role="tabpanel" class="tab-pane fade" id="reviews">
-                                <div class="reviews_area">
-                                    <ul>
-                                        <li>
-                                            <div class="single_user_review mb-15">
-                                                <div class="review-rating">
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <span>for Quality</span>
-                                                </div>
-                                                <div class="review-details">
-                                                    <p>by <a href="#">Designing World</a> on <span>12 Sep 2019</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="single_user_review mb-15">
-                                                <div class="review-rating">
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <span>for Design</span>
-                                                </div>
-                                                <div class="review-details">
-                                                    <p>by <a href="#">Designing World</a> on <span>12 Sep 2019</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="single_user_review">
-                                                <div class="review-rating">
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <span>for Value</span>
-                                                </div>
-                                                <div class="review-details">
-                                                    <p>by <a href="#">Designing World</a> on <span>12 Sep 2019</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
 
+                                @if ($comments->count() > 0)
+                                    <div class="reviews_area">
+                                        <ul>
+                                            <li>
+                                                @foreach($comments as $item)
+                                                    <div class="single_user_review mb-15">
+                                                        <div class="review-rating">
+                                                            @for ($i = 0; $i < 5; $i++)
+                                                                @if ($item->rate > $i)
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                @else
+                                                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                                @endif
+                                                            @endfor
+                                                            <span>for {{ucfirst($item->reason)}}</span>
+                                                        </div>
+                                                        <div class="review-details">
+                                                            <p>by <b>{{$item->user->full_name}}</b> on
+                                                                <span>{{\Carbon\Carbon::parse($item->created_at)->format('m D Y')}}</span>
+                                                            </p>
+                                                            <p>
+                                                                {{$item->review}}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    {{$comments->links('vendor.pagination.custom')}}
+                                @endif
                                 <div class="submit_a_review_area mt-50">
                                     <h4>Submit A Review</h4>
-                                    <form action="#" method="post">
-                                        <div class="form-group">
-                                            <span>Your Ratings</span>
-                                            <div class="stars">
-                                                <input type="radio" name="star" class="star-1" id="star-1">
-                                                <label class="star-1" for="star-1">1</label>
-                                                <input type="radio" name="star" class="star-2" id="star-2">
-                                                <label class="star-2" for="star-2">2</label>
-                                                <input type="radio" name="star" class="star-3" id="star-3">
-                                                <label class="star-3" for="star-3">3</label>
-                                                <input type="radio" name="star" class="star-4" id="star-4">
-                                                <label class="star-4" for="star-4">4</label>
-                                                <input type="radio" name="star" class="star-5" id="star-5">
-                                                <label class="star-5" for="star-5">5</label>
-                                                <span></span>
+                                    @auth
+                                        <form action="{{route('product.review',$product->slug)}}" method="post">
+                                            @csrf
+                                            <div class="form-group">
+                                                <span>Your Ratings</span>
+                                                <div class="stars">
+                                                    <input type="radio" name="rate" class="star-1" id="star-1"
+                                                           value="1">
+                                                    <label class="star-1" for="star-1">1</label>
+                                                    <input type="radio" name="rate" class="star-2" id="star-2"
+                                                           value="2">
+                                                    <label class="star-2" for="star-2">2</label>
+                                                    <input type="radio" name="rate" class="star-3" id="star-3"
+                                                           value="3">
+                                                    <label class="star-3" for="star-3">3</label>
+                                                    <input type="radio" name="rate" class="star-4" id="star-4"
+                                                           value="4">
+                                                    <label class="star-4" for="star-4">4</label>
+                                                    <input type="radio" name="rate" class="star-5" id="star-5"
+                                                           value="5">
+                                                    <label class="star-5" for="star-5">5</label>
+                                                    <span></span>
+                                                </div>
+                                                @error('rate')
+                                                <p class="text-danger">{{$message}}</p>
+                                                @enderror
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="name">Nickname</label>
-                                            <input type="email" class="form-control" id="name" placeholder="Nazrul">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="options">Reason for your rating</label>
-                                            <select class="form-control small right py-0 w-100" id="options">
-                                                <option>Quality</option>
-                                                <option>Value</option>
-                                                <option>Design</option>
-                                                <option>Price</option>
-                                                <option>Others</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="comments">Comments</label>
-                                            <textarea class="form-control" id="comments" rows="5"
-                                                      data-max-length="150"></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Submit Review</button>
-                                    </form>
+                                            <input type="hidden" name="product_id" value="{{$product->id}}">
+                                            <div class="form-group">
+                                                <label for="options">Reason for your rating</label>
+                                                <select class="form-control small right py-0 w-100" id="options"
+                                                        name="reason">
+                                                    <option value="quality" {{old('reason')== 'quality'?'selected':''}}>
+                                                        Quality
+                                                    </option>
+                                                    <option value="value" {{old('reason')== 'value'?'selected':''}}>
+                                                        Value
+                                                    </option>
+                                                    <option value="design" {{old('reason')== 'design'?'selected':''}}>
+                                                        Design
+                                                    </option>
+                                                    <option value="price" {{old('reason')== 'price'?'selected':''}}>
+                                                        Price
+                                                    </option>
+                                                    <option value="others" {{old('reason')== 'others'?'selected':''}}>
+                                                        Others
+                                                    </option>
+                                                </select>
+                                                @error('reason')
+                                                <p class="text-danger">{{$message}}</p>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="comments">Comments</label>
+                                                <textarea class="form-control" id="comments" rows="5"
+                                                          data-max-length="150" name="review"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                                        </form>
+                                    @else
+                                        <p class="py-2">You need to login for writing review.<a
+                                                href="{{route('user.auth')}}">Click here </a>to login!</p>
+                                    @endif
                                 </div>
                             </div>
 
@@ -429,4 +437,35 @@
         }
     </style>
 
+@endsection
+
+@section('scripts')
+    <script>
+
+        $('#size').change(function () {
+            var size = $(this).val();
+            $('.add_to_cart_button_details').attr('data-size', size);
+            var product_id = {{$product->id}};
+
+            if (product_id != null) {
+                $.ajax({
+                    url: '/get-product-price/' + product_id,
+                    data: {
+                        size: size,
+                    },
+                    type: 'GET',
+                    success: function (response) {
+                        if (response.status) {
+                            var data = response.data;
+                            $('#original_price').html('$' + data['original_price']);
+                            $('#offer_price').html('$' + data['offer_price']);
+                            $('#add_to_cart_button_details_1').attr('data-price', data['offer_price']);
+                        }
+                    }
+                });
+            }
+
+        })
+
+    </script>
 @endsection
