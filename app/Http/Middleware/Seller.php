@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Seller
 {
@@ -16,9 +17,11 @@ class Seller
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->role === 'seller')
-        {
+        if(Auth::guard('seller')->check()){
             return $next($request);
         }
-        return redirect()->route(auth()->user()->role)->with('error',"You don't have access");    }
+        else{
+            return redirect()->route('seller.login.form');
+        }
+    }
 }

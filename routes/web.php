@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductReviewController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\Admin\LoginController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\IndexController;
@@ -41,6 +42,11 @@ use App\Http\Controllers\Admin\BannerController;
     //Frontend
     Route::get('/', [IndexController::class, 'index'])->name('index');
 
+    //Admin login
+    Route::group(['prefix' => 'admin'],function (){
+       Route::get('/login', [LoginController::class,'loginForm'])->name('login.form');
+       Route::post('/login', [LoginController::class,'login'])->name('admin.login');
+    });
     //Auth
     Route::get('user/auth', [IndexController::class, 'userAuth'])->name('user.auth');
     Route::post('user/login', [IndexController::class, 'loginSubmit'])->name('login.submit');
@@ -98,7 +104,7 @@ use App\Http\Controllers\Admin\BannerController;
 
 //Admin section
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/', [AdminController::class, 'admin'])->name('admin');
 
     // Banner Section
@@ -143,7 +149,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'admin'], function ()
 
 //Seller Dashboard
 
-Route::group(['prefix' => 'seller', 'middleware' => 'auth', 'seller'], function () {
+Route::group(['prefix' => 'seller', 'middleware' => ['auth', 'seller']], function () {
     Route::get('/', [AdminController::class, 'admin'])->name('seller');
 });
 

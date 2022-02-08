@@ -148,7 +148,6 @@ class IndexController extends Controller
             }
         }
 
-
         return redirect()->route('shop', $catUrl . $sortByUrl . $price_range_url . $brandUrl . $sizeUrl);
     }
 
@@ -250,7 +249,6 @@ class IndexController extends Controller
             'email' => 'email|required|exists:users,email',
             'password' => 'required|min:3',
         ]);
-//        dd($validate_data);
         if (Auth::attempt(['email' => $validate_data['email'], 'password' => $validate_data['password'], 'status' => 'active'])) {
             Session::put('user', $validate_data['email']);
             if (Session::get('url.intended')) {
